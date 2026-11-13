@@ -91,7 +91,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-02-FE-001: Provider Catalog Explorer & Model View (Agent: frontend-agent, Priority: P1, Complexity: M)
   * Depends on: PHASE-02-BE-001
   * Criteria: Providers page (/providers) displays provider cards with capabilities, supported aspect ratios/resolutions, duration limits, and billing badge (free_verified, trial, paid, unknown).
-- **[PENDING]** PHASE-02-FE-002: User API Keys Management & Testing Interface (Agent: frontend-agent, Priority: P0, Complexity: M)
+- **[COMPLETED]** PHASE-02-FE-002: User API Keys Management & Testing Interface (Agent: frontend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-02-BE-002, PHASE-02-FE-001
   * Criteria: Settings → API Providers (/settings/providers) allows connecting keys with masked display (sk-****abcd); connection test button with status badges; region and custom label configuration; strict free-only toggle.
 - **[PENDING]** PHASE-02-QA-001: Provider Catalog & Encryption Test Suite (Agent: qa-agent, Priority: P0, Complexity: M)
