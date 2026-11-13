@@ -111,7 +111,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-03-FE-001: Video Creation Wizard (Agent: frontend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-03-BE-001
   * Criteria: Multi-step video creation wizard at /videos/new: prompt input, target duration (30/60/90/120s), aspect ratio (9:16, 16:9, 1:1), style, provider/model selector, pre-generation warnings for paid/unknown providers.
-- **[PENDING]** PHASE-03-FE-002: Script Review & Scene Prompt Editor (Agent: frontend-agent, Priority: P0, Complexity: M)
+- **[COMPLETED]** PHASE-03-FE-002: Script Review & Scene Prompt Editor (Agent: frontend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-03-BE-002, PHASE-03-FE-001
   * Criteria: Scene review screen (/videos/:id/edit-script): reorder scenes, edit visual and narration prompts, add/delete scenes, preview calculated duration, and approve script button.
 - **[PENDING]** PHASE-03-QA-001: Project & Script Planner Test Suite (Agent: qa-agent, Priority: P0, Complexity: M)

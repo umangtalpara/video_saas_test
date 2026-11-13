@@ -30,7 +30,7 @@
     "frontend-agent": {
       "status": "IDLE",
       "task": null,
-      "lastActive": "2026-11-13 16:05:32"
+      "lastActive": "2026-11-13 16:08:23"
     },
     "qa-agent": {
       "lastActive": "2026-11-13 13:55:06"
@@ -346,14 +346,15 @@
           "title": "Script Review & Scene Prompt Editor",
           "agent": "frontend-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-03-BE-002",
             "PHASE-03-FE-001"
           ],
           "acceptance_criteria": "Scene review screen (/videos/:id/edit-script): reorder scenes, edit visual and narration prompts, add/delete scenes, preview calculated duration, and approve script button.",
-          "complexity": "M"
+          "complexity": "M",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-03-QA-001",
