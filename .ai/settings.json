@@ -106,5 +106,7 @@
     "frontend_unit": "codebase/frontend/src/**/*.test.tsx",
     "frontend_e2e": "codebase/frontend/e2e/**/*.spec.ts"
   },
-  "git_remotes": {}
+  "git_remotes": {
+    "main": "git@github.com:umangtalpara/video_saas_test.git"
+  }
 }

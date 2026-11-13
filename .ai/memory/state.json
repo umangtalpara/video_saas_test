@@ -1,28 +1,555 @@
 {
   "project": {
-    "name": "SaaS AI Factory",
-    "status": "AWAITING_PRD",
+    "name": "VideoForge AI",
+    "status": "PLANNING",
     "startedAt": "2026-11-13",
     "lastUpdated": "2026-11-13",
-    "totalPhases": 0,
+    "totalPhases": 6,
     "completedPhases": 0,
-    "activeBlockers": 0
+    "activeBlockers": 0,
+    "awaitingApproval": {
+      "kind": "plan",
+      "after": "PLAN",
+      "next": "PHASE-01",
+      "since": "2026-11-13 11:30:25"
+    }
   },
   "stack": {
-    "structure": null,
-    "dockerSetup": null,
-    "gitStrategy": null,
-    "dbEngine": null,
-    "cacheEngine": null,
-    "multiTenant": null,
-    "mailProvider": null,
-    "storageProvider": null,
-    "loggingProvider": null,
-    "paymentProvider": null,
-    "realtime": null
+    "structure": "decoupled",
+    "dockerSetup": "manual",
+    "gitStrategy": "single",
+    "dbEngine": "mongodb",
+    "cacheEngine": "local",
+    "multiTenant": "multi",
+    "mailProvider": "smtp",
+    "storageProvider": "s3",
+    "loggingProvider": "datadog",
+    "paymentProvider": "none",
+    "realtime": "none"
   },
   "agents": {},
-  "phases": [],
+  "phases": [
+    {
+      "id": "PHASE-01",
+      "name": "Foundation, Authentication & Layout Shell",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "id": "PHASE-01-BE-001",
+          "title": "Core Setup, MongoDB Connection & Health Checks",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [],
+          "acceptance_criteria": "NestJS app initializes with ConfigModule, Mongoose connects to MongoDB, /health/live and /health/ready return 200 OK, Winston logging redacts sensitive tokens.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-01-BE-002",
+          "title": "User Management & JWT Authentication Module",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-01-BE-001"
+          ],
+          "acceptance_criteria": "POST /api/v1/auth/register hashes passwords with bcrypt; POST /api/v1/auth/login returns access (15m) and rotating refresh (7d) JWT tokens; POST /api/v1/auth/logout invalidates session; GET /api/v1/auth/me returns user profile; Nodemailer sends verification and reset emails.",
+          "complexity": "L"
+        },
+        {
+          "id": "PHASE-01-FE-001",
+          "title": "Next.js App Shell, Navigation & Theme System",
+          "agent": "frontend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-01-BE-001"
+          ],
+          "acceptance_criteria": "Tailwind CSS and Shadcn UI setup with dark/light theme toggle; responsive desktop sidebar with mobile drawer; Zustand auth store with token persistence; Axios client with automatic refresh-token interceptor.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-01-FE-002",
+          "title": "Authentication & User Profile Pages",
+          "agent": "frontend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-01-BE-002",
+            "PHASE-01-FE-001"
+          ],
+          "acceptance_criteria": "Pages for /register, /login, /forgot-password, /reset-password, /verify-email, and /settings/profile with React Hook Form + Zod validation, error banners, and loading spinners.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-01-QA-001",
+          "title": "Foundation & Auth Test Suite",
+          "agent": "qa-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-01-BE-002",
+            "PHASE-01-FE-002"
+          ],
+          "acceptance_criteria": "Unit tests for AuthService and JwtStrategy pass; integration tests for /api/v1/auth/* endpoints pass; Playwright E2E tests for registration, login, and auth guard redirects pass with >= 80% coverage.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-01-CR-001",
+          "title": "Phase 1 Security & Architecture Review",
+          "agent": "code-review-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-01-QA-001"
+          ],
+          "acceptance_criteria": "Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings across JWT security, password hashing, MongoDB query sanitization, and CORS/Helmet configurations.",
+          "complexity": "S"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-02",
+      "name": "BYOK Provider Engine & Catalog",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "id": "PHASE-02-BE-001",
+          "title": "Provider Catalog & Models Module",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-01-BE-002"
+          ],
+          "acceptance_criteria": "Mongoose schemas for provider_catalog and provider_models with indexes; GET /api/v1/providers and GET /api/v1/providers/:id/models return dynamic catalogue; admin endpoints allow adding/updating model metadata and freeQuotaPolicy.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-02-BE-002",
+          "title": "User Provider Connections & Credential Encryption",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-02-BE-001"
+          ],
+          "acceptance_criteria": "User provider credentials encrypted at rest with AES-256-GCM (ciphertext, iv, authTag, keyVersion); CRUD for /api/v1/provider-connections with tenant isolation; POST /api/v1/provider-connections/:id/test tests connection without returning raw keys; credentials never exposed in logs or API responses.",
+          "complexity": "L"
+        },
+        {
+          "id": "PHASE-02-FE-001",
+          "title": "Provider Catalog Explorer & Model View",
+          "agent": "frontend-agent",
+          "priority": "P1",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-02-BE-001"
+          ],
+          "acceptance_criteria": "Providers page (/providers) displays provider cards with capabilities, supported aspect ratios/resolutions, duration limits, and billing badge (free_verified, trial, paid, unknown).",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-02-FE-002",
+          "title": "User API Keys Management & Testing Interface",
+          "agent": "frontend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-02-BE-002",
+            "PHASE-02-FE-001"
+          ],
+          "acceptance_criteria": "Settings → API Providers (/settings/providers) allows connecting keys with masked display (sk-****abcd); connection test button with status badges; region and custom label configuration; strict free-only toggle.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-02-QA-001",
+          "title": "Provider Catalog & Encryption Test Suite",
+          "agent": "qa-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-02-BE-002",
+            "PHASE-02-FE-002"
+          ],
+          "acceptance_criteria": "Unit tests verify AES-256-GCM encryption, decryption, and key masking; integration tests verify tenant isolation on provider connections; Playwright E2E verifies adding and testing an API key.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-02-CR-001",
+          "title": "Phase 2 BYOK Security Review",
+          "agent": "code-review-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-02-QA-001"
+          ],
+          "acceptance_criteria": "Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings; confirms plaintext API keys are never returned to client, never logged, and properly isolated per tenant.",
+          "complexity": "S"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-03",
+      "name": "Video Projects & Script Planner Engine",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "id": "PHASE-03-BE-001",
+          "title": "Video Projects & Scenes Data Module",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-02-BE-002"
+          ],
+          "acceptance_criteria": "video_projects and video_scenes Mongoose schemas; project status state machine (draft, script_generating, awaiting_approval, queued, generating, rendering, completed, failed); CRUD endpoints /api/v1/projects with user ownership enforcement.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-03-BE-002",
+          "title": "LLM Script & Scene Generation Engine",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-03-BE-001"
+          ],
+          "acceptance_criteria": "POST /api/v1/projects/:id/script/generate parses user prompt into structured JSON scenes (narration, visualPrompt, plannedDurationSeconds, transition); respects provider duration boundaries; PATCH /projects/:id/script allows editing; POST /projects/:id/script/approve locks scene plan.",
+          "complexity": "L"
+        },
+        {
+          "id": "PHASE-03-FE-001",
+          "title": "Video Creation Wizard",
+          "agent": "frontend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-03-BE-001"
+          ],
+          "acceptance_criteria": "Multi-step video creation wizard at /videos/new: prompt input, target duration (30/60/90/120s), aspect ratio (9:16, 16:9, 1:1), style, provider/model selector, pre-generation warnings for paid/unknown providers.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-03-FE-002",
+          "title": "Script Review & Scene Prompt Editor",
+          "agent": "frontend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-03-BE-002",
+            "PHASE-03-FE-001"
+          ],
+          "acceptance_criteria": "Scene review screen (/videos/:id/edit-script): reorder scenes, edit visual and narration prompts, add/delete scenes, preview calculated duration, and approve script button.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-03-QA-001",
+          "title": "Project & Script Planner Test Suite",
+          "agent": "qa-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-03-BE-002",
+            "PHASE-03-FE-002"
+          ],
+          "acceptance_criteria": "Unit tests for script parser JSON schema validation; integration tests for project CRUD and state transitions; Playwright E2E for video creation wizard and script approval flow.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-03-CR-001",
+          "title": "Phase 3 Script & State Machine Review",
+          "agent": "code-review-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-03-QA-001"
+          ],
+          "acceptance_criteria": "Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings; confirms strict validation on script output and atomic state transitions preventing duplicate generation.",
+          "complexity": "S"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-04",
+      "name": "Video Generation Worker & Provider Adapters",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "id": "PHASE-04-BE-001",
+          "title": "Provider Adapter Framework & Video Provider Integrations",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-03-BE-002"
+          ],
+          "acceptance_criteria": "TypeScript VideoProviderAdapter interface; Alibaba Cloud Model Studio (Wan) adapter implementing validateCredentials, generateVideo, and getGenerationStatus; MockVideoProvider for local/CI automated testing without real API spend; normalized provider errors.",
+          "complexity": "XL"
+        },
+        {
+          "id": "PHASE-04-BE-002",
+          "title": "In-Process Generation Queue & S3 Asset Ingestion",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-04-BE-001"
+          ],
+          "acceptance_criteria": "Asynchronous in-process scene queue with concurrency limits; polling processor with exponential backoff; safe HTTP download of provider clips with SSRF prevention; ffprobe stream and duration validation; Amazon S3 upload with tenant-scoped keys; media_assets records.",
+          "complexity": "L"
+        },
+        {
+          "id": "PHASE-04-FE-001",
+          "title": "Real-Time Generation Progress Dashboard",
+          "agent": "frontend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-04-BE-002"
+          ],
+          "acceptance_criteria": "Project details screen (/videos/:id) showing generation progress bar, per-scene status badges (queued, generating, downloading, stored, failed), cancel project button, and retry failed scenes action.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-04-FE-002",
+          "title": "Scene Clip Preview & Asset Inspector",
+          "agent": "frontend-agent",
+          "priority": "P1",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-04-BE-002",
+            "PHASE-04-FE-001"
+          ],
+          "acceptance_criteria": "Preview individual generated scene video clips; display clip metadata (codec, resolution, duration); single-scene regenerate modal with prompt tweak.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-04-QA-001",
+          "title": "Video Generation & Adapter Test Suite",
+          "agent": "qa-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-04-BE-002",
+            "PHASE-04-FE-002"
+          ],
+          "acceptance_criteria": "Unit tests for Wan adapter request/response normalization; integration tests for generation worker with mock adapter and S3 upload mocking; Playwright E2E testing progress polling and scene status updates.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-04-CR-001",
+          "title": "Phase 4 Generation Pipeline & S3 Security Review",
+          "agent": "code-review-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-04-QA-001"
+          ],
+          "acceptance_criteria": "Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings; confirms SSRF protection on video downloads, no silent paid fallback, and secure S3 tenant key isolation.",
+          "complexity": "S"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-05",
+      "name": "FFmpeg Rendering & Media Assembly",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "id": "PHASE-05-BE-001",
+          "title": "FFmpeg Video Concatenation & Audio Mixing Engine",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-04-BE-002"
+          ],
+          "acceptance_criteria": "Service invoking FFmpeg to normalize scene clips (H.264/AAC, target aspect ratio/fps), concatenate in sequence, mix voiceover narration and background music track, burn captions from SRT, and export final MP4.",
+          "complexity": "L"
+        },
+        {
+          "id": "PHASE-05-BE-002",
+          "title": "Thumbnail Generation & Presigned S3 Delivery API",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-05-BE-001"
+          ],
+          "acceptance_criteria": "Extract poster thumbnail from real video frame via FFmpeg; upload final video and thumbnail to S3; generate short-lived presigned GET URLs for preview and download; cleanup temporary render files.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-05-FE-001",
+          "title": "Video Player & Render Progress Interface",
+          "agent": "frontend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-05-BE-001"
+          ],
+          "acceptance_criteria": "Finished video player at /videos/:id with custom playback controls, aspect-ratio container (9:16 vertical, 16:9 landscape, 1:1 square), render progress state, and retry render button.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-05-FE-002",
+          "title": "Video Library, Download & Project Actions",
+          "agent": "frontend-agent",
+          "priority": "P1",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-05-BE-002",
+            "PHASE-05-FE-001"
+          ],
+          "acceptance_criteria": "Videos index page (/videos) with grid/table view, filters by status and date, expiring download button, project duplication modal, and delete project with asset confirmation.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-05-QA-001",
+          "title": "Render Engine & Media Delivery Test Suite",
+          "agent": "qa-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-05-BE-002",
+            "PHASE-05-FE-002"
+          ],
+          "acceptance_criteria": "Unit tests for FFmpeg parameter generation and ffprobe output parsing; integration tests for render lifecycle and presigned URL expiration; Playwright E2E for video playback, download link trigger, and project duplication.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-05-CR-001",
+          "title": "Phase 5 Media Pipeline & Delivery Review",
+          "agent": "code-review-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-05-QA-001"
+          ],
+          "acceptance_criteria": "Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings; confirms command injection defense on FFmpeg calls, temp file descriptor cleanup, and S3 presigned URL expiration enforcement.",
+          "complexity": "S"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-06",
+      "name": "Usage Tracking, Limits & Admin Console",
+      "status": "PENDING",
+      "tasks": [
+        {
+          "id": "PHASE-06-BE-001",
+          "title": "Provider Usage Tracking & User Limits Enforcement",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-05-BE-002"
+          ],
+          "acceptance_criteria": "provider_usage collection logging every provider call with units/duration/cost estimate; middleware/guard enforcing daily/monthly job caps and max estimated cost per project; block paid/unknown providers toggle check.",
+          "complexity": "L"
+        },
+        {
+          "id": "PHASE-06-BE-002",
+          "title": "Platform Administration & System Diagnostics API",
+          "agent": "backend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-06-BE-001"
+          ],
+          "acceptance_criteria": "Admin endpoints (/api/v1/admin/*) protected by admin RBAC: GET /admin/dashboard, GET /admin/users with suspension toggle, GET/PATCH /admin/providers with emergency killswitch, GET /admin/jobs with failure logs, GET /admin/audit-logs.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-06-FE-001",
+          "title": "Usage Analytics & User Limits Dashboard",
+          "agent": "frontend-agent",
+          "priority": "P1",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-06-BE-001"
+          ],
+          "acceptance_criteria": "Usage dashboard (/usage) showing consumption charts by provider and model, daily/monthly job limit progress bars, estimated cost breakdown, and personal limit settings at /settings/limits.",
+          "complexity": "M"
+        },
+        {
+          "id": "PHASE-06-FE-002",
+          "title": "Platform Admin Console",
+          "agent": "frontend-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-06-BE-002",
+            "PHASE-06-FE-001"
+          ],
+          "acceptance_criteria": "Admin console (/admin): provider catalogue manager with killswitch button, global job monitor with failure diagnostics, user management table with suspend/activate actions, and system audit log viewer.",
+          "complexity": "L"
+        },
+        {
+          "id": "PHASE-06-QA-001",
+          "title": "Usage, Admin & Full System E2E Regression Suite",
+          "agent": "qa-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-06-BE-002",
+            "PHASE-06-FE-002"
+          ],
+          "acceptance_criteria": "Unit tests for limit validation and free-only guard; integration tests for admin endpoints and audit logging; comprehensive Playwright E2E suite covering full lifecycle: user signup -> key setup -> project creation -> scene generation -> render -> usage tracking -> admin monitoring.",
+          "complexity": "L"
+        },
+        {
+          "id": "PHASE-06-CR-001",
+          "title": "Phase 6 Final Production & Security Review",
+          "agent": "code-review-agent",
+          "priority": "P0",
+          "status": "PENDING",
+          "retries": 0,
+          "dependencies": [
+            "PHASE-06-QA-001"
+          ],
+          "acceptance_criteria": "Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings; confirms admin RBAC lockdown, audit logging completeness, Datadog observability integration, and production readiness.",
+          "complexity": "S"
+        }
+      ]
+    }
+  ],
   "blockers": [],
   "timeline": [
     {
@@ -31,9 +558,19 @@
       "notes": "AI Factory workspace created"
     },
     {
-      "event": "Factory audit fixes applied",
+      "event": "Project status → PLANNING",
       "date": "2026-11-13",
-      "notes": "Scripts rewritten, adapters generated, docs updated, state reset"
+      "notes": ""
+    },
+    {
+      "event": "Plan validated — awaiting user approval",
+      "date": "2026-11-13",
+      "notes": "6 phases"
     }
-  ]
+  ],
+  "plan": {
+    "validatedAt": "2026-11-13 11:30:25",
+    "phases": 6,
+    "incremental": false
+  }
 }

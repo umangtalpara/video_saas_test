@@ -8,11 +8,11 @@
 
 | Field | Value |
 |-------|-------|
-| **Project** | SaaS AI Factory |
-| **Status** | 🟡 AWAITING_PRD |
+| **Project** | VideoForge AI |
+| **Status** | 🔵 PLANNING |
 | **Current Phase** | N/A |
-| **Awaiting Approval** | no |
-| **Total Phases** | 0 |
+| **Awaiting Approval** | ⏸ yes — start of PHASE-01 (since 2026-11-13 11:30:25) |
+| **Total Phases** | 6 |
 | **Completed Phases** | 0 |
 | **Active Blockers** | 0 |
 | **Started At** | 2026-11-13 |
@@ -34,29 +34,34 @@
 
 | Setting | Value |
 |---------|-------|
-| structure | — |
-| dockerSetup | — |
-| gitStrategy | — |
-| dbEngine | — |
-| cacheEngine | — |
-| multiTenant | — |
-| mailProvider | — |
-| storageProvider | — |
-| loggingProvider | — |
-| paymentProvider | — |
-| realtime | — |
+| structure | decoupled |
+| dockerSetup | manual |
+| gitStrategy | single |
+| dbEngine | mongodb |
+| cacheEngine | local |
+| multiTenant | multi |
+| mailProvider | smtp |
+| storageProvider | s3 |
+| loggingProvider | datadog |
+| paymentProvider | none |
+| realtime | none |
 
 ## Phase Summary
 
 | Phase | Name | Status | Tasks | Completed | Failed | Blocked |
 |-------|------|--------|-------|-----------|--------|---------|
-| — | No phases defined | — | — | — | — | — |
+| PHASE-01 | Foundation, Authentication & Layout Shell | PENDING | 6 | 0 | 0 | 0 |
+| PHASE-02 | BYOK Provider Engine & Catalog | PENDING | 6 | 0 | 0 | 0 |
+| PHASE-03 | Video Projects & Script Planner Engine | PENDING | 6 | 0 | 0 | 0 |
+| PHASE-04 | Video Generation Worker & Provider Adapters | PENDING | 6 | 0 | 0 | 0 |
+| PHASE-05 | FFmpeg Rendering & Media Assembly | PENDING | 6 | 0 | 0 | 0 |
+| PHASE-06 | Usage Tracking, Limits & Admin Console | PENDING | 6 | 0 | 0 | 0 |
 
 ## Key Metrics
 
 | Metric | Value |
 |-------|-------|
-| Total Tasks | 0 |
+| Total Tasks | 36 |
 | Tasks Completed | 0 |
 | Tasks In Progress | 0 |
 | Tasks Failed | 0 |
@@ -67,7 +72,8 @@
 | Event | Date | Notes |
 |-------|------|-------|
 | Project Initialized | 2026-11-13 | AI Factory workspace created |
-| Factory audit fixes applied | 2026-11-13 | Scripts rewritten, adapters generated, docs updated, state reset |
+| Project status → PLANNING | 2026-11-13 | — |
+| Plan validated — awaiting user approval | 2026-11-13 | 6 phases |
 
 ---
 

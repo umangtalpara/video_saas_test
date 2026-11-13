@@ -10,10 +10,10 @@
 |-------|------|--------|-------------|------------|-----------------|-------------|
 | ⚪ super-agent | Orchestrator | IDLE | — | 0 | 0 | — |
 | ⚪ deep-plan-agent | Planning | IDLE | — | 0 | 0 | — |
-| ⚪ backend-agent | Backend Dev | IDLE | — | 0 | 0 | — |
-| ⚪ frontend-agent | Frontend Dev | IDLE | — | 0 | 0 | — |
-| ⚪ qa-agent | Testing | IDLE | — | 0 | 0 | — |
-| ⚪ code-review-agent | Code Review | IDLE | — | 0 | 0 | — |
+| 🟡 backend-agent | Backend Dev | PENDING | — | 0 | 12 | — |
+| 🟡 frontend-agent | Frontend Dev | PENDING | — | 0 | 12 | — |
+| 🟡 qa-agent | Testing | PENDING | — | 0 | 6 | — |
+| 🟡 code-review-agent | Code Review | PENDING | — | 0 | 6 | — |
 
 ## Status Legend
 

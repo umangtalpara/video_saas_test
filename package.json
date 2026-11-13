@@ -1,0 +1,12 @@
+{
+  "name": "saas-decoupled-project",
+  "private": true,
+  "scripts": {
+    "dev:backend": "npm --prefix codebase/backend run start:dev",
+    "dev:frontend": "npm --prefix codebase/frontend run dev",
+    "build:backend": "npm --prefix codebase/backend run build",
+    "build:frontend": "npm --prefix codebase/frontend run build",
+    "validate": "node .ai/scripts/validate-project.js --tsc",
+    "sync:adapters": "node .ai/scripts/sync-adapters.js"
+  }
+}

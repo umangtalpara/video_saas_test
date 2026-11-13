@@ -8,7 +8,46 @@
 
 | ID | Date | Decision | Rationale | Status |
 |----|------|----------|-----------|--------|
-| — | — | No decisions recorded yet | Project initialized, awaiting PRD | — |
+| DEC-004 | 2026-11-13 | Decoupled Standalone Project Layout | Separate backend (Render) and frontend (Vercel) | Accepted |
+| DEC-005 | 2026-11-13 | MongoDB + Mongoose 8 Primary Database | Native JSON documents matching PRD schemas | Accepted |
+| DEC-006 | 2026-11-13 | In-Memory Local Queue & Cache Strategy | Zero external Redis dependency; in-process job worker | Accepted |
+| DEC-007 | 2026-11-13 | AES-256-GCM BYOK Credential Encryption | Zero credential leakage to logs or client | Accepted |
+| DEC-008 | 2026-11-13 | S3 Private Media Storage & Presigned URLs | Secure tenant-scoped object storage | Accepted |
+| DEC-009 | 2026-11-13 | 6-Phase Engineering Roadmap | Strict Backend → Frontend → QA → Code Review order | Accepted |
+
+---
+
+## Architecture Decision Records
+
+### DEC-004: Decoupled Standalone Project Layout (2026-11-13)
+- **Status**: Accepted
+- **Decision**: Scaffold the project with standalone `codebase/backend` and `codebase/frontend` project roots rather than a shared workspace monorepo.
+- **Why**: Selected in Discovery Q1 to facilitate completely independent CI/CD pipelines, containerization, and hosting targets (Next.js on Vercel, NestJS API on Render).
+
+### DEC-005: MongoDB + Mongoose 8 Primary Database (2026-11-13)
+- **Status**: Accepted
+- **Decision**: Use MongoDB with Mongoose 8 as the primary document store, utilizing single-node / Atlas replica sets for atomic transactions.
+- **Why**: Matches the PRD data model (11 collections including flexible nested JSON script structures and provider metadata).
+
+### DEC-006: In-Memory Local Queue & Schedule Architecture (2026-11-13)
+- **Status**: Accepted
+- **Decision**: Use local in-memory caching and an in-process asynchronous task manager backed by `@nestjs/schedule` instead of an external Redis BullMQ cluster.
+- **Why**: Selected in Discovery Q5 to eliminate external Redis operational dependencies while maintaining asynchronous scene generation, provider polling, and download queues.
+
+### DEC-007: AES-256-GCM BYOK Credential Encryption (2026-11-13)
+- **Status**: Accepted
+- **Decision**: Encrypt all user-provided API credentials at rest using AES-256-GCM with unique random 12-byte IVs, authenticated tags, and key versioning.
+- **Why**: Strict non-negotiable security requirement. Decryption occurs only in memory right before dispatching HTTP calls to external AI providers. Plaintext keys are never returned to clients or logged.
+
+### DEC-008: S3 Private Media Storage & Presigned URLs (2026-11-13)
+- **Status**: Accepted
+- **Decision**: All generated scene clips, narration tracks, thumbnails, and final MP4 videos are uploaded to a private Amazon S3 bucket using tenant-scoped keys (`users/{userId}/projects/{projectId}/...`).
+- **Why**: Zero public bucket access; access is provided strictly through time-limited presigned GET URLs after verifying tenant authorization.
+
+### DEC-009: 6-Phase Engineering Roadmap (2026-11-13)
+- **Status**: Accepted
+- **Decision**: Decompose implementation into 6 sequential phases containing 36 atomic tasks. Every phase strictly executes: Backend Agent → Frontend Agent → QA Agent → Code Review Agent.
+- **Why**: Validated by `status-manager.js validate-plan`. Guarantees rigorous quality gates, unit/integration/E2E testing, and security sign-off before advancing.
 
 ---
 

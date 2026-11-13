@@ -6,4 +6,7 @@
 
 ## No Active Phase
 
-Project Status: 🟡 AWAITING_PRD
+Project Status: 🔵 PLANNING
+
+> ⏸ WAITING FOR USER APPROVAL of the plan before PHASE-01 starts.
+> The user must approve in chat; then the agent runs `status-manager.js approve-phase PHASE-01`.
