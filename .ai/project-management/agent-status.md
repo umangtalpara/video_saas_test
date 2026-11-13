@@ -13,7 +13,7 @@
 | ⚪ backend-agent | Backend Dev | IDLE | — | 8 | 4 | 2026-11-13 17:04:00 |
 | ⚪ frontend-agent | Frontend Dev | IDLE | — | 8 | 4 | 2026-11-13 17:15:17 |
 | ⚪ qa-agent | Testing | IDLE | — | 4 | 2 | 2026-11-13 17:20:31 |
-| 🟡 code-review-agent | Code Review | PENDING | — | 3 | 3 | 2026-11-13 16:14:53 |
+| ⚪ code-review-agent | Code Review | IDLE | — | 4 | 2 | 2026-11-13 17:21:45 |
 
 ## Status Legend
 

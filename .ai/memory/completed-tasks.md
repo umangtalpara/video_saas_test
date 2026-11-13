@@ -29,3 +29,4 @@
 | PHASE-04-FE-001 | Real-Time Generation Progress Dashboard | frontend-agent | 2026-11-13 | — |
 | PHASE-04-FE-002 | Scene Clip Preview & Asset Inspector | frontend-agent | 2026-11-13 | — |
 | PHASE-04-QA-001 | Video Generation & Adapter Test Suite | qa-agent | 2026-11-13 | — |
+| PHASE-04-CR-001 | Phase 4 Generation Pipeline & S3 Security Review | code-review-agent | 2026-11-13 | — |
