@@ -20,7 +20,7 @@
 | Stage | Agent | Done / Total | State |
 |-------|-------|--------------|-------|
 | Backend | backend-agent | 2/2 | ✅ |
-| Frontend | frontend-agent | 0/2 | ⬜ |
+| Frontend | frontend-agent | 1/2 | 🔄 |
 | QA | qa-agent | 0/1 | ⬜ |
 | Code Review | code-review-agent | 0/1 | ⬜ |
 
@@ -39,7 +39,7 @@ Code review rounds used: 0/3
 ### Frontend Tasks
 | Task ID | Title | Agent | Priority | Status |
 |---------|-------|-------|----------|--------|
-| PHASE-01-FE-001 | Next.js App Shell, Navigation & Theme System | frontend-agent | P0 | PENDING |
+| PHASE-01-FE-001 | Next.js App Shell, Navigation & Theme System | frontend-agent | P0 | COMPLETED |
 | PHASE-01-FE-002 | Authentication & User Profile Pages | frontend-agent | P0 | PENDING |
 
 ### QA Tasks

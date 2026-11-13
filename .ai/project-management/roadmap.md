@@ -68,7 +68,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-01-BE-002: User Management & JWT Authentication Module (Agent: backend-agent, Priority: P0, Complexity: L)
   * Depends on: PHASE-01-BE-001
   * Criteria: POST /api/v1/auth/register hashes passwords with bcrypt; POST /api/v1/auth/login returns access (15m) and rotating refresh (7d) JWT tokens; POST /api/v1/auth/logout invalidates session; GET /api/v1/auth/me returns user profile; Nodemailer sends verification and reset emails.
-- **[PENDING]** PHASE-01-FE-001: Next.js App Shell, Navigation & Theme System (Agent: frontend-agent, Priority: P0, Complexity: M)
+- **[COMPLETED]** PHASE-01-FE-001: Next.js App Shell, Navigation & Theme System (Agent: frontend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-01-BE-001
   * Criteria: Tailwind CSS and Shadcn UI setup with dark/light theme toggle; responsive desktop sidebar with mobile drawer; Zustand auth store with token persistence; Axios client with automatic refresh-token interceptor.
 - **[PENDING]** PHASE-01-FE-002: Authentication & User Profile Pages (Agent: frontend-agent, Priority: P0, Complexity: M)

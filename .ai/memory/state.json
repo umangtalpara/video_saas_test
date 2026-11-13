@@ -26,6 +26,11 @@
       "status": "ACTIVE",
       "task": "PHASE-01-BE-002",
       "lastActive": "2026-11-13 11:54:10"
+    },
+    "frontend-agent": {
+      "status": "ACTIVE",
+      "task": "PHASE-01-FE-001",
+      "lastActive": "2026-11-13 12:12:27"
     }
   },
   "phases": [
@@ -65,13 +70,14 @@
           "title": "Next.js App Shell, Navigation & Theme System",
           "agent": "frontend-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-01-BE-001"
           ],
           "acceptance_criteria": "Tailwind CSS and Shadcn UI setup with dark/light theme toggle; responsive desktop sidebar with mobile drawer; Zustand auth store with token persistence; Axios client with automatic refresh-token interceptor.",
-          "complexity": "M"
+          "complexity": "M",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-01-FE-002",
