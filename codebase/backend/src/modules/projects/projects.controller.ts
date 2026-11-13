@@ -18,10 +18,13 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ProjectsService } from './projects.service';
+import { ProjectsScriptService } from './projects-script.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { QueryProjectDto } from './dto/query-project.dto';
 import { ProjectResponseDto } from './dto/project-response.dto';
+import { GenerateScriptDto } from './dto/generate-script.dto';
+import { UpdateScriptDto } from './dto/update-script.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
@@ -30,7 +33,10 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth('JWT-auth')
 export class ProjectsController {
-  constructor(private readonly projectsService: ProjectsService) {}
+  constructor(
+    private readonly projectsService: ProjectsService,
+    private readonly scriptService: ProjectsScriptService,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: "List current authenticated user's video projects" })
@@ -98,5 +104,41 @@ export class ProjectsController {
   ): Promise<ProjectResponseDto> {
     return this.projectsService.duplicate(id, userId);
   }
-}
 
+  @Post(':id/script/generate')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Generate or regenerate structured scene script plan' })
+  @ApiResponse({ status: 200, type: ProjectResponseDto })
+  @ApiResponse({ status: 404, description: 'Project not found' })
+  public async generateScript(
+    @CurrentUser('sub') userId: string,
+    @Param('id') id: string,
+    @Body() dto: GenerateScriptDto,
+  ): Promise<ProjectResponseDto> {
+    return this.scriptService.generateScript(id, userId, dto);
+  }
+
+  @Patch(':id/script')
+  @ApiOperation({ summary: 'Update/reorder planned scenes and prompts' })
+  @ApiResponse({ status: 200, type: ProjectResponseDto })
+  @ApiResponse({ status: 400, description: 'Invalid state or scene schema' })
+  public async updateScript(
+    @CurrentUser('sub') userId: string,
+    @Param('id') id: string,
+    @Body() dto: UpdateScriptDto,
+  ): Promise<ProjectResponseDto> {
+    return this.scriptService.updateScript(id, userId, dto);
+  }
+
+  @Post(':id/script/approve')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Approve script plan and queue for scene video generation' })
+  @ApiResponse({ status: 200, type: ProjectResponseDto })
+  @ApiResponse({ status: 400, description: 'Cannot approve script in current state' })
+  public async approveScript(
+    @CurrentUser('sub') userId: string,
+    @Param('id') id: string,
+  ): Promise<ProjectResponseDto> {
+    return this.scriptService.approveScript(id, userId);
+  }
+}

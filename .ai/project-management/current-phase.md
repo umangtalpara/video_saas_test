@@ -19,7 +19,7 @@
 
 | Stage | Agent | Done / Total | State |
 |-------|-------|--------------|-------|
-| Backend | backend-agent | 1/2 | 🔄 |
+| Backend | backend-agent | 2/2 | ✅ |
 | Frontend | frontend-agent | 0/2 | ⬜ |
 | QA | qa-agent | 0/1 | ⬜ |
 | Code Review | code-review-agent | 0/1 | ⬜ |
@@ -34,7 +34,7 @@ Code review rounds used: 0/3
 | Task ID | Title | Agent | Priority | Status |
 |---------|-------|-------|----------|--------|
 | PHASE-03-BE-001 | Video Projects & Scenes Data Module | backend-agent | P0 | COMPLETED |
-| PHASE-03-BE-002 | LLM Script & Scene Generation Engine | backend-agent | P0 | PENDING |
+| PHASE-03-BE-002 | LLM Script & Scene Generation Engine | backend-agent | P0 | COMPLETED |
 
 ### Frontend Tasks
 | Task ID | Title | Agent | Priority | Status |

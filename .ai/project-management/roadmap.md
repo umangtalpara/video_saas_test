@@ -105,7 +105,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-03-BE-001: Video Projects & Scenes Data Module (Agent: backend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-02-BE-002
   * Criteria: video_projects and video_scenes Mongoose schemas; project status state machine (draft, script_generating, awaiting_approval, queued, generating, rendering, completed, failed); CRUD endpoints /api/v1/projects with user ownership enforcement.
-- **[PENDING]** PHASE-03-BE-002: LLM Script & Scene Generation Engine (Agent: backend-agent, Priority: P0, Complexity: L)
+- **[COMPLETED]** PHASE-03-BE-002: LLM Script & Scene Generation Engine (Agent: backend-agent, Priority: P0, Complexity: L)
   * Depends on: PHASE-03-BE-001
   * Criteria: POST /api/v1/projects/:id/script/generate parses user prompt into structured JSON scenes (narration, visualPrompt, plannedDurationSeconds, transition); respects provider duration boundaries; PATCH /projects/:id/script allows editing; POST /projects/:id/script/approve locks scene plan.
 - **[PENDING]** PHASE-03-FE-001: Video Creation Wizard (Agent: frontend-agent, Priority: P0, Complexity: M)

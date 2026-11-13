@@ -1,12 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
+import { ProjectsScriptService } from './projects-script.service';
 import { AspectRatio, ProjectStatus } from './schemas/project.schema';
 import { ProjectResponseDto } from './dto/project-response.dto';
 
 describe('ProjectsController', () => {
   let controller: ProjectsController;
   let service: jest.Mocked<ProjectsService>;
+  let scriptService: jest.Mocked<ProjectsScriptService>;
 
   const userId = 'user-123';
   const projectId = 'proj-456';
@@ -47,13 +49,30 @@ describe('ProjectsController', () => {
       duplicate: jest.fn().mockResolvedValue(mockProjectResponse),
     };
 
+    const mockScriptService = {
+      generateScript: jest.fn().mockResolvedValue({
+        ...mockProjectResponse,
+        status: ProjectStatus.AWAITING_APPROVAL,
+      }),
+      updateScript: jest.fn().mockResolvedValue(mockProjectResponse),
+      approveScript: jest.fn().mockResolvedValue({
+        ...mockProjectResponse,
+        status: ProjectStatus.QUEUED,
+        scriptApproved: true,
+      }),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProjectsController],
-      providers: [{ provide: ProjectsService, useValue: mockService }],
+      providers: [
+        { provide: ProjectsService, useValue: mockService },
+        { provide: ProjectsScriptService, useValue: mockScriptService },
+      ],
     }).compile();
 
     controller = module.get<ProjectsController>(ProjectsController);
     service = module.get(ProjectsService);
+    scriptService = module.get(ProjectsScriptService);
   });
 
   it('should be defined', () => {
@@ -80,19 +99,26 @@ describe('ProjectsController', () => {
     });
   });
 
-  describe('getProject', () => {
-    it('returns project by id', async () => {
-      const result = await controller.getProject(userId, projectId);
-      expect(result.id).toBe(projectId);
+  describe('generateScript', () => {
+    it('triggers script generation', async () => {
+      const result = await controller.generateScript(userId, projectId, {});
+      expect(result.status).toBe(ProjectStatus.AWAITING_APPROVAL);
+      expect(scriptService.generateScript).toHaveBeenCalledWith(
+        projectId,
+        userId,
+        {},
+      );
     });
   });
 
-  describe('duplicateProject', () => {
-    it('duplicates project', async () => {
-      const result = await controller.duplicateProject(userId, projectId);
-      expect(result.id).toBe(projectId);
-      expect(service.duplicate).toHaveBeenCalledWith(projectId, userId);
+  describe('approveScript', () => {
+    it('approves script and queues project', async () => {
+      const result = await controller.approveScript(userId, projectId);
+      expect(result.status).toBe(ProjectStatus.QUEUED);
+      expect(scriptService.approveScript).toHaveBeenCalledWith(
+        projectId,
+        userId,
+      );
     });
   });
 });
-

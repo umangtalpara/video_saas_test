@@ -25,7 +25,7 @@
     "backend-agent": {
       "status": "IDLE",
       "task": null,
-      "lastActive": "2026-11-13 14:43:06"
+      "lastActive": "2026-11-13 15:50:51"
     },
     "frontend-agent": {
       "lastActive": "2026-11-13 13:55:06"
@@ -316,13 +316,14 @@
           "title": "LLM Script & Scene Generation Engine",
           "agent": "backend-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-03-BE-001"
           ],
           "acceptance_criteria": "POST /api/v1/projects/:id/script/generate parses user prompt into structured JSON scenes (narration, visualPrompt, plannedDurationSeconds, transition); respects provider duration boundaries; PATCH /projects/:id/script allows editing; POST /projects/:id/script/approve locks scene plan.",
-          "complexity": "L"
+          "complexity": "L",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-03-FE-001",

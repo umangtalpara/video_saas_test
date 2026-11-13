@@ -7,6 +7,8 @@ import {
 import { VideoScene, VideoSceneSchema } from './schemas/scene.schema';
 import { ProjectsRepository } from './projects.repository';
 import { ProjectsService } from './projects.service';
+import { ProjectsScriptService } from './projects-script.service';
+import { ScriptPlannerService } from './script-planner.service';
 import { ProjectsController } from './projects.controller';
 
 @Module({
@@ -17,8 +19,17 @@ import { ProjectsController } from './projects.controller';
     ]),
   ],
   controllers: [ProjectsController],
-  providers: [ProjectsRepository, ProjectsService],
-  exports: [ProjectsService, ProjectsRepository],
+  providers: [
+    ProjectsRepository,
+    ProjectsService,
+    ProjectsScriptService,
+    ScriptPlannerService,
+  ],
+  exports: [
+    ProjectsService,
+    ProjectsScriptService,
+    ScriptPlannerService,
+    ProjectsRepository,
+  ],
 })
 export class ProjectsModule {}
-
