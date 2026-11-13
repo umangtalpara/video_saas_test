@@ -134,7 +134,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-04-FE-002: Scene Clip Preview & Asset Inspector (Agent: frontend-agent, Priority: P1, Complexity: M)
   * Depends on: PHASE-04-BE-002, PHASE-04-FE-001
   * Criteria: Preview individual generated scene video clips; display clip metadata (codec, resolution, duration); single-scene regenerate modal with prompt tweak.
-- **[PENDING]** PHASE-04-QA-001: Video Generation & Adapter Test Suite (Agent: qa-agent, Priority: P0, Complexity: M)
+- **[COMPLETED]** PHASE-04-QA-001: Video Generation & Adapter Test Suite (Agent: qa-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-04-BE-002, PHASE-04-FE-002
   * Criteria: Unit tests for Wan adapter request/response normalization; integration tests for generation worker with mock adapter and S3 upload mocking; Playwright E2E testing progress polling and scene status updates.
 - **[PENDING]** PHASE-04-CR-001: Phase 4 Generation Pipeline & S3 Security Review (Agent: code-review-agent, Priority: P0, Complexity: S)

@@ -28,3 +28,4 @@
 | PHASE-04-BE-002 | In-Process Generation Queue & S3 Asset Ingestion | backend-agent | 2026-11-13 | — |
 | PHASE-04-FE-001 | Real-Time Generation Progress Dashboard | frontend-agent | 2026-11-13 | — |
 | PHASE-04-FE-002 | Scene Clip Preview & Asset Inspector | frontend-agent | 2026-11-13 | — |
+| PHASE-04-QA-001 | Video Generation & Adapter Test Suite | qa-agent | 2026-11-13 | — |

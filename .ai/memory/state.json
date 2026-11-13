@@ -33,7 +33,9 @@
       "lastActive": "2026-11-13 17:15:17"
     },
     "qa-agent": {
-      "lastActive": "2026-11-13 16:14:53"
+      "status": "IDLE",
+      "task": null,
+      "lastActive": "2026-11-13 17:20:31"
     },
     "code-review-agent": {
       "lastActive": "2026-11-13 16:14:53"
@@ -489,14 +491,15 @@
           "title": "Video Generation & Adapter Test Suite",
           "agent": "qa-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-04-BE-002",
             "PHASE-04-FE-002"
           ],
           "acceptance_criteria": "Unit tests for Wan adapter request/response normalization; integration tests for generation worker with mock adapter and S3 upload mocking; Playwright E2E testing progress polling and scene status updates.",
-          "complexity": "M"
+          "complexity": "M",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-04-CR-001",
