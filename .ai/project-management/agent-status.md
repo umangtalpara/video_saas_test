@@ -10,7 +10,7 @@
 |-------|------|--------|-------------|------------|-----------------|-------------|
 | ⚪ super-agent | Orchestrator | IDLE | — | 0 | 0 | — |
 | ⚪ deep-plan-agent | Planning | IDLE | — | 0 | 0 | — |
-| 🟡 backend-agent | Backend Dev | PENDING | — | 2 | 10 | 2026-11-13 13:20:38 |
+| ⚪ backend-agent | Backend Dev | IDLE | — | 3 | 9 | 2026-11-13 13:28:03 |
 | 🟡 frontend-agent | Frontend Dev | PENDING | — | 2 | 10 | 2026-11-13 13:20:38 |
 | 🟡 qa-agent | Testing | PENDING | — | 1 | 5 | 2026-11-13 13:20:38 |
 | 🟡 code-review-agent | Code Review | PENDING | — | 1 | 5 | 2026-11-13 13:20:38 |

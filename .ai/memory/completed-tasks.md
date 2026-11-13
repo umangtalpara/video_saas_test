@@ -12,3 +12,4 @@
 | PHASE-01-FE-002 | Authentication & User Profile Pages | frontend-agent | 2026-11-13 | — |
 | PHASE-01-QA-001 | Foundation & Auth Test Suite | qa-agent | 2026-11-13 | — |
 | PHASE-01-CR-001 | Phase 1 Security & Architecture Review | code-review-agent | 2026-11-13 | — |
+| PHASE-02-BE-001 | Provider Catalog & Models Module | backend-agent | 2026-11-13 | — |

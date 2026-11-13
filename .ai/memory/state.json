@@ -6,13 +6,7 @@
     "lastUpdated": "2026-11-13",
     "totalPhases": 6,
     "completedPhases": 1,
-    "activeBlockers": 0,
-    "awaitingApproval": {
-      "kind": "phase",
-      "after": "PHASE-01",
-      "next": "PHASE-02",
-      "since": "2026-11-13 13:20:38"
-    }
+    "activeBlockers": 0
   },
   "stack": {
     "structure": "decoupled",
@@ -29,7 +23,9 @@
   },
   "agents": {
     "backend-agent": {
-      "lastActive": "2026-11-13 13:20:38"
+      "status": "IDLE",
+      "task": null,
+      "lastActive": "2026-11-13 13:28:03"
     },
     "frontend-agent": {
       "lastActive": "2026-11-13 13:20:38"
@@ -171,20 +167,21 @@
     {
       "id": "PHASE-02",
       "name": "BYOK Provider Engine & Catalog",
-      "status": "PENDING",
+      "status": "IN_PROGRESS",
       "tasks": [
         {
           "id": "PHASE-02-BE-001",
           "title": "Provider Catalog & Models Module",
           "agent": "backend-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-01-BE-002"
           ],
           "acceptance_criteria": "Mongoose schemas for provider_catalog and provider_models with indexes; GET /api/v1/providers and GET /api/v1/providers/:id/models return dynamic catalogue; admin endpoints allow adding/updating model metadata and freeQuotaPolicy.",
-          "complexity": "M"
+          "complexity": "M",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-02-BE-002",
@@ -253,7 +250,8 @@
           "acceptance_criteria": "Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings; confirms plaintext API keys are never returned to client, never logged, and properly isolated per tenant.",
           "complexity": "S"
         }
-      ]
+      ],
+      "startedAt": "2026-11-13"
     },
     {
       "id": "PHASE-03",
@@ -635,6 +633,11 @@
       "event": "PHASE-01 closed — awaiting user approval to start PHASE-02",
       "date": "2026-11-13",
       "notes": ""
+    },
+    {
+      "event": "User approved start of PHASE-02",
+      "date": "2026-11-13",
+      "notes": "user approved auto-proceed till finish phase 2"
     }
   ],
   "plan": {
