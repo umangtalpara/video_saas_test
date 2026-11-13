@@ -9,3 +9,4 @@
 | PHASE-01-BE-001 | Core Setup, MongoDB Connection & Health Checks | backend-agent | 2026-11-13 | — |
 | PHASE-01-BE-002 | User Management & JWT Authentication Module | backend-agent | 2026-11-13 | — |
 | PHASE-01-FE-001 | Next.js App Shell, Navigation & Theme System | frontend-agent | 2026-11-13 | — |
+| PHASE-01-FE-002 | Authentication & User Profile Pages | frontend-agent | 2026-11-13 | — |

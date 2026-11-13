@@ -71,7 +71,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-01-FE-001: Next.js App Shell, Navigation & Theme System (Agent: frontend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-01-BE-001
   * Criteria: Tailwind CSS and Shadcn UI setup with dark/light theme toggle; responsive desktop sidebar with mobile drawer; Zustand auth store with token persistence; Axios client with automatic refresh-token interceptor.
-- **[PENDING]** PHASE-01-FE-002: Authentication & User Profile Pages (Agent: frontend-agent, Priority: P0, Complexity: M)
+- **[COMPLETED]** PHASE-01-FE-002: Authentication & User Profile Pages (Agent: frontend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-01-BE-002, PHASE-01-FE-001
   * Criteria: Pages for /register, /login, /forgot-password, /reset-password, /verify-email, and /settings/profile with React Hook Form + Zod validation, error banners, and loading spinners.
 - **[PENDING]** PHASE-01-QA-001: Foundation & Auth Test Suite (Agent: qa-agent, Priority: P0, Complexity: M)
