@@ -12,7 +12,7 @@
 | ⚪ deep-plan-agent | Planning | IDLE | — | 0 | 0 | — |
 | 🟢 backend-agent | Backend Dev | ACTIVE | PHASE-01-BE-002 | 2 | 10 | 2026-11-13 11:54:10 |
 | 🟢 frontend-agent | Frontend Dev | ACTIVE | PHASE-01-FE-002 | 2 | 10 | 2026-11-13 13:09:42 |
-| 🟡 qa-agent | Testing | PENDING | — | 0 | 6 | — |
+| 🟢 qa-agent | Testing | ACTIVE | PHASE-01-QA-001 | 1 | 5 | 2026-11-13 13:13:33 |
 | 🟡 code-review-agent | Code Review | PENDING | — | 0 | 6 | — |
 
 ## Status Legend

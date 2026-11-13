@@ -74,7 +74,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-01-FE-002: Authentication & User Profile Pages (Agent: frontend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-01-BE-002, PHASE-01-FE-001
   * Criteria: Pages for /register, /login, /forgot-password, /reset-password, /verify-email, and /settings/profile with React Hook Form + Zod validation, error banners, and loading spinners.
-- **[PENDING]** PHASE-01-QA-001: Foundation & Auth Test Suite (Agent: qa-agent, Priority: P0, Complexity: M)
+- **[COMPLETED]** PHASE-01-QA-001: Foundation & Auth Test Suite (Agent: qa-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-01-BE-002, PHASE-01-FE-002
   * Criteria: Unit tests for AuthService and JwtStrategy pass; integration tests for /api/v1/auth/* endpoints pass; Playwright E2E tests for registration, login, and auth guard redirects pass with >= 80% coverage.
 - **[PENDING]** PHASE-01-CR-001: Phase 1 Security & Architecture Review (Agent: code-review-agent, Priority: P0, Complexity: S)
