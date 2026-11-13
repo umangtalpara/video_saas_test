@@ -5,6 +5,9 @@ import { envValidationSchema } from './config/env.validation';
 import { LoggingModule } from './logging/logging.module';
 import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
+import { UsersModule } from './modules/users/users.module';
+import { MailModule } from './modules/mail/mail.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +19,9 @@ import { HealthModule } from './health/health.module';
     LoggingModule,
     DatabaseModule,
     HealthModule,
+    UsersModule,
+    MailModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

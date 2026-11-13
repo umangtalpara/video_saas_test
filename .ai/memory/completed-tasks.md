@@ -7,3 +7,4 @@
 | Task ID | Title | Agent | Date Completed | Notes |
 |---------|-------|-------|----------------|-------|
 | PHASE-01-BE-001 | Core Setup, MongoDB Connection & Health Checks | backend-agent | 2026-11-13 | — |
+| PHASE-01-BE-002 | User Management & JWT Authentication Module | backend-agent | 2026-11-13 | — |

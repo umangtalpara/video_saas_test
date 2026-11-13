@@ -65,7 +65,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 ### PHASE-01: Foundation, Authentication & Layout Shell (Status: IN_PROGRESS)
 - **[COMPLETED]** PHASE-01-BE-001: Core Setup, MongoDB Connection & Health Checks (Agent: backend-agent, Priority: P0, Complexity: M)
   * Criteria: NestJS app initializes with ConfigModule, Mongoose connects to MongoDB, /health/live and /health/ready return 200 OK, Winston logging redacts sensitive tokens.
-- **[PENDING]** PHASE-01-BE-002: User Management & JWT Authentication Module (Agent: backend-agent, Priority: P0, Complexity: L)
+- **[COMPLETED]** PHASE-01-BE-002: User Management & JWT Authentication Module (Agent: backend-agent, Priority: P0, Complexity: L)
   * Depends on: PHASE-01-BE-001
   * Criteria: POST /api/v1/auth/register hashes passwords with bcrypt; POST /api/v1/auth/login returns access (15m) and rotating refresh (7d) JWT tokens; POST /api/v1/auth/logout invalidates session; GET /api/v1/auth/me returns user profile; Nodemailer sends verification and reset emails.
 - **[PENDING]** PHASE-01-FE-001: Next.js App Shell, Navigation & Theme System (Agent: frontend-agent, Priority: P0, Complexity: M)
