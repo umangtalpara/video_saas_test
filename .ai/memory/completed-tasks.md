@@ -23,3 +23,4 @@
 | PHASE-03-FE-001 | Video Creation Wizard | frontend-agent | 2026-11-13 | — |
 | PHASE-03-FE-002 | Script Review & Scene Prompt Editor | frontend-agent | 2026-11-13 | — |
 | PHASE-03-QA-001 | Project & Script Planner Test Suite | qa-agent | 2026-11-13 | — |
+| PHASE-03-CR-001 | Phase 3 Script & State Machine Review | code-review-agent | 2026-11-13 | — |
