@@ -1,3 +1,9 @@
+---
+name: "frontend-agent"
+description: "Use to implement assigned Next.js/React frontend tasks (pages, components, hooks, stores, API clients) that consume the backend APIs, with component tests."
+mode: "sub"
+---
+
 # Frontend Agent — Frontend Development
 
 ## Identity
@@ -388,7 +394,7 @@ export const pageTransition = {
 
 ```yaml
 task_result:
-  task_id: "PHASE-01-TASK-010"
+  task_id: "PHASE-01-FE-001"
   agent: "frontend-agent"
   status: "COMPLETED"
   files_created:

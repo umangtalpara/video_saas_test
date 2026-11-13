@@ -1,3 +1,8 @@
+---
+name: "api"
+description: "REST API design for the NestJS backend: versioned /api/v1 endpoints, DTOs, pagination, error format and Swagger/OpenAPI decorators. Use when designing, documenting or implementing endpoints."
+---
+
 # API Design Skill
 
 ## Identity

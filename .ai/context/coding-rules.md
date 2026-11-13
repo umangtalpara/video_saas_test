@@ -1,3 +1,9 @@
+---
+name: "coding-rules"
+description: "TypeScript strict-mode coding rules: types, functions, classes, error handling, constants and testing."
+globs: "codebase/**/*.ts, codebase/**/*.tsx"
+---
+
 # Coding Rules
 
 ## Language: TypeScript (Strict Mode)
@@ -10,17 +16,18 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
+    "strictPropertyInitialization": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   }
 }
 ```
+
+> `strictPropertyInitialization` is **off** because DTOs and entities are populated by `class-transformer`, Mongoose and Prisma, not by constructors (NestJS default). `exactOptionalPropertyTypes` is intentionally **not** enabled — it breaks Mongoose, `@nestjs/swagger` and class-validator typings. `scaffold-starter.js` generates this exact config.
 
 ### Type Safety Rules
 
@@ -79,24 +86,34 @@ throw new NotFoundException(`User with ID ${id} not found`);
 throw new ConflictException('Email already registered');
 throw new UnauthorizedException('Invalid credentials');
 
-// DO: Use try-catch with specific error handling for MongoDB
-try {
-  await this.userModel.create(dto);
-} catch (error: any) {
-  if (error.code === 11000) { // MongoDB duplicate key error
-    throw new ConflictException('Resource already exists');
-  }
-  throw new InternalServerErrorException('Failed to save resource');
+// DO: Translate database errors inside the REPOSITORY (never in services/controllers).
+// Catch as `unknown` and narrow with a type guard — never `any`.
+function hasErrorCode(error: unknown): error is { code: number | string } {
+  return typeof error === 'object' && error !== null && 'code' in error;
 }
 
-// DO: Use try-catch with specific error handling for SQL (Prisma)
-try {
-  await this.prisma.user.create({ data: dto });
-} catch (error: any) {
-  if (error.code === 'P2002') { // Prisma unique constraint violation
-    throw new ConflictException('Resource already exists');
+// MongoDB (Mongoose) — in users.repository.ts
+async create(dto: CreateUserDto): Promise<User> {
+  try {
+    return await this.userModel.create(dto);
+  } catch (error: unknown) {
+    if (hasErrorCode(error) && error.code === 11000) { // duplicate key
+      throw new ConflictException('Resource already exists');
+    }
+    throw new InternalServerErrorException('Failed to save resource');
   }
-  throw new InternalServerErrorException('Failed to save resource');
+}
+
+// SQL (Prisma) — in users.repository.ts
+async create(dto: CreateUserDto): Promise<User> {
+  try {
+    return await this.prisma.user.create({ data: dto });
+  } catch (error: unknown) {
+    if (hasErrorCode(error) && error.code === 'P2002') { // unique constraint
+      throw new ConflictException('Resource already exists');
+    }
+    throw new InternalServerErrorException('Failed to save resource');
+  }
 }
 
 // DON'T: Swallow errors silently

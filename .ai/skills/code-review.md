@@ -1,3 +1,8 @@
+---
+name: "code-review"
+description: "Code review and security audit checklist with CRITICAL/HIGH/MEDIUM/LOW severities and approval criteria. Use when reviewing a phase, a diff or a pull request."
+---
+
 # Code Review Skill
 
 ## Identity

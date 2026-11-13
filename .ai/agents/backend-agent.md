@@ -1,3 +1,9 @@
+---
+name: "backend-agent"
+description: "Use to implement assigned NestJS backend tasks (modules, controllers, services, repositories, DTOs, queue jobs) with unit tests and Swagger docs."
+mode: "sub"
+---
+
 # Backend Agent — Backend Development
 
 ## Identity
@@ -251,7 +257,7 @@ When completing a task, report:
 
 ```yaml
 task_result:
-  task_id: "PHASE-01-TASK-001"
+  task_id: "PHASE-01-BE-001"
   agent: "backend-agent"
   status: "COMPLETED"
   files_created:
@@ -263,11 +269,11 @@ task_result:
       description: "Auth service with JWT issuance, password hashing, user validation"
   files_modified: []
   tests_created:
-    - path: "tests/unit/auth/auth.service.spec.ts"
+    - path: "codebase/backend/src/modules/auth/auth.service.spec.ts"
       test_count: 12
       passing: 12
       failing: 0
-    - path: "tests/integration/auth/auth.e2e-spec.ts"
+    - path: "codebase/backend/test/integration/auth/auth.e2e-spec.ts"
       test_count: 8
       passing: 8
       failing: 0
@@ -276,7 +282,7 @@ task_result:
     branches: 85
     functions: 95
   swagger_endpoints_documented: 4
-  notes: "Used RS256 for JWT signing. Key rotation support built in."
+  notes: "HS256 with JWT_SECRET, refresh-token rotation with reuse detection."
   blockers: []
 ```
 

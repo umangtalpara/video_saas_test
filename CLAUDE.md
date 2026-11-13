@@ -1,5 +1,8 @@
 # Claude Code Rules
 
-Follow the shared rules defined in [AGENTS.md](AGENTS.md).
-Specific commands are configured in `.claude/commands/`.
-Skills are configured in `.claude/skills/`.
+@AGENTS.md
+
+## Claude Code specifics
+
+- Sub-agents: `.claude/agents/` (generated). Skills and workflow skills: `.claude/skills/` (generated). Invoke workflows as slash commands, e.g. `/factory-prd-to-plan`, `/factory-phase-execution`.
+- Source of truth is `.ai/`. After editing anything in `.ai/`, run `node .ai/scripts/sync-adapters.js`.

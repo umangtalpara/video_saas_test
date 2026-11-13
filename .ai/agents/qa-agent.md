@@ -1,3 +1,9 @@
+---
+name: "qa-agent"
+description: "Use after backend and frontend tasks of a phase are done to write and run unit, integration, API-contract and Playwright E2E tests, report bugs and check coverage."
+mode: "sub"
+---
+
 # QA Agent — Quality Assurance & Testing
 
 ## Identity
@@ -44,7 +50,7 @@ The QA Agent ensures the application meets quality standards through comprehensi
 Test individual functions, services, and utilities in isolation.
 
 ```typescript
-// tests/unit/auth/auth.service.spec.ts
+// codebase/backend/src/modules/auth/auth.service.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '@/modules/auth/auth.service';
 import { UsersService } from '@/modules/users/users.service';
@@ -174,7 +180,7 @@ describe('AuthService', () => {
 Test API endpoints with real database connections.
 
 ```typescript
-// tests/integration/auth/auth.e2e-spec.ts
+// codebase/backend/test/integration/auth/auth.e2e-spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
@@ -299,7 +305,7 @@ Validate every API endpoint against its OpenAPI specification:
 Test complete user journeys through the browser:
 
 ```typescript
-// tests/e2e/auth.spec.ts
+// codebase/frontend/e2e/auth.spec.ts
 import { test, expect } from '@playwright/test';
 
 test.describe('Authentication Flow', () => {
@@ -372,7 +378,7 @@ test.describe('Authentication Flow', () => {
 bug_report:
   id: "BUG-001"
   severity: "HIGH"  # CRITICAL | HIGH | MEDIUM | LOW
-  test_file: "tests/integration/auth/auth.e2e-spec.ts"
+  test_file: "codebase/backend/test/integration/auth/auth.e2e-spec.ts"
   test_name: "should reject duplicate email"
   expected: "409 Conflict response"
   actual: "500 Internal Server Error"
@@ -381,7 +387,7 @@ bug_report:
       at MessageStream.messageHandler (node_modules/mongodb/src/cmap/connection.ts:400)
   root_cause: "Missing duplicate email check in auth.service.register()"
   suggested_fix: "Add findByEmail() check before insert in AuthService.register()"
-  affected_task: "PHASE-01-TASK-001"
+  affected_task: "PHASE-01-BE-001"
   agent_to_fix: "backend-agent"
 ```
 
@@ -391,7 +397,7 @@ bug_report:
 
 ```yaml
 task_result:
-  task_id: "PHASE-01-TASK-020"
+  task_id: "PHASE-01-QA-001"
   agent: "qa-agent"
   status: "COMPLETED"
   test_summary:

@@ -1,3 +1,8 @@
+---
+name: "git"
+description: "Git workflow: branch names, Conventional Commits, pull request hygiene and downstream repo sync. Use when committing, branching or syncing repositories."
+---
+
 # Git Skill
 
 ## Identity
@@ -30,7 +35,7 @@ Types:
   chore/    → Build, CI, dependency updates
 
 Examples:
-  feature/PHASE-01-TASK-001-user-registration
+  feature/PHASE-01-BE-001-user-registration
   fix/BUG-042-duplicate-email-error
   refactor/auth-module-cleanup
 ```
@@ -63,7 +68,7 @@ Rules:
   1. Use imperative mood ("add" not "added")
   2. First line ≤ 72 characters
   3. Body explains "why" not "what"
-  4. Reference task IDs: "Refs: PHASE-01-TASK-001"
+  4. Reference task IDs: "Refs: PHASE-01-BE-001"
 ```
 
 ### Pull Request Template
@@ -72,7 +77,7 @@ Rules:
 Brief description of changes.
 
 ## Task Reference
-- Task ID: PHASE-XX-TASK-XXX
+- Task ID: PHASE-XX-{BE|FE|QA|CR}-NNN
 - Phase: X
 
 ## Type of Change

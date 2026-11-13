@@ -3,7 +3,7 @@
 ## Unit Test Template
 
 ```typescript
-// tests/unit/[module]/[service].spec.ts
+// codebase/backend/src/modules/[module]/[service].spec.ts
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { [ServiceName] } from '@/modules/[module]/[module].service';
@@ -199,7 +199,7 @@ describe('[ServiceName]', () => {
 ## SQL (Prisma ORM) Unit Test Template
 
 ```typescript
-// tests/unit/[module]/[service].spec.ts
+// codebase/backend/src/modules/[module]/[service].spec.ts
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { [ServiceName] } from '@/modules/[module]/[module].service';
@@ -256,7 +256,7 @@ describe('[ServiceName] (Prisma)', () => {
 ## Integration Test Template
 
 ```typescript
-// tests/integration/[module]/[module].e2e-spec.ts
+// codebase/backend/test/integration/[module]/[module].e2e-spec.ts
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
@@ -334,7 +334,7 @@ describe('[Module] Endpoints (e2e)', () => {
 ## E2E Test Template (Playwright)
 
 ```typescript
-// tests/e2e/[feature].spec.ts
+// codebase/frontend/e2e/[feature].spec.ts
 
 import { test, expect } from '@playwright/test';
 

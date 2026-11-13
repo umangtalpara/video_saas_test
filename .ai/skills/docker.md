@@ -1,3 +1,8 @@
+---
+name: "docker"
+description: "Docker multi-stage builds and docker-compose for NestJS and Next.js with non-root users and health checks. Use when writing Dockerfiles or compose files."
+---
+
 # Docker Skill
 
 ## Identity

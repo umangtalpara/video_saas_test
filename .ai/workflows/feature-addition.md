@@ -1,3 +1,8 @@
+---
+name: "feature-addition"
+description: "Add a feature from doc/features/*.md: impact analysis, new phase and tasks, migrations, standard execution pipeline. Use when a feature spec exists after the initial build."
+---
+
 # Feature Addition Workflow (Incremental Features)
 
 ## Identity
@@ -55,7 +60,7 @@
 ## How to Add a New Feature
 
 ### Step 1: Create a Feature Specification
-Create a new file under `doc/features/[feature-name].md` or append to `doc/prd.md`:
+Copy `.ai/templates/feature-template.md` to `doc/features/[feature-name].md` (or append to `doc/prd.md`) and fill it in (minimum structure shown below):
 ```markdown
 # Feature Specification: [Feature Name]
 
@@ -80,7 +85,7 @@ The AI agent will:
 2. Formulate an **Incremental Feature Plan** assessing:
    * **Database migrations** (e.g. `npx prisma migrate dev` if SQL is chosen).
    * **API versions** (maintaining `/api/v1/` compatibility or creating `/api/v2/`).
-3. Add a new Phase (e.g., `PHASE-07: Advanced Analytics`) to `.ai/memory/state.json` via the CLI.
-4. Auto-regenerate [roadmap.md](file:///d:/Umang/provenpeak/npm%20repo/saasAiAgentWorkFLow/.ai/project-management/roadmap.md) and [progress.md](file:///d:/Umang/provenpeak/npm%20repo/saasAiAgentWorkFLow/.ai/project-management/progress.md).
+3. Add a new Phase and its tasks through the CLI: `node .ai/scripts/status-manager.js add-phase PHASE-07 "Advanced Analytics"`, then `add-task PHASE-07 PHASE-07-TASK-001 "<title>" <agent> <priority> --deps <ids> --criteria "<text>"` (never edit `state.json` directly). The new phase follows the same rule as the original plan: Backend → Frontend → QA → Code Review tasks (`PHASE-07-BE/FE/QA/CR-00N`). Check it with `node .ai/scripts/status-manager.js validate-plan --incremental`, then run it with the normal phase loop and close it with `complete-phase`.
+4. The CLI auto-regenerates [roadmap.md](../project-management/roadmap.md) and [progress.md](../project-management/progress.md).
 5. Hand off tasks to the Developer Agents to implement codebase changes.
 6. Verify integration and E2E tests, audit via the Code Review Agent, and complete the phase.

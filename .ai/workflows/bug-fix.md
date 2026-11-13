@@ -1,3 +1,8 @@
+---
+name: "bug-fix"
+description: "Fix a bug from doc/bugs/*.md using TDD: reproduce with a failing test, fix, verify, regression test and record. Use when a bug report exists."
+---
+
 # Bug-Fixing Workflow (Hotfixes & Patches)
 
 ## Identity
@@ -56,7 +61,7 @@
 ## How to Execute the Bug Fix
 
 ### Step 1: Create a Bug Report
-Create a new file under `doc/bugs/[bug-name-or-id].md` using the following structure:
+Copy `.ai/templates/bug-template.md` to `doc/bugs/[bug-name-or-id].md` and fill it in (minimum structure shown below):
 ```markdown
 # Bug Report: [Title]
 
@@ -85,5 +90,6 @@ The AI agent will:
 3. Write a test case (unit or integration test) that specifically targets the bug and fails.
 4. Correct the code.
 5. Verify the test passes and run `node .ai/scripts/validate-project.js`.
-6. Run `node .ai/scripts/status-manager.js update-task` (updating task list if applicable) and log the resolution details to `.ai/memory/completed-tasks.md` with notes.
+6. Track it: `node .ai/scripts/status-manager.js add-phase HOTFIX-<n> "<bug title>"` + `add-task HOTFIX-<n> HOTFIX-<n>-TASK-001 "<title>" backend-agent HIGH`, then move it `IN_PROGRESS` → `COMPLETED` with `update-task <ID> status <STATUS>` and record notes with `log "<resolution notes>"`. Regenerated files (`completed-tasks.md`, `progress.md`) must not be edited by hand.
+6a. Commit: `git commit -m "fix(<scope>): <summary> [<ID>]"`.
 7. Inform the user of the fix.

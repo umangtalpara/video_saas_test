@@ -1,3 +1,9 @@
+---
+name: "code-review-agent"
+description: "Use as the final quality gate of a phase to review all changes for security, performance, scalability and code quality and return APPROVED or CHANGES_REQUESTED with findings."
+mode: "sub"
+---
+
 # Code Review Agent — Code Review & Security Audit
 
 ## Identity
@@ -18,7 +24,7 @@ The Code Review Agent performs comprehensive code reviews across all changes in 
 ### 1. Security Review
 
 #### Authentication & Authorization
-- [ ] JWT tokens use strong algorithms (RS256 preferred over HS256).
+- [ ] JWT tokens use a strong algorithm: HS256 with a random secret of at least 32 chars from env, or RS256 when other services verify tokens (never `none`, never a hardcoded secret).
 - [ ] Access tokens have short expiry (15 minutes max).
 - [ ] Refresh tokens are stored securely (httpOnly cookies or encrypted storage).
 - [ ] All protected endpoints validate JWT on every request.
@@ -88,7 +94,7 @@ The Code Review Agent performs comprehensive code reviews across all changes in 
 #### Architecture Scalability
 - [ ] Modules have clear boundaries and can be extracted to microservices.
 - [ ] State is externalized (Redis, database) — no in-memory application state.
-- [ ] Background jobs use BullMQ (Redis) for reliable processing.
+- [ ] Background jobs use BullMQ (when Redis is the chosen cache engine) or `@nestjs/schedule` (local cache) for reliable processing; never RabbitMQ.
 - [ ] File storage uses external object storage (S3), not local filesystem.
 - [ ] Database schema supports multi-tenancy (if required by PRD).
 
@@ -219,6 +225,13 @@ A phase is approved when:
 4. **Test coverage meets minimum** — 80% line coverage for all modules.
 5. **All Swagger documentation is complete** — every endpoint documented.
 6. **No security vulnerabilities detected** — all OWASP Top 10 checks pass.
+
+---
+
+## Verdict Actions (CLI)
+
+- **APPROVED** → `node .ai/scripts/status-manager.js update-task PHASE-0X-CR-001 status COMPLETED`; the Super Agent then closes the phase with `complete-phase`.
+- **CHANGES_REQUESTED** → `node .ai/scripts/status-manager.js request-changes PHASE-0X "<top findings>" --tasks <backend/frontend task ids to rework> [--retest]`. This reopens only those tasks (plus this review, plus QA with `--retest`), logs the round in `retry-log.md`, and after 3 rounds blocks the phase and asks the user. Do not mark the review task COMPLETED until a re-review is clean.
 
 ---
 

@@ -1,3 +1,8 @@
+---
+name: "database"
+description: "Data modeling and access: Mongoose schemas, indexes and transactions for MongoDB, plus Redis caching. Use when designing entities, repositories, queries or indexes (for SQL/Prisma see prisma-sql)."
+---
+
 # Database Skill
 
 ## Identity
@@ -9,7 +14,7 @@
 
 ### MongoDB (Mongoose)
 - **Document Schemas**: Design schema definitions with strict validation, custom validators, and standard type casting.
-- **Transactions & Sessions**: Implement multi-document transactions using Mongoose sessions to ensure ACID compliance across operations.
+- **Transactions & Sessions**: Implement multi-document transactions using Mongoose sessions to ensure ACID compliance across operations. Transactions require a **replica set** — the scaffolded docker-compose runs a single-node one (`?replicaSet=rs0&directConnection=true`); MongoDB Atlas works out of the box.
 - **Query Optimization**: Use `.lean()` for read-only queries to bypass model hydration and improve latency.
 - **Aggregations**: Build robust aggregation pipelines for complex reporting, data transformations, and high-performance lookups.
 - **Indexing**: Define compound, text, partial, and TTL indexes directly in schemas to support efficient query paths.

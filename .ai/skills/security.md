@@ -1,3 +1,8 @@
+---
+name: "security"
+description: "Application security: input validation, JWT handling, CORS, Helmet, rate limiting and OWASP Top 10 checks. Use when handling auth, user input, secrets or reviewing security."
+---
+
 # Security Skill
 
 ## Identity
@@ -7,7 +12,7 @@
 ## Capabilities
 
 ### Authentication Security
-- JWT implementation with RS256 algorithm and key rotation.
+- JWT with a strong algorithm (HS256 + random 32+ char secret from env, or RS256 when other services verify tokens) and refresh-token rotation with reuse detection. See the `auth` skill.
 - Access token short expiry (15 minutes), refresh token long expiry (7 days).
 - Refresh token rotation — invalidate old refresh token on use.
 - Account lockout after 5 failed login attempts (30-minute cooldown).

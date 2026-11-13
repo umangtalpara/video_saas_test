@@ -1,3 +1,8 @@
+---
+name: "backend"
+description: "NestJS 11 + TypeScript backend conventions: modules, controllers, services, dependency injection, validation, error handling, configuration. Use when implementing or changing backend code."
+---
+
 # Backend Development Skill
 
 ## Identity

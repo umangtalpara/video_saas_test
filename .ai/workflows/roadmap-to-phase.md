@@ -1,3 +1,8 @@
+---
+name: "roadmap-to-phase"
+description: "Load the approved roadmap and activate the next phase (check dependencies, set the phase IN_PROGRESS, queue tasks per agent). Use after planning or when resuming a project."
+---
+
 # Roadmap to Phase Workflow
 
 ## Identity
@@ -88,15 +93,24 @@
 4. Completed tasks are NEVER rerun — even if the phase is restarted.
 5. Progress within a phase is tracked in `progress.md`.
 
+## Executable Steps (commands)
+
+| Step | Command |
+|------|---------|
+| Where are we? | `node .ai/scripts/status-manager.js status` |
+| Next runnable task (dependencies satisfied) | `node .ai/scripts/status-manager.js next` |
+| Activate the phase | `status-manager.js set-phase PHASE-0X IN_PROGRESS` (Phase 1 requires a passing `validate-plan`; later phases require the previous one to be COMPLETED). Normally the previous `complete-phase … --start-next` already did this |
+| Mark agents | `status-manager.js set-agent backend-agent ACTIVE <TASK-ID>` |
+| Log phase start | `status-manager.js add-event "Phase 0X started"` |
+
 ## State Recovery
 
-If the system is restarted mid-phase:
+If the system is restarted mid-phase, `.ai/memory/state.json` is the single source of truth:
 
-1. Read `current-phase.md` to determine the active phase.
-2. Read `progress.md` to determine completed tasks.
-3. Read `agent-status.md` to determine agent states.
-4. Read `completed-tasks.md` to confirm finished work.
-5. Resume from the first incomplete task.
+1. Run `node .ai/scripts/status-manager.js status` — shows project status, active phase and task counts.
+2. Run `node .ai/scripts/status-manager.js next` — returns the next task to run.
+3. Check `.ai/memory/blockers.md` for open blockers; resolve them with `resolve-blocker` before continuing.
+4. Resume from that task. Never rerun `COMPLETED` tasks.
 
 ## Output
 

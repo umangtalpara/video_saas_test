@@ -1,3 +1,8 @@
+---
+name: "architecture"
+description: "Modular-monolith architecture: module boundaries, controller/service/repository/entity layering, events and dependency rules. Use when planning modules, adding a feature module or reviewing structure."
+---
+
 # Architecture Skill
 
 ## Identity

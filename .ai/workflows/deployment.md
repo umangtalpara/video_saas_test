@@ -1,3 +1,8 @@
+---
+name: "deployment"
+description: "Pre-deployment checks, builds, Docker images, migrations, staging then production deployment with human approval and rollback plan. Use when all phases are complete."
+---
+
 # Deployment Workflow
 
 ## Identity
@@ -168,18 +173,31 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      mongodb:
-        image: mongo:7
-        ports: ['27017:27017']
+    strategy:
+      matrix:
+        app: [backend, frontend]        # decoupled/monorepo layouts both keep code in codebase/<app>
+    defaults:
+      run:
+        working-directory: codebase/${{ matrix.app }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '24' }
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: codebase/${{ matrix.app }}/package-lock.json
       - run: npm ci
-      - run: npm run lint
-      - run: npm run test:unit -- --coverage
-      - run: npm run test:e2e
+      - run: npm run typecheck
+      - if: matrix.app == 'frontend'
+        run: npm run lint
+      - run: npm run build
+      - run: npm test -- --coverage
+      # Backend integration tests (test/*.e2e-spec.ts) need the database/cache from the scaffolded docker-compose.yml
+      # (Mongo runs as a single-node replica set so transactions work).
+      - if: matrix.app == 'backend'
+        run: |
+          docker compose -f ../../docker-compose.yml up -d --wait
+          npm run test:e2e
 
   build:
     needs: test

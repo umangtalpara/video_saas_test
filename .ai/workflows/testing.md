@@ -1,4 +1,11 @@
+---
+name: "testing"
+description: "Run the full test pipeline (unit, integration, API contract, Playwright E2E), coverage report and bug reports. Use when verifying a phase or before deployment."
+---
+
 # Testing Workflow
+
+> Status tracking: QA tasks are updated with `node .ai/scripts/status-manager.js update-task <ID> status <STATUS>` and failures with `retry`. Test files live next to the code they test (see layout below) so decoupled backend/frontend repos stay self-contained.
 
 ## Identity
 - **Name**: Testing Workflow
@@ -123,13 +130,16 @@
 
 ## Test Configuration
 
-### Jest Configuration
+Run each suite from its own package (`codebase/backend`, `codebase/frontend`) so the same commands work in a monorepo and in decoupled repos.
+
+### Jest Configuration (`codebase/backend`, unit tests — `npm run test:unit`)
 ```json
 {
   "moduleFileExtensions": ["js", "json", "ts"],
-  "rootDir": "codebase",
+  "rootDir": "src",
   "testRegex": ".*\\.spec\\.ts$",
   "transform": { "^.+\\.(t|j)s$": "ts-jest" },
+  "moduleNameMapper": { "^@/(.*)$": "<rootDir>/$1" },
   "collectCoverageFrom": ["**/*.(t|j)s", "!**/*.module.ts", "!**/main.ts"],
   "coverageDirectory": "../coverage",
   "testEnvironment": "node",
@@ -144,10 +154,12 @@
 }
 ```
 
-### Playwright Configuration
+Integration/API tests use `codebase/backend/test/jest-e2e.json` (`rootDir: "."`, `testRegex: ".e2e-spec.ts$"`, same transform and `moduleNameMapper` with `<rootDir>/../src/$1`) via `npm run test:e2e`.
+
+### Playwright Configuration (`codebase/frontend/playwright.config.ts`)
 ```typescript
 {
-  testDir: './tests/e2e',
+  testDir: './e2e',
   fullyParallel: true,
   retries: 2,
   workers: '50%',

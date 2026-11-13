@@ -1,3 +1,9 @@
+---
+name: "architecture-rules"
+description: "Modular monolith architecture rules: layers, module communication, dependency rules and forbidden patterns."
+globs: "codebase/backend/**"
+---
+
 # Architecture Rules
 
 ## System Architecture

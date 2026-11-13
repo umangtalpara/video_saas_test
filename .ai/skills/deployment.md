@@ -1,3 +1,8 @@
+---
+name: "deployment"
+description: "Build and release practices: env configuration, migrations, CI/CD, health checks, monitoring, rollback. Use when preparing or performing a deployment."
+---
+
 # Deployment Skill
 
 ## Identity

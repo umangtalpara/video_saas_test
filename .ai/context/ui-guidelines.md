@@ -1,3 +1,9 @@
+---
+name: "ui-guidelines"
+description: "Design system, typography, spacing, components and accessibility rules for the Next.js frontend."
+globs: "codebase/frontend/**"
+---
+
 # UI Guidelines
 
 ## Design Philosophy

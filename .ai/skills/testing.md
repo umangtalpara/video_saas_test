@@ -1,3 +1,8 @@
+---
+name: "testing"
+description: "Jest, Supertest, Playwright and Newman standards with file layout and coverage targets. Use when writing or running tests."
+---
+
 # Testing Skill
 
 ## Identity
@@ -34,10 +39,11 @@
 ## Test File Naming
 
 ```
-Unit:        *.spec.ts        (co-located with source)
-Integration: *.e2e-spec.ts    (in tests/integration/)
-E2E:         *.spec.ts        (in tests/e2e/)
-API:         *.api-spec.ts    (in tests/api/)
+Backend unit:        *.spec.ts       (co-located: codebase/backend/src/**)
+Backend integration: *.e2e-spec.ts   (codebase/backend/test/integration/)
+API contract:        *.api-spec.ts   (codebase/backend/test/api/)
+Frontend unit:       *.test.tsx      (co-located: codebase/frontend/src/**)
+Browser E2E:         *.spec.ts       (codebase/frontend/e2e/, Playwright)
 ```
 
 ## Test Structure (AAA Pattern)

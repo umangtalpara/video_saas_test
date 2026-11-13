@@ -1,149 +1,129 @@
-# How to Use SaaS AI Factory (.ai)
+# How to Use the SaaS AI Factory
 
-Welcome to the **SaaS AI Factory**! This workspace uses an autonomous, multi-stack development pipeline that takes your Product Requirements Document (PRD), conducts an interactive Q&A discovery, scaffolds your custom setup, and automatically builds, tests, and validates your SaaS application.
+This workspace turns a Product Requirements Document (PRD) into a working SaaS application. Cooperating AI agents ask you a short questionnaire, scaffold the project, plan phases, write and test the code, review it and prepare deployment.
 
-Because the system is driven by cooperating AI agents, **you do not need to run local setup steps manually.** The AI agents act as the strategic planners and software engineers.
-
----
-
-## 🚀 The Getting Started Workflow (For Fresh Users)
-
-Follow these simple steps to build your SaaS application from scratch.
-
-### Step 1: Complete your PRD Document
-Open the Product Requirements Document template and fill in your app requirements:
-👉 **[doc/prd.md](../doc/prd.md)**
-
-*Describe the features, target users, and key screens. Be as specific as possible — the quality of your PRD determines the quality of the generated code.*
-
-### Step 2: Trigger Ingestion & Discovery
-Message the AI agent in the chat to launch the workflow:
-> *"I have completed my PRD. Please ingest doc/prd.md and start code generation."*
+It works in **Claude Code**, **Cursor** and **Google Antigravity** (see the [README](../README.md#tool-compatibility)). You do not run setup steps by hand — you answer questions and approve results.
 
 ---
 
-## 💬 The Interactive Q&A Discovery Phase (Automatic)
+## Getting Started
 
-Once triggered, the AI agent will analyze your PRD and ask you a few quick questions in the chat to define your custom technology stack:
+### Step 1: Fill in your PRD
+Edit **[doc/prd.md](prd.md)** (template with guidance: `.ai/templates/prd-template.md`). The more specific the PRD — features, user roles, key screens, acceptance criteria — the better the generated code.
 
-1. **Project structure**: Do you want a **Shared Monorepo** (with a `shared` types package) or **Decoupled Standalone Projects** (if you plan to deploy backend and frontend on completely different servers)?
-2. **Deploy infrastructure**: **Docker Compose** containers vs. **Manual / PaaS deployments** (like Vercel and Render).
-3. **Database**: **MongoDB** (NoSQL via Mongoose) or **Postgres / MySQL** (SQL via Prisma ORM).
-4. **Caching**: **Redis** (required for queues) vs. **Local In-Memory Cache**.
-5. **Multi-Tenancy**: A **Multi-tenant SaaS** (with RBAC) vs. a **Single-Client** application.
-6. **Integrations** (Payments, Logs, Real-Time): These are **optional and skippable**. The AI will only ask about them if it detects them in your PRD.
+### Step 2: Start the factory
+In your AI tool, say:
+> *I have completed my PRD at doc/prd.md. Please ingest it and start the factory.*
+
+Or run the slash command / skill **`/factory-prd-to-plan`**.
+
+### Step 3: Answer the discovery questions
+The agent asks these in chat and records each answer itself (you never edit config files). Items marked **compulsory** are always asked.
+
+| # | Question | Typical answers |
+|---|----------|-----------------|
+| 1 | Project structure *(compulsory)* | Shared monorepo (with `shared/` package) · Decoupled standalone backend/frontend |
+| 2 | Deployment *(compulsory)* | Docker/Compose · Manual / PaaS (Vercel, Render, ...) |
+| 3 | Git strategy | Single repo · 3-repo setup (main + backend + frontend) · Skip. SSH links are verified before use |
+| 4 | Database *(compulsory)* | MongoDB (Mongoose) · PostgreSQL/MySQL (Prisma) |
+| 5 | Caching | Redis (needed for BullMQ queues) · Local in-memory |
+| 6 | Multi-tenancy *(compulsory)* | Multi-tenant SaaS with RBAC · Single organisation |
+| 7 | Email *(compulsory)* | SMTP · Resend · SendGrid · Amazon SES · Mailgun |
+| 8 | File storage *(compulsory)* | AWS S3 · DigitalOcean Spaces · Cloudinary · Local disk |
+| 9 | Logging *(compulsory)* | Datadog · ELK · CloudWatch · Console only |
+| 10 | Payments *(compulsory)* | Stripe · PayPal · Razorpay · None |
+| 11 | Real-time *(compulsory)* | WebSockets · SSE · None |
 
 ---
 
-## 🛠️ Behind the Scenes (Autonomous Pipeline)
-
-Once you answer the questionnaire, the cooperating agents execute the pipeline:
+## What Happens Next
 
 ```
-┌─────────────────────────────────┐
-│       1. PRD Ingestion          │
-│  Super Agent reads and checks   │
-│  doc/prd.md for completeness.   │
-└────────────────┬────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────┐
-│      2. Discovery Q&A           │
-│  Super Agent asks custom stack  │
-│  questions based on the PRD.    │
-└────────────────┬────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────┐
-│     3. Custom Scaffolding       │
-│  CLI script setups directory,   │
-│  package.json, and DB ORMs.     │
-└────────────────┬────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────┐
-│       4. Phased Planning        │
-│  Designs database schemas, APIs,│
-│  architecture, & phase tasks.   │
-└────────────────┬────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────┐
-│     5. Phase Execution          │
-│  Backend and Frontend agents    │
-│  write the code phase-by-phase. │
-└────────────────┬────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────┐
-│      6. QA, Review, & Linter    │
-│  Runs test suites and linter    │
-│  to enforce strict architecture.│
-└─────────────────────────────────┘
+PRD ingestion → Discovery Q&A → Scaffold → Planning → Phase execution → QA → Code review → Deployment prep
+```
+
+1. **Ingestion** – Super Agent validates `doc/prd.md` against the template.
+2. **Discovery** – the 11 questions above; answers saved to `.ai/memory/state.json`.
+3. **Scaffold** – `scaffold-starter.js` generates `package.json`, `tsconfig`, Jest/Playwright config, `.env`/`.env.example` (with a random JWT secret) and an infrastructure `docker-compose.yml`. Then `npm install` is run in each app.
+4. **Planning** – Deep Planning Agent designs architecture, DB schema and API, then splits the PRD into **5–10 phases**. Every phase contains Backend, Frontend, QA and Code Review tasks. `validate-plan` must pass before development starts.
+5. **Execution, one phase at a time** – each phase runs four stages in strict order:
+   1. **Backend** – all backend tasks of the phase (code + tests)
+   2. **Frontend** – all frontend tasks (against the finished APIs)
+   3. **QA** – unit, API-contract and Playwright E2E tests, coverage
+   4. **Code Review** – security / performance / quality gate. `CHANGES_REQUESTED` sends only the affected tasks back (max 3 rounds), then the review repeats.
+
+   Every task is validated (`validate-project.js --tsc`), tested and committed. A task that fails 3 times is **BLOCKED** and the agent asks you.
+6. **Phase close-out** – when the review is APPROVED the agent runs `complete-phase`, which refreshes **every** file in `.ai/project-management/` and `.ai/memory/` (status, progress, current phase, roadmap, agent status, completed tasks, phase report, blockers, execution/retry logs, decisions), commits and tags the phase, tells you what was delivered and starts the next phase.
+7. **Deployment prep** – after the last phase, `/factory-testing` and `/factory-deployment`.
+
+```
+Phase 1 ─ Backend → Frontend → QA → Review ─ close-out ─┐
+Phase 2 ─ Backend → Frontend → QA → Review ─ close-out ─┤  (5–10 phases)
+   …                                                     │
+Phase N ─ Backend → Frontend → QA → Review ─ close-out ─┘ → testing → deployment
+```
+
+If a session stops, just say *"continue"* — the agent resumes from `.ai/memory/state.json` (`status-manager.js status` / `next`).
+
+---
+
+## Monitoring Progress
+
+Open the generated dashboards in **`.ai/project-management/`**: [project-status.md](../.ai/project-management/project-status.md), [progress.md](../.ai/project-management/progress.md), [roadmap.md](../.ai/project-management/roadmap.md), [current-phase.md](../.ai/project-management/current-phase.md), [agent-status.md](../.ai/project-management/agent-status.md). Blockers are in `.ai/memory/blockers.md`.
+
+These files are **generated** — don't edit them. Quick view in a terminal:
+
+```bash
+node .ai/scripts/status-manager.js status
+```
+
+### If a task is BLOCKED
+Read the blocker in `.ai/memory/blockers.md`, tell the agent what to do (or fix the cause), and it will run `status-manager.js resolve-blocker` and continue.
+
+---
+
+## Slash Commands / Skills
+
+| Command | Purpose |
+|---------|---------|
+| `/factory-prd-to-plan` | PRD → discovery → scaffold → plan |
+| `/factory-roadmap-to-phase` | Activate the next phase |
+| `/factory-phase-execution` | Run the active phase |
+| `/factory-testing` | Full test pipeline |
+| `/factory-deployment` | Deployment checklist, Docker, CI/CD |
+| `/factory-bug-fix` | Hotfix loop |
+| `/factory-feature-addition` | Add a feature as a new phase |
+
+(Claude Code and Antigravity expose them as skills; Cursor also as `.cursor/commands`.)
+
+---
+
+## Developer CLI
+
+```bash
+node .ai/scripts/status-manager.js help        # full command list
+node .ai/scripts/validate-project.js --tsc     # architecture + naming + type-check
+node .ai/scripts/scaffold-starter.js --help    # scaffold options
+node .ai/scripts/sync-adapters.js              # regenerate .claude/.cursor/.agents after editing .ai/
+node .ai/scripts/git-sync.js push-all          # 3-repo strategy: push backend/frontend subtrees
 ```
 
 ---
 
-## 📊 Monitoring Progress & Logs
+## Post-Development Maintenance
 
-You can watch the build progress and review logs by inspecting the status files in the **`.ai/project-management/`** directory. All updates are auto-synced by our CLI, saving token costs:
+### Fix a bug
+1. Copy `.ai/templates/bug-template.md` to `doc/bugs/<bug-name>.md` and fill it in.
+2. Run `/factory-bug-fix` or tell the agent:
+   > *I created a bug report at doc/bugs/<bug-name>.md. Investigate, write a reproducing test and fix it.*
 
-* **[project-status.md](../.ai/project-management/project-status.md)**: Check the high-level project status (Awaiting PRD, Planning, In Progress, Blocked, Completed).
-* **[progress.md](../.ai/project-management/progress.md)**: Track the active task list showing progress bar, completed task count, and agent assignments.
-* **[roadmap.md](../.ai/project-management/roadmap.md)**: View the generated technical plan and structured phase checklist.
-* **[current-phase.md](../.ai/project-management/current-phase.md)**: View the active phase's details, tasks, and completion criteria.
-
----
-
-## ⚙️ Developer CLI Commands
-
-If you ever need to inspect or run checks yourself, you can run these commands from the root directory:
-
-* **Codebase Linter Check**:
-  ```bash
-  node .ai/scripts/validate-project.js
-  ```
-  *(Checks naming conventions, file size limits, and repository pattern rules).*
-
-* **Database/Cache Scaffolder**:
-  ```bash
-  node .ai/scripts/scaffold-starter.js
-  ```
-  *(Generates the directory skeleton based on configuration).*
-
-* **Sync Status Logs manually**:
-  ```bash
-  node .ai/scripts/status-manager.js sync
-  ```
-  *(Synchronizes the JSON database state to the markdown logs).*
-
-* **Sync Downstream Repositories (3-repo structure)**:
-  ```bash
-  node .ai/scripts/git-sync.js push-all
-  ```
-  *(Pushes backend and frontend directories to their respective standalone repositories).*
+### Add a feature
+1. Copy `.ai/templates/feature-template.md` to `doc/features/<feature-name>.md` and fill it in.
+2. Run `/factory-feature-addition` or tell the agent:
+   > *I added a feature request at doc/features/<feature-name>.md. Analyse the impact, add it as a new phase and implement it.*
 
 ---
 
-## 🔧 Post-Development Maintenance
+## Customising the Factory
 
-After your initial SaaS application is complete, you can continue to use the AI Factory to fix bugs and add new features.
-
-### 🐛 Fixing a Bug (Hotfix Loop)
-If a bug is discovered in production or testing, organize the report in the `doc/bugs/` directory:
-
-1. Create a new bug file: **`doc/bugs/[bug-name-or-id].md`** (e.g. `doc/bugs/bug-101-auth-failure.md`).
-2. Describe the bug, list steps to reproduce, and paste error logs.
-3. Message the AI agent:
-   > *"I have created a bug report at doc/bugs/[bug-name-or-id].md. Please investigate, write a reproducing test, and patch the codebase."*
-4. The AI will automatically isolate the issue, write a reproducing test case, fix the bug, confirm all tests pass, run project linter audits, and record the fix.
-
-### 🚀 Adding a New Feature (Feature Loop)
-To expand your product with new functionalities:
-
-1. Create a new feature specification file: **`doc/features/[feature-name].md`** (e.g. `doc/features/analytics-dashboard.md`).
-2. Describe the feature requirements, acceptance criteria, and API/schema expectations.
-3. Message the AI agent:
-   > *"I have added a new feature request at doc/features/[feature-name].md. Please analyze the impact on our current architecture, add it as a new phase, and implement it."*
-4. The AI will run an impact analysis, set up database migrations, add a new phase to the task database, generate the tasks, execute the code, and write tests to verify it works.
-
+Edit only the canonical sources in `.ai/` (`agents/`, `skills/`, `workflows/`, `context/`), then run `node .ai/scripts/sync-adapters.js`. Files in `.claude/`, `.cursor/` and `.agents/` are generated and will be overwritten.

@@ -1,3 +1,9 @@
+---
+name: "naming-rules"
+description: "File, code, database, API, git and React naming conventions."
+globs: "codebase/**"
+---
+
 # Naming Rules
 
 ## File Naming
@@ -69,7 +75,7 @@
 
 | Type | Convention | Example |
 |------|-----------|---------|
-| Branches | `{type}/{task-id}-{description}` | `feature/PHASE-01-TASK-001-user-auth` |
+| Branches | `{type}/{task-id}-{description}` | `feature/PHASE-01-BE-001-user-auth` |
 | Commits | Conventional Commits | `feat(auth): implement JWT login` |
 | Tags | Semantic Versioning | `v1.0.0`, `v1.2.3` |
 

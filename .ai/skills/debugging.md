@@ -1,3 +1,8 @@
+---
+name: "debugging"
+description: "Systematic diagnosis for the NestJS/Next.js stack: reproduce, isolate, find root cause, fix with a regression test. Use when a build, test or runtime error occurs or a bug report arrives."
+---
+
 # Debugging Skill
 
 ## Identity

@@ -1,11 +1,10 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "project": {
     "name": "SaaS AI Factory",
     "description": "Autonomous multi-agent software factory for PRD-to-SaaS application development",
     "organization": "ProvenPeak Solutions",
-    "created": "2026-05-25",
-    "status": "initialized"
+    "created": "2026-05-25"
   },
   "agents": {
     "super-agent": {
@@ -40,20 +39,25 @@
       "phase-execution",
       "testing",
       "deployment"
+    ],
+    "maintenance": [
+      "bug-fix",
+      "feature-addition"
     ]
   },
   "tech_stack": {
+    "_note": "Supported defaults. The stack actually chosen for a project is recorded in .ai/memory/state.json -> stack (set via status-manager.js set-stack).",
     "backend": {
       "runtime": "Node.js 24 LTS",
       "framework": "NestJS 11.x",
       "language": "TypeScript 5.x",
       "databases": [
-        "MongoDB 7.x"
+        "MongoDB 7.x (Mongoose 8.x)",
+        "PostgreSQL / MySQL (Prisma 5.x)"
       ],
-      "orm_odm": "Mongoose 8.x",
-      "cache": "Redis 7.x",
-      "queue": "BullMQ (Redis-backed)",
-      "containerization": "Docker",
+      "cache": "Redis 7.x or local in-memory",
+      "queue": "BullMQ (Redis-backed) or @nestjs/schedule when Redis is not chosen",
+      "containerization": "Docker (optional)",
       "api_docs": "Swagger/OpenAPI 3.0"
     },
     "frontend": {
@@ -61,7 +65,7 @@
       "library": "React 18.x",
       "language": "TypeScript 5.x",
       "styling": "Tailwind CSS 3.x",
-      "components": "Shadcn UI (Latest)",
+      "components": "Shadcn UI (Tailwind v3 compatible CLI: shadcn@2.3.0)",
       "state": "Zustand 4.x",
       "animations": "Framer Motion 11.x"
     },
@@ -73,9 +77,9 @@
     },
     "devops": {
       "ci_cd": "GitHub Actions",
-      "containerization": "Docker + Docker Compose (Latest)",
-      "monitoring": "Prometheus (Latest) + Grafana (Latest)",
-      "logging": "Winston 3.x + ELK (Latest)"
+      "containerization": "Docker + Docker Compose (optional)",
+      "monitoring": "Prometheus + Grafana (optional)",
+      "logging": "Winston 3.x (+ Datadog / ELK / CloudWatch if chosen)"
     }
   },
   "paths": {
@@ -88,11 +92,14 @@
     "templates": ".ai/templates",
     "prd": "doc/prd.md",
     "source_backend": "codebase/backend",
-    "source_frontend": "codebase/frontend",
-    "tests": "tests"
+    "source_frontend": "codebase/frontend"
   },
-  "git_remotes": {
-    "backend": "git@github.com:yourusername/backend-only-repo.git",
-    "frontend": "git@github.com:yourusername/frontend-only-repo.git"
-  }
+  "test_layout": {
+    "backend_unit": "codebase/backend/src/**/*.spec.ts",
+    "backend_integration": "codebase/backend/test/integration/**/*.e2e-spec.ts",
+    "backend_api_contract": "codebase/backend/test/api/**/*.api-spec.ts",
+    "frontend_unit": "codebase/frontend/src/**/*.test.tsx",
+    "frontend_e2e": "codebase/frontend/e2e/**/*.spec.ts"
+  },
+  "git_remotes": {}
 }

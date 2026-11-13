@@ -1,3 +1,8 @@
+---
+name: "documentation"
+description: "Technical writing: JSDoc, README structure, environment variable tables, API docs. Use when writing or updating documentation."
+---
+
 # Documentation Skill
 
 ## Identity

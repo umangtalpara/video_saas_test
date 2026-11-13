@@ -1,110 +1,95 @@
 # SaaS AI Factory
 
-Welcome to the **SaaS AI Factory**! This repository is designed as an autonomous, multi-agent software development environment. It utilizes cooperative AI agents to process Product Requirements Documents (PRDs) and automatically generate, test, review, and prepare code for a complete SaaS application.
+An autonomous, multi-agent software factory. Give it a Product Requirements Document (PRD); cooperating AI agents ask a short discovery questionnaire, scaffold the project, plan phases, write the code, test, review and prepare it for deployment.
+
+It works with **Claude Code**, **Cursor**, **Google Antigravity** and any tool that reads `AGENTS.md` / Agent Skills (`SKILL.md`).
 
 ## Repository Structure
 
-The repository is structured as follows:
-
 ```
 saasAiAgentWorkFLow/
-├── AGENTS.md            ← Shared spine containing core rules & directory references
-├── CLAUDE.md            ← Claude Code adapter directing to AGENTS.md
-├── GEMINI.md            ← Google Antigravity adapter directing to AGENTS.md
-├── README.md            ← This human entry point
+├── AGENTS.md              ← Shared entry point & rules (read by every tool)
+├── CLAUDE.md              ← Claude Code: imports @AGENTS.md
+├── GEMINI.md              ← Antigravity: extra notes (AGENTS.md is loaded automatically)
+├── README.md              ← This file
 │
-├── .ai/                 ← Canonical store of AI Agent rules and context
-│   ├── settings.json    ← Global tech stack and directory configurations
-│   ├── context/         ← Development, naming, architecture, and UI rules
-│   ├── skills/          ← Technical capabilities for specific agent domains (.md)
-│   ├── agents/          ← Base personas and instructions for each agent (.md)
-│   ├── workflows/       ← Step-by-step agent workflow checklists (.md)
-│   ├── templates/       ← PRD and Code Review templates (.md)
-│   ├── memory/          ← Session log, blocker tracker, and decision log
-│   └── project-management/ ← Progress tracker, roadmap, and phase status
+├── .ai/                   ← SINGLE SOURCE OF TRUTH (edit here)
+│   ├── settings.json      ← Directory layout, workflow config, git remotes
+│   ├── context/           ← Coding, naming, architecture, tech-stack, UI rules
+│   ├── agents/            ← Super, Deep-Plan, Backend, Frontend, QA, Code-Review personas
+│   ├── skills/            ← Knowledge skills (backend, database, prisma-sql, auth, payments, ...)
+│   ├── workflows/         ← prd-to-plan, roadmap-to-phase, phase-execution, testing, deployment, bug-fix, feature-addition
+│   ├── templates/         ← PRD, API, bug, feature, test, review, component, docker templates
+│   ├── memory/            ← state.json (machine state) + generated logs, decisions.md (manual)
+│   ├── project-management/← GENERATED status dashboards (roadmap, progress, current phase, ...)
+│   └── scripts/           ← status-manager, scaffold-starter, validate-project, sync-adapters, git-sync, verify-ssh
 │
-├── .claude/             ← Claude Code configuration and skill/command stubs
-├── .cursor/             ← Cursor rules (.mdc) and command shims
-├── .agents/             ← Google Antigravity workspace rules and workflow shims
+├── .claude/  .cursor/  .agents/   ← GENERATED adapters. Never edit by hand — run `node .ai/scripts/sync-adapters.js`
 │
-├── doc/                 ← Product Requirements Documents (doc/prd.md)
-│
-└── codebase/            ← Generated applications
-    ├── backend/         ← NestJS 11 backend codebase (flexible database, caching, and scheduling setup)
-    └── frontend/        ← Next.js 14 frontend codebase (Tailwind & Shadcn UI)
+├── doc/                   ← prd.md, bugs/, features/, how-to-use-ai.md
+└── codebase/              ← Generated apps: backend/ (NestJS 11) and frontend/ (Next.js 14)
 ```
+
+## Tool Compatibility
+
+| Capability | Claude Code | Cursor | Google Antigravity |
+|---|---|---|---|
+| Shared rules | `CLAUDE.md` → `@AGENTS.md` | `AGENTS.md` + `.cursor/rules/*.mdc` | `AGENTS.md` + `GEMINI.md` + `.agents/rules/*.md` |
+| Skills (knowledge + workflows) | `.claude/skills/<name>/SKILL.md` | reads `.claude/skills`, `.agents/skills` | `.agents/skills/<name>/SKILL.md` |
+| Slash commands | `/factory-prd-to-plan`, `/factory-testing`, ... | `/factory-*` (`.cursor/commands`) + skills | skills `factory-*` |
+| Specialist subagents | `.claude/agents/*.md` | reads `.claude/agents` | `.agents/agents/*.md` |
+| Super Agent (orchestrator) | the main session itself (subagents cannot spawn subagents) | main chat | main agent |
+
+The **Super Agent** is the main session: `AGENTS.md` tells whichever tool you use to act as the Super Agent and follow `.ai/agents/super-agent.md`. Backend / Frontend / QA / Code-Review / Deep-Plan agents run as subagents where the tool supports them, or as roles the main agent adopts.
 
 ## How to Get Started
 
-1. Check the **[How-To Guide](doc/how-to-use-ai.md)** for detailed instructions on utilizing the AI Factory workflow.
-2. Complete your Product Requirements Document at **[doc/prd.md](doc/prd.md)**.
-3. Use your preferred AI coder tool to initiate the development loop.
+1. Fill in **[doc/prd.md](doc/prd.md)**.
+2. Open the folder in your tool and say:
+   > *I have completed my PRD at doc/prd.md. Ingest it and start the factory.*
+   (or run `/factory-prd-to-plan`)
+3. Answer the 11 discovery questions in chat. The agent records them, scaffolds `codebase/`, splits the PRD into **5–10 phases**, then builds them one by one. Each phase runs **Backend → Frontend → QA → Code Review** and is closed with `complete-phase`, which refreshes every file in `.ai/project-management/` and `.ai/memory/`.
+4. Watch progress in `.ai/project-management/` (generated) or run `node .ai/scripts/status-manager.js status`.
 
-### 🚀 Running the Workflow Across Different AI Tools
+Details: **[doc/how-to-use-ai.md](doc/how-to-use-ai.md)**.
 
-Here is how to launch the pipeline and start code generation in each tool:
+## Maintaining the Factory
 
-#### 1. Claude Code
-Claude Code reads the root `CLAUDE.md` and dynamically imports capabilities from `.claude/skills/` as needed.
-- **To Start**: Open your terminal in the repository root and run:
-  ```bash
-  claude
-  ```
-- **Execution**: Instruct Claude in the chat:
-  > *I have completed the PRD at doc/prd.md. Please ingest it, start the deep planning phase, and execute the roadmap.*
-- **Slash Commands**: Run slash workflows directly from the terminal (e.g. `/testing`, `/deployment`).
+`.ai/` is canonical. After editing anything in `.ai/agents`, `.ai/skills`, `.ai/workflows` or `.ai/context`:
 
-#### 2. Cursor
-Cursor automatically loads conventions from `AGENTS.md` and `.cursor/rules/*.mdc` (including `core.mdc`).
-- **To Start**: Open the repository folder in Cursor.
-- **Execution**: Open Cursor Composer (`Ctrl+I` / `Cmd+I`) or Chat (`Ctrl+L` / `Cmd+L`) and instruct:
-  > *I have completed the PRD at doc/prd.md. Please ingest it, run the deep planning phase, and generate the roadmap.*
-  Rules will auto-attach based on the files in your session context.
+```bash
+node .ai/scripts/sync-adapters.js          # regenerate .claude / .cursor / .agents
+node .ai/scripts/sync-adapters.js --check  # CI: fail if adapters are out of date
+```
 
-#### 3. Google Antigravity
-Google Antigravity automatically detects conventions from `AGENTS.md` and uses the rules, skills, and workflows under `.agents/`.
-- **To Start**: Open the workspace in your IDE with the Google Antigravity extension enabled.
-- **Execution**: Message the agent in the chat:
-  > *I have completed my PRD. Please ingest doc/prd.md and start code generation.*
-- **Workflows**: Trigger specific pre-defined workflows using commands like `/prd-to-plan` or `/testing`.
+## Developer CLI
 
----
+| Command | Purpose |
+|---|---|
+| `node .ai/scripts/status-manager.js status` | Summary of project, phase and tasks |
+| `node .ai/scripts/status-manager.js next` | Next runnable task (respects stage order) |
+| `node .ai/scripts/status-manager.js validate-plan` | Plan must have 5–10 phases, each with Backend/Frontend/QA/Review |
+| `node .ai/scripts/status-manager.js complete-phase PHASE-0X --summary "…" --start-next` | Close a phase, refresh all status + memory files, start the next |
+| `node .ai/scripts/status-manager.js help` | All commands (init, set-stack, add-phase, add-task, update-task, retry, add-blocker, resolve-blocker, log, sync ...) |
+| `node .ai/scripts/scaffold-starter.js [--help]` | Generate package.json, tsconfig, jest/playwright config, `.env`, docker-compose from the discovery answers |
+| `node .ai/scripts/validate-project.js [--tsc] [--path <dir>]` | Architecture / naming / type-safety audit |
+| `node .ai/scripts/verify-ssh.js <ssh-url> ...` | Verify git SSH access before pushing |
+| `node .ai/scripts/git-sync.js push-all` | 3-repo strategy: push `backend/` and `frontend/` subtrees |
 
-## ⚙️ Developer CLI Commands
+`status-manager.js` is the only writer of the status markdown files; they are regenerated from `.ai/memory/state.json`.
 
-* **Codebase Compliance Auditor**:
-  ```bash
-  node .ai/scripts/validate-project.js
-  ```
-  *(Audits naming styles, class lengths, direct Mongoose service calls, and type safety)*
-* **Project Scaffolding Builder**:
-  ```bash
-  node .ai/scripts/scaffold-starter.js
-  ```
-  *(Scaffolds standard monorepos vs decoupled projects, DB ORMs, caching setups, and environment variables)*
-* **Status Logs Synchronizer**:
-  ```bash
-  node .ai/scripts/status-manager.js sync
-  ```
-  *(Synchronizes JSON database state to markdown logs)*
-* **Downstream Repositories Synchronizer**:
-  ```bash
-  node .ai/scripts/git-sync.js push-all
-  ```
-  *(Automates pushing and pulling codebase subdirectories to separate frontend/backend Git repositories via subtrees)*
+## Test Layout
 
----
+Tests travel with each codebase so decoupled repos stay self-contained:
 
-## 🔧 Post-Development Maintenance
+- Backend: unit tests `codebase/backend/src/**/*.spec.ts`; integration/API tests `codebase/backend/test/*.e2e-spec.ts`.
+- Frontend: unit tests `codebase/frontend/src/**/*.test.tsx`; Playwright E2E `codebase/frontend/e2e/`.
 
-### 🐛 1. Fixing Bugs
-1. Create a new bug file: **`doc/bugs/[bug-name].md`** (use template **`.ai/templates/bug-template.md`**).
-2. Detail the issue, steps to reproduce, and logs.
-3. Chat message to the agent:
-   > *"I have created a bug report at doc/bugs/[bug-name].md. Please investigate, write a reproducing test, and patch the codebase."*
+## Post-Development Maintenance
 
-### 🚀 2. Adding Features
-1. Create a new feature spec: **`doc/features/[feature-name].md`** (use template **`.ai/templates/feature-template.md`**).
-2. Chat message to the agent:
-   > *"I have added a new feature request at doc/features/[feature-name].md. Please analyze the impact on our current architecture, add it as a new phase, and implement it."*
+- **Bug**: copy `.ai/templates/bug-template.md` to `doc/bugs/<name>.md`, then run `/factory-bug-fix` or tell the agent to fix it.
+- **Feature**: copy `.ai/templates/feature-template.md` to `doc/features/<name>.md`, then run `/factory-feature-addition`.
 
+## Stack
+
+NestJS 11 · Node 24 LTS · TypeScript 5 · MongoDB (Mongoose 8) or PostgreSQL/MySQL (Prisma 5) · Redis + BullMQ (optional) · Next.js 14 · React 18 · Tailwind 3 · Shadcn UI (`shadcn@2.3.0`). Newer majors exist (see `.ai/context/tech-stack.md` → *Upgrade Path*); the factory is intentionally pinned to the tested set.

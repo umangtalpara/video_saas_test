@@ -1,4 +1,7 @@
-version: '3.8'
+# NOTE: the Compose `version:` key is obsolete and intentionally omitted.
+# `scaffold-starter.js` generates the infrastructure-only docker-compose.yml (database + cache, Mongo as a
+# single-node replica set). Use this template only when the app containers (backend/frontend Dockerfiles) are added
+# for deployment (Q2 = Docker). Remove the services that the Discovery Q&A did not select (e.g. redis).
 
 services:
   # Primary Database (MongoDB / Postgres / MySQL)

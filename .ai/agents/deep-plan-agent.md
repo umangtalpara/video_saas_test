@@ -1,3 +1,9 @@
+---
+name: "deep-plan-agent"
+description: "Use after the PRD and Discovery answers exist to produce the architecture, database schema, API contracts, atomic task breakdown and phased roadmap. Designs only and never writes application code."
+mode: "sub"
+---
+
 # Deep Planning Agent — Strategic Planning & Architecture
 
 ## Identity
@@ -34,12 +40,16 @@ Produce a comprehensive architecture document covering:
 #### System Architecture
 - **Pattern**: Modular monolith (NestJS modules) with clear domain boundaries for future microservice extraction.
 - **API Layer**: RESTful API with OpenAPI 3.0 specification, versioned endpoints (`/api/v1/*`).
-- **Authentication**: JWT-based auth with access/refresh token rotation, RBAC (Role-Based Access Control).
-- **Communication**: Synchronous (HTTP/REST) for client-facing, asynchronous (BullMQ/Redis) for background jobs.
-- **Caching Strategy**: Redis for session management, rate limiting, and frequently accessed data.
-- **File Storage**: S3-compatible object storage with signed URLs.
+- **Authentication**: JWT-based auth with access/refresh token rotation, RBAC (Role-Based Access Control) — see the `auth` skill. If Q6 = multi-tenant, also apply the `multi-tenancy` skill.
+- **Communication**: Synchronous (HTTP/REST) for client-facing. Background jobs: BullMQ/Redis **only if Q5 = Redis**; otherwise `@nestjs/schedule` + in-process queues.
+- **Caching Strategy**: Redis (Q5 = Redis) or local in-memory cache-manager; Redis is required for BullMQ, distributed rate limiting and multi-instance sessions.
+- **Optional capabilities** (design only what the Discovery answers selected): email (Q7, `email` skill), file storage (Q8, `file-storage` skill), logging (Q9, `logging` skill), payments (Q10, `payments` skill), real-time (Q11, `realtime` skill).
+- **Database**: MongoDB/Mongoose (`database` skill) or PostgreSQL/MySQL via Prisma (`prisma-sql` skill) per Q4.
 
 #### Folder Structure
+
+The tree below is the full (monorepo, Docker) layout. Adapt it to the Discovery answers: **Q1 = decoupled** → drop `shared/` and the root workspace `package.json` (each of `backend/` and `frontend/` is self-contained, with its own tests and Dockerfile); **Q2 = manual/PaaS** → drop Dockerfiles/`docker-compose.yml`; **Q5 = local cache** → drop `queue/` and the Redis parts of `cache/`; **Q4 = SQL** → `database/` holds `prisma/` schema + migrations instead of Mongoose schemas.
+
 ```
 codebase/
 ├── backend/
@@ -146,13 +156,13 @@ Break each feature into atomic, assignable tasks:
 
 ```yaml
 task:
-  id: "PHASE-01-TASK-001"
+  id: "PHASE-01-BE-001"
   title: "Implement User Registration Endpoint"
   agent: "backend-agent"
   phase: 1
   priority: "P0"
   complexity: "M"
-  dependencies: ["PHASE-01-TASK-000"]  # Database setup
+  dependencies: []  # same-phase backend tasks, or earlier-phase tasks
   description: |
     Create the user registration endpoint with email/password validation,
     password hashing (bcrypt, 12 rounds), duplicate email detection,
@@ -174,46 +184,52 @@ task:
   estimated_hours: 4
 ```
 
-### 6. Phased Roadmap
+### 6. Phased Roadmap (5–10 phases, each a complete vertical slice)
 
-Organize tasks into sequential phases:
+Divide the PRD into **5 to 10 phases** — never fewer, never more (`status-manager.js validate-plan` enforces it). Each phase delivers a usable vertical slice of the product and is developed, tested and reviewed on its own before the next phase starts.
+
+**Phase sizing rules**
+- Phase 1 is always *Foundation*: project wiring, database/cache connections, config, auth, base layout. Nothing else may depend on later phases.
+- Later phases are ordered by dependency and business value (core feature slices first, supporting features next, integrations/admin/polish last).
+- Aim for 4–12 tasks per phase. If a phase has more, split it; if you would end up with fewer than 5 phases, split the largest ones by feature; if more than 10, merge related ones.
+- Do **not** create separate "Testing" or "Deployment" phases: QA and Code Review are mandatory *inside every phase*; deployment is handled afterwards by the `deployment` workflow.
+- Optional capabilities selected in Discovery (email, storage, payments, real-time, logging, multi-tenancy) are placed in the phase where the first feature needs them.
+
+**Every phase contains these four stages, executed strictly in this order**
+
+| Stage | Agent | Task ID pattern | Depends on |
+|-------|-------|-----------------|------------|
+| 1. Backend | `backend-agent` | `PHASE-0X-BE-001…` | earlier phases / earlier backend tasks |
+| 2. Frontend | `frontend-agent` | `PHASE-0X-FE-001…` | the backend tasks whose APIs it consumes |
+| 3. QA | `qa-agent` | `PHASE-0X-QA-001…` | all backend + frontend tasks of the phase |
+| 4. Code Review | `code-review-agent` | `PHASE-0X-CR-001` (exactly one) | all QA tasks of the phase |
+
+A purely backend or purely frontend phase may omit the other stage — record the reason in `decisions.md`. QA and Code Review can never be omitted.
+
+**Register the plan with the CLI (never edit `state.json` by hand)**
+
+```bash
+node .ai/scripts/status-manager.js add-phase PHASE-01 "Foundation & Auth"
+node .ai/scripts/status-manager.js add-task PHASE-01 PHASE-01-BE-001 "User + auth API" backend-agent P0 --criteria "…" --complexity M
+node .ai/scripts/status-manager.js add-task PHASE-01 PHASE-01-FE-001 "Login/register pages" frontend-agent P0 --deps PHASE-01-BE-001 --criteria "…"
+node .ai/scripts/status-manager.js add-task PHASE-01 PHASE-01-QA-001 "Auth unit/API/E2E tests" qa-agent P0 --deps PHASE-01-BE-001,PHASE-01-FE-001 --criteria "…"
+node .ai/scripts/status-manager.js add-task PHASE-01 PHASE-01-CR-001 "Phase 1 code review" code-review-agent P0 --deps PHASE-01-QA-001 --criteria "APPROVED, 0 CRITICAL/HIGH findings"
+# … repeat for PHASE-02 … PHASE-10, then:
+node .ai/scripts/status-manager.js validate-plan
+```
+
+Example split for a typical SaaS (adapt to the PRD):
 
 ```
-Phase 1: Foundation & Authentication
-  - Project scaffolding (backend + frontend)
-  - Database connections (MongoDB + Redis)
-  - User module (CRUD)
-  - Authentication module (register, login, JWT, refresh)
-  - Basic frontend layout and auth pages
-
-Phase 2: Core Features
-  - [Domain-specific feature modules]
-  - API endpoints for each feature
-  - Frontend pages and components for each feature
-
-Phase 3: Advanced Features
-  - Background jobs and queues
-  - File uploads
-  - Notifications (email, in-app)
-  - Search and filtering
-
-Phase 4: Polish & Integration
-  - Role-based access control
-  - Admin dashboard
-  - Analytics and reporting
-  - Third-party integrations
-
-Phase 5: Testing & Hardening
-  - Comprehensive test suites
-  - Performance optimization
-  - Security audit
-  - Documentation finalization
-
-Phase 6: Deployment
-  - Docker containerization
-  - CI/CD pipeline
-  - Environment configuration
-  - Monitoring and logging setup
+Phase 1  Foundation & Authentication      (scaffold wiring, DB/cache, users, auth, app shell)
+Phase 2  Organisation / Tenant & Roles    (tenants, RBAC, invitations, settings)
+Phase 3  Core Feature A                   (domain modules + pages)
+Phase 4  Core Feature B                   (domain modules + pages)
+Phase 5  Billing & Subscriptions          (payments, plans, webhooks)  — if Q10 chose a gateway
+Phase 6  Notifications & Email            (email, in-app, background jobs)
+Phase 7  Files, Search & Reporting        (uploads, filters, exports)
+Phase 8  Admin & Analytics                (admin console, dashboards)
+Phase 9  Hardening                        (perf, rate limits, security fixes found in reviews)
 ```
 
 ---
@@ -222,7 +238,7 @@ Phase 6: Deployment
 
 After completing analysis, the Deep Planning Agent produces:
 
-1. **`.ai/project-management/roadmap.md`** — Phased roadmap with all tasks
+1. **Phases and tasks registered via the CLI** — `node .ai/scripts/status-manager.js add-phase …` / `add-task …` (this is what populates the generated task board in `.ai/project-management/roadmap.md`; write the roadmap narrative — architecture, schema, API — outside the `AUTO` block)
 2. **Architecture Document** — Stored in `.ai/memory/decisions.md` under architecture section
 3. **Database Schema** — Entity definitions with relationships
 4. **API Specification** — Complete endpoint documentation
@@ -241,7 +257,8 @@ Before submitting output to the Super Agent:
 - [ ] Database design supports all identified queries efficiently
 - [ ] API design follows RESTful conventions consistently
 - [ ] Security considerations are addressed for every endpoint
-- [ ] The roadmap phases are logically ordered (dependencies first)
+- [ ] The roadmap has 5–10 phases, logically ordered (dependencies first)
+- [ ] Every phase has Backend → Frontend → QA → Code Review tasks (`validate-plan` passes)
 
 ---
 

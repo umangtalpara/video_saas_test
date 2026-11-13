@@ -1,3 +1,8 @@
+---
+name: "uiux"
+description: "UI/UX design principles on Tailwind + Shadcn: layout, accessibility, loading/empty/error states. Use when designing screens or components."
+---
+
 # UI/UX Design Skill
 
 ## Identity

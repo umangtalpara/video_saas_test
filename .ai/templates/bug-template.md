@@ -57,6 +57,6 @@
 ---
 
 ## 6. Fix Verification (Completed by AI Agent)
-* **Reproducing Test File**: `tests/[test-path]/bug-[id].spec.ts`
+* **Reproducing Test File**: `codebase/backend/test/integration/bug-[id].e2e-spec.ts` (backend) or `codebase/frontend/e2e/bug-[id].spec.ts` (frontend)
 * **Resolution Description**: [Explain what was edited and how it resolved the bug]
 * **Regression Check**: [ ] All existing test suites pass.

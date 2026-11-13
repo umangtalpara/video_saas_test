@@ -70,3 +70,23 @@ Thumbs.db
 dist/
 .next/
 out/
+
+# Environment files (secrets) — keep only the examples
+.env*
+!.env.example
+
+# Keys & certificates
+*.pem
+*.key
+*.p12
+
+# Local AI-tool overrides
+.claude/settings.local.json
+CLAUDE.local.md
+.cursor/mcp.json
+
+# Uploads & generated artifacts
+uploads/
+*.tsbuildinfo
+playwright-report/
+test-results/

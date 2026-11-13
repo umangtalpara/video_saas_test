@@ -1,3 +1,8 @@
+---
+name: "tech-stack"
+description: "Supported technologies, versions and compatibility notes for backend, frontend, databases, caching and testing."
+---
+
 # Tech Stack
 
 The technologies utilized in this project are dynamically determined during the Discovery Q&A Phase. Below are the supported technologies and configurations.
@@ -14,13 +19,12 @@ The technologies utilized in this project are dynamically determined during the 
 | **bcrypt** | 5.x | Password hashing |
 | **class-validator** | 0.14.x | Request validation decorators |
 | **class-transformer** | 0.5.x | Object transformation |
-| **@nestjs/swagger** | 7.x | OpenAPI documentation |
-| **@nestjs/config** | 3.x | Configuration management |
-| **@nestjs/throttler** | 5.x | Rate limiting |
-| **@nestjs/cache-manager** | 2.x | Caching abstraction (supports Redis or Local In-Memory) |
+| **@nestjs/swagger** | 11.x | OpenAPI documentation |
+| **@nestjs/config** | 4.x | Configuration management |
+| **@nestjs/throttler** | 6.x | Rate limiting |
+| **@nestjs/cache-manager** | 3.x (+ cache-manager 6, @keyv/redis) | Caching abstraction (supports Redis or Local In-Memory) |
 | **Winston** | 3.x | Structured logging |
-| **helmet** | 7.x | HTTP security headers |
-| **cors** | 2.x | Cross-Origin Resource Sharing |
+| **helmet** | 8.x | HTTP security headers |
 | **Joi** | 17.x | Configuration validation |
 | **uuid** | 9.x | UUID generation |
 
@@ -32,7 +36,7 @@ The technologies utilized in this project are dynamically determined during the 
 | **React** | 18.x | UI component library |
 | **TypeScript** | 5.x | Type-safe JavaScript (strict mode) |
 | **Tailwind CSS** | 3.x | Utility-first CSS framework |
-| **Shadcn UI** | Latest | Accessible component primitives |
+| **Shadcn UI** | CLI `shadcn@2.3.0` | Accessible component primitives (pinned: the shadcn docs direct Tailwind v3 projects to `shadcn@2.3.0`; `@latest` defaults to Tailwind v4 / React 19) |
 | **Radix UI** | Latest | Headless UI primitives (via Shadcn) |
 | **Zustand** | 4.x | Client state management |
 | **TanStack React Query** | 5.x | Server state management |
@@ -49,7 +53,7 @@ The technologies utilized in this project are dynamically determined during the 
 ## Databases (Choose One)
 
 * **MongoDB** (Version 7.x) with **Mongoose** (8.x ODM) - Suitable for flexible document schemas and transaction support.
-* **PostgreSQL / MySQL** with **Prisma ORM** (5.x) or **TypeORM** (0.3.x) - Suitable for strict SQL relational schemas.
+* **PostgreSQL / MySQL** with **Prisma ORM** (5.x) - Suitable for strict SQL relational schemas. See the `prisma-sql` skill.
 
 ## Caching & Background Queues (Conditional)
 
@@ -88,7 +92,13 @@ The technologies utilized in this project are dynamically determined during the 
 
 ## Version Compatibility Notes
 
-- Node.js 24 LTS is required for native fetch and latest ESM support.
+- Node.js 24 LTS is the supported runtime (Node 22 LTS also works).
 - NestJS 11.x requires Node.js 18+ and TypeScript 5.0+.
 - Next.js 14.x requires React 18.x and Node.js 18+.
 - Mongoose 8.x and Prisma 5.x require Node.js 16+ and have strict type checking.
+- Versions in this file are the **tested set**: `scaffold-starter.js` generates `package.json` files whose dependency trees were verified to resolve against NestJS 11 / Next.js 14 (no peer conflicts). Nest-ecosystem packages must match the Nest major (e.g. `@nestjs/swagger` 11, `@nestjs/config` 4, `@nestjs/schedule` 6, `@nestjs/cache-manager` 3).
+- MongoDB transactions need a replica set (single-node replica set in docker-compose, or Atlas).
+
+## Upgrade Path (decision recorded, not yet applied)
+
+The registry has newer majors: NestJS 12, Next.js 16, React 19, Tailwind CSS 4, Prisma 7. This factory deliberately stays on NestJS 11 / Next.js 14 / React 18 / Tailwind 3 / Prisma 5 because every agent, skill and template is written against them. Treat an upgrade as its own project: bump `tech-stack.md`, `settings.json`, `scaffold-starter.js`, then adjust the skills/templates and re-run the test pipeline. Keep Next.js 14 on the latest 14.2.x patch for security fixes.

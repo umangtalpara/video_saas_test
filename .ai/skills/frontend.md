@@ -1,3 +1,8 @@
+---
+name: "frontend"
+description: "Next.js 14 App Router + React 18 conventions with Zustand, React Query and React Hook Form. Use when building pages, components, hooks, stores or API clients."
+---
+
 # Frontend Development Skill
 
 ## Identity

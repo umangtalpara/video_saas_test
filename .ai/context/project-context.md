@@ -1,3 +1,8 @@
+---
+name: "project-context"
+description: "What the AI factory is, how the pipeline flows, directory and test layout."
+---
+
 # Project Context
 
 ## Overview
@@ -8,7 +13,7 @@ This workspace is an autonomous AI-driven software factory designed to transform
 
 - **Organization**: ProvenPeak Solutions
 - **Project Type**: SaaS Application Factory
-- **Status**: Initialized — awaiting PRD
+- **Status**: see `.ai/project-management/project-status.md` (generated from `.ai/memory/state.json`)
 
 ## How It Works
 
@@ -61,14 +66,15 @@ doc/
 
 codebase/
 ├── backend/            → NestJS backend application
+│   ├── src/**          → source + co-located unit tests (*.spec.ts)
+│   └── test/           → integration (integration/) and API contract (api/) tests
 ├── frontend/           → Next.js frontend application
-└── shared/             → Shared types, constants, validators
+│   ├── src/**          → source + co-located unit tests (*.test.tsx)
+│   └── e2e/            → Playwright end-to-end tests
+└── shared/             → Shared types/constants/validators (monorepo structure only)
 
-tests/
-├── unit/               → Unit tests
-├── integration/        → Integration tests
-├── e2e/                → End-to-end tests
-└── api/                → API contract tests
+Tests live inside each codebase folder so they travel with the code when
+backend/frontend are split into separate repositories.
 ```
 
 ## Key Principles
