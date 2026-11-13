@@ -4,50 +4,9 @@
 
 ---
 
-## Active Phase
+## No Active Phase
 
-| Field | Value |
-|-------|-------|
-| **Phase** | PHASE-02 |
-| **Name** | BYOK Provider Engine & Catalog |
-| **Status** | IN_PROGRESS |
-| **Started At** | 2026-11-13 |
+Project Status: 🟢 IN_PROGRESS
 
----
-
-## Phase Pipeline (strict order: Backend → Frontend → QA → Code Review)
-
-| Stage | Agent | Done / Total | State |
-|-------|-------|--------------|-------|
-| Backend | backend-agent | 2/2 | ✅ |
-| Frontend | frontend-agent | 2/2 | ✅ |
-| QA | qa-agent | 1/1 | ✅ |
-| Code Review | code-review-agent | 1/1 | ✅ |
-
-Code review rounds used: 0/3
-
----
-
-## Phase Tasks
-
-### Backend Tasks
-| Task ID | Title | Agent | Priority | Status |
-|---------|-------|-------|----------|--------|
-| PHASE-02-BE-001 | Provider Catalog & Models Module | backend-agent | P0 | COMPLETED |
-| PHASE-02-BE-002 | User Provider Connections & Credential Encryption | backend-agent | P0 | COMPLETED |
-
-### Frontend Tasks
-| Task ID | Title | Agent | Priority | Status |
-|---------|-------|-------|----------|--------|
-| PHASE-02-FE-001 | Provider Catalog Explorer & Model View | frontend-agent | P1 | COMPLETED |
-| PHASE-02-FE-002 | User API Keys Management & Testing Interface | frontend-agent | P0 | COMPLETED |
-
-### QA Tasks
-| Task ID | Title | Agent | Priority | Status |
-|---------|-------|-------|----------|--------|
-| PHASE-02-QA-001 | Provider Catalog & Encryption Test Suite | qa-agent | P0 | COMPLETED |
-
-### Code Review Tasks
-| Task ID | Title | Agent | Priority | Status |
-|---------|-------|-------|----------|--------|
-| PHASE-02-CR-001 | Phase 2 BYOK Security Review | code-review-agent | P0 | COMPLETED |
+> ⏸ WAITING FOR USER APPROVAL: PHASE-02 is closed; PHASE-03 has not started.
+> The user must approve in chat; then the agent runs `status-manager.js approve-phase PHASE-03`.

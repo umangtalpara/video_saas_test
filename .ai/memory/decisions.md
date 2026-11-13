@@ -110,6 +110,12 @@ What is the chosen solution?
 - **Stats**: 6 tasks, 0 retries, 0 review round(s)
 - **Details**: [phase-reports.md](phase-reports.md)
 
+### PHASE-02 closed — BYOK Provider Engine & Catalog (2026-11-13)
+
+- **Delivered**: Delivered BYOK Provider Catalog with dynamic Mongoose schemas and default seed data, User Provider Connections with AES-256-GCM encryption at rest, connection test endpoint with key masking, Frontend Provider Catalog explorer (/providers), and User API Key settings with test interface (/settings/providers).
+- **Stats**: 6 tasks, 0 retries, 0 review round(s)
+- **Details**: [phase-reports.md](phase-reports.md)
+
 ---
 
 *Last updated: 2026-11-13*

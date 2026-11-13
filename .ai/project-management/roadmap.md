@@ -81,7 +81,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
   * Depends on: PHASE-01-QA-001
   * Criteria: Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings across JWT security, password hashing, MongoDB query sanitization, and CORS/Helmet configurations.
 
-### PHASE-02: BYOK Provider Engine & Catalog (Status: IN_PROGRESS)
+### PHASE-02: BYOK Provider Engine & Catalog (Status: COMPLETED)
 - **[COMPLETED]** PHASE-02-BE-001: Provider Catalog & Models Module (Agent: backend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-01-BE-002
   * Criteria: Mongoose schemas for provider_catalog and provider_models with indexes; GET /api/v1/providers and GET /api/v1/providers/:id/models return dynamic catalogue; admin endpoints allow adding/updating model metadata and freeQuotaPolicy.
