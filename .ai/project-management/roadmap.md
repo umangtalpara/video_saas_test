@@ -85,7 +85,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-02-BE-001: Provider Catalog & Models Module (Agent: backend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-01-BE-002
   * Criteria: Mongoose schemas for provider_catalog and provider_models with indexes; GET /api/v1/providers and GET /api/v1/providers/:id/models return dynamic catalogue; admin endpoints allow adding/updating model metadata and freeQuotaPolicy.
-- **[PENDING]** PHASE-02-BE-002: User Provider Connections & Credential Encryption (Agent: backend-agent, Priority: P0, Complexity: L)
+- **[COMPLETED]** PHASE-02-BE-002: User Provider Connections & Credential Encryption (Agent: backend-agent, Priority: P0, Complexity: L)
   * Depends on: PHASE-02-BE-001
   * Criteria: User provider credentials encrypted at rest with AES-256-GCM (ciphertext, iv, authTag, keyVersion); CRUD for /api/v1/provider-connections with tenant isolation; POST /api/v1/provider-connections/:id/test tests connection without returning raw keys; credentials never exposed in logs or API responses.
 - **[PENDING]** PHASE-02-FE-001: Provider Catalog Explorer & Model View (Agent: frontend-agent, Priority: P1, Complexity: M)

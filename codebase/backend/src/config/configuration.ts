@@ -15,6 +15,7 @@ export interface SecurityConfig {
   jwtSecret: string;
   jwtAccessExpiry: string;
   jwtRefreshExpiry: string;
+  encryptionKey: string;
 }
 
 export interface LoggingConfig {
@@ -49,6 +50,9 @@ export default (): RootConfig => ({
       'change-me-to-a-random-string-of-at-least-32-characters',
     jwtAccessExpiry: process.env['JWT_ACCESS_EXPIRY'] || '15m',
     jwtRefreshExpiry: process.env['JWT_REFRESH_EXPIRY'] || '7d',
+    encryptionKey:
+      process.env['ENCRYPTION_KEY'] ||
+      '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef',
   },
   logging: {
     level: process.env['LOG_LEVEL'] || 'info',

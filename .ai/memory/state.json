@@ -25,7 +25,7 @@
     "backend-agent": {
       "status": "IDLE",
       "task": null,
-      "lastActive": "2026-11-13 13:28:03"
+      "lastActive": "2026-11-13 13:35:17"
     },
     "frontend-agent": {
       "lastActive": "2026-11-13 13:20:38"
@@ -188,13 +188,14 @@
           "title": "User Provider Connections & Credential Encryption",
           "agent": "backend-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-02-BE-001"
           ],
           "acceptance_criteria": "User provider credentials encrypted at rest with AES-256-GCM (ciphertext, iv, authTag, keyVersion); CRUD for /api/v1/provider-connections with tenant isolation; POST /api/v1/provider-connections/:id/test tests connection without returning raw keys; credentials never exposed in logs or API responses.",
-          "complexity": "L"
+          "complexity": "L",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-02-FE-001",
