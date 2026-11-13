@@ -86,3 +86,4 @@ describe('AuthController', () => {
     expect(authService.logout).toHaveBeenCalledWith('123');
   });
 });
+

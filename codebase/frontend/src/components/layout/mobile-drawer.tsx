@@ -49,3 +49,4 @@ export function MobileDrawer({ isOpen, onClose }: MobileDrawerProps): React.JSX.
     </div>
   );
 }
+

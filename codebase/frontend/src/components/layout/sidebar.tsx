@@ -125,3 +125,4 @@ export function Sidebar({ className }: { className?: string }): React.JSX.Elemen
     </aside>
   );
 }
+

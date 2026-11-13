@@ -40,3 +40,4 @@ describe('envValidationSchema', () => {
     expect(value.LOG_LEVEL).toBe('info');
   });
 });
+

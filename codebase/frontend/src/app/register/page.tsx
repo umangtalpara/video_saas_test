@@ -155,3 +155,4 @@ export default function RegisterPage(): React.JSX.Element {
     </AuthLayout>
   );
 }
+

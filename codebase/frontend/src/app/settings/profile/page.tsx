@@ -238,3 +238,4 @@ export default function ProfileSettingsPage(): React.JSX.Element {
     </DashboardLayout>
   );
 }
+

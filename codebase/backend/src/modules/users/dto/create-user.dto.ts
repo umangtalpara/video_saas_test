@@ -9,3 +9,4 @@ export interface CreateUserData {
   emailVerificationToken?: string | null;
   emailVerificationExpires?: Date | null;
 }
+

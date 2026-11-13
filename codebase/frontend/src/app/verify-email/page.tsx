@@ -117,3 +117,4 @@ export default function VerifyEmailPage(): React.JSX.Element {
     </AuthLayout>
   );
 }
+

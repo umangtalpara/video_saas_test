@@ -53,3 +53,4 @@ export class UsersService {
     await this.usersRepository.updateRefreshToken(id, refreshTokenHash);
   }
 }
+

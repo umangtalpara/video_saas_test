@@ -19,3 +19,4 @@ describe('RegisterPage', () => {
     expect(screen.getByRole('button', { name: /sign up/i })).toBeInTheDocument();
   });
 });
+

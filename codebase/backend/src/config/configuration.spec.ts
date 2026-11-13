@@ -44,3 +44,4 @@ describe('configuration loader', () => {
     expect(config.logging.level).toBe('debug');
   });
 });
+

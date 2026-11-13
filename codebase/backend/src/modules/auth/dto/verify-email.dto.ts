@@ -7,3 +7,4 @@ export class VerifyEmailDto {
   @IsNotEmpty()
   token!: string;
 }
+

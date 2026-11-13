@@ -24,3 +24,4 @@ export class DatabaseHealthIndicator extends HealthIndicator {
     throw new HealthCheckError('Database connection is not ready', result);
   }
 }
+

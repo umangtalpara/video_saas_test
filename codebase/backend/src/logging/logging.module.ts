@@ -12,3 +12,4 @@ import { createWinstonLoggerOptions } from './winston.config';
   exports: [WinstonModule],
 })
 export class LoggingModule {}
+

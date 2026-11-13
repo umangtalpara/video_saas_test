@@ -33,3 +33,4 @@ export function Badge({ className, variant, ...props }: BadgeProps): React.JSX.E
     <div className={cn(badgeVariants({ variant }), className)} {...props} />
   );
 }
+

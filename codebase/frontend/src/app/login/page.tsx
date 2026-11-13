@@ -141,3 +141,4 @@ export default function LoginPage(): React.JSX.Element {
     </AuthLayout>
   );
 }
+

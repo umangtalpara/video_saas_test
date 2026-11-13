@@ -40,3 +40,4 @@ test.describe('Authentication & Navigation Flows', () => {
     await page.getByRole('button', { name: /Send Reset Link/i }).click();
   });
 });
+

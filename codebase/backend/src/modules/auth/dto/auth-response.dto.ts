@@ -19,3 +19,4 @@ export class AuthResponseDto {
   @ApiProperty({ type: AuthTokensDto })
   tokens!: AuthTokensDto;
 }
+

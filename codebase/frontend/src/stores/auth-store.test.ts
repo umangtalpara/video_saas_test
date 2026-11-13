@@ -54,3 +54,4 @@ describe('auth-store', () => {
     expect(state.user).toBeNull();
   });
 });
+

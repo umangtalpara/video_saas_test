@@ -65,3 +65,4 @@ describe('UsersService', () => {
     await expect(service.update('456', { name: 'None' })).rejects.toThrow(NotFoundException);
   });
 });
+
