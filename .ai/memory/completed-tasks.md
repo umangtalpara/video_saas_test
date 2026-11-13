@@ -6,4 +6,4 @@
 
 | Task ID | Title | Agent | Date Completed | Notes |
 |---------|-------|-------|----------------|-------|
-| — | No completed tasks yet | — | — | — |
+| PHASE-01-BE-001 | Core Setup, MongoDB Connection & Health Checks | backend-agent | 2026-11-13 | — |

@@ -4,9 +4,50 @@
 
 ---
 
-## No Active Phase
+## Active Phase
 
-Project Status: 🔵 PLANNING
+| Field | Value |
+|-------|-------|
+| **Phase** | PHASE-01 |
+| **Name** | Foundation, Authentication & Layout Shell |
+| **Status** | IN_PROGRESS |
+| **Started At** | 2026-11-13 |
 
-> ⏸ WAITING FOR USER APPROVAL of the plan before PHASE-01 starts.
-> The user must approve in chat; then the agent runs `status-manager.js approve-phase PHASE-01`.
+---
+
+## Phase Pipeline (strict order: Backend → Frontend → QA → Code Review)
+
+| Stage | Agent | Done / Total | State |
+|-------|-------|--------------|-------|
+| Backend | backend-agent | 1/2 | 🔄 |
+| Frontend | frontend-agent | 0/2 | ⬜ |
+| QA | qa-agent | 0/1 | ⬜ |
+| Code Review | code-review-agent | 0/1 | ⬜ |
+
+Code review rounds used: 0/3
+
+---
+
+## Phase Tasks
+
+### Backend Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-01-BE-001 | Core Setup, MongoDB Connection & Health Checks | backend-agent | P0 | COMPLETED |
+| PHASE-01-BE-002 | User Management & JWT Authentication Module | backend-agent | P0 | PENDING |
+
+### Frontend Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-01-FE-001 | Next.js App Shell, Navigation & Theme System | frontend-agent | P0 | PENDING |
+| PHASE-01-FE-002 | Authentication & User Profile Pages | frontend-agent | P0 | PENDING |
+
+### QA Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-01-QA-001 | Foundation & Auth Test Suite | qa-agent | P0 | PENDING |
+
+### Code Review Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-01-CR-001 | Phase 1 Security & Architecture Review | code-review-agent | P0 | PENDING |
