@@ -6,4 +6,30 @@ One entry per closed phase (written by `status-manager.js complete-phase`).
 
 ---
 
-_No phase has been closed yet._
+## PHASE-01: Foundation, Authentication & Layout Shell
+
+| Field | Value |
+|-------|-------|
+| **Started** | 2026-11-13 |
+| **Completed** | 2026-11-13 |
+| **Tasks** | 6 |
+| **Total retries** | 0 |
+| **Review rounds** | 0 |
+
+**Summary:** Delivered NestJS 11 foundation, MongoDB connection, JWT auth with refresh rotation, SMTP mailer, Next.js 14 app shell with dark theme, auth/profile pages, and end-to-end test suites.
+
+| Stage | Agent | Done / Total |
+|-------|-------|--------------|
+| Backend | backend-agent | 2/2 |
+| Frontend | frontend-agent | 2/2 |
+| QA | qa-agent | 1/1 |
+| Code Review | code-review-agent | 1/1 |
+
+| Task | Title | Agent | Completed |
+|------|-------|-------|-----------|
+| PHASE-01-BE-001 | Core Setup, MongoDB Connection & Health Checks | backend-agent | 2026-11-13 |
+| PHASE-01-BE-002 | User Management & JWT Authentication Module | backend-agent | 2026-11-13 |
+| PHASE-01-FE-001 | Next.js App Shell, Navigation & Theme System | frontend-agent | 2026-11-13 |
+| PHASE-01-FE-002 | Authentication & User Profile Pages | frontend-agent | 2026-11-13 |
+| PHASE-01-QA-001 | Foundation & Auth Test Suite | qa-agent | 2026-11-13 |
+| PHASE-01-CR-001 | Phase 1 Security & Architecture Review | code-review-agent | 2026-11-13 |

@@ -10,10 +10,10 @@
 |-------|-------|
 | **Project** | VideoForge AI |
 | **Status** | 🟢 IN_PROGRESS |
-| **Current Phase** | PHASE-01 — Foundation, Authentication & Layout Shell |
-| **Awaiting Approval** | no |
+| **Current Phase** | N/A |
+| **Awaiting Approval** | ⏸ yes — start of PHASE-02 (since 2026-11-13 13:20:38) |
 | **Total Phases** | 6 |
-| **Completed Phases** | 0 |
+| **Completed Phases** | 1 |
 | **Active Blockers** | 0 |
 | **Started At** | 2026-11-13 |
 | **Last Updated** | 2026-11-13 |
@@ -50,7 +50,7 @@
 
 | Phase | Name | Status | Tasks | Completed | Failed | Blocked |
 |-------|------|--------|-------|-----------|--------|---------|
-| PHASE-01 | Foundation, Authentication & Layout Shell | IN_PROGRESS | 6 | 6 | 0 | 0 |
+| PHASE-01 | Foundation, Authentication & Layout Shell | COMPLETED | 6 | 6 | 0 | 0 |
 | PHASE-02 | BYOK Provider Engine & Catalog | PENDING | 6 | 0 | 0 | 0 |
 | PHASE-03 | Video Projects & Script Planner Engine | PENDING | 6 | 0 | 0 | 0 |
 | PHASE-04 | Video Generation Worker & Provider Adapters | PENDING | 6 | 0 | 0 | 0 |
@@ -75,6 +75,8 @@
 | Project status → PLANNING | 2026-11-13 | — |
 | Plan validated — awaiting user approval | 2026-11-13 | 6 phases |
 | User approved start of PHASE-01 | 2026-11-13 | user approved in chat |
+| PHASE-01 completed | 2026-11-13 | Foundation, Authentication & Layout Shell — Delivered NestJS 11 foundation, MongoDB connection, JWT auth with refresh rotation, SMTP mailer, Next.js 14 app shell with dark theme, auth/profile pages, and end-to-end test suites. |
+| PHASE-01 closed — awaiting user approval to start PHASE-02 | 2026-11-13 | — |
 
 ---
 

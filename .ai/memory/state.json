@@ -5,8 +5,14 @@
     "startedAt": "2026-11-13",
     "lastUpdated": "2026-11-13",
     "totalPhases": 6,
-    "completedPhases": 0,
-    "activeBlockers": 0
+    "completedPhases": 1,
+    "activeBlockers": 0,
+    "awaitingApproval": {
+      "kind": "phase",
+      "after": "PHASE-01",
+      "next": "PHASE-02",
+      "since": "2026-11-13 13:20:38"
+    }
   },
   "stack": {
     "structure": "decoupled",
@@ -23,31 +29,23 @@
   },
   "agents": {
     "backend-agent": {
-      "status": "ACTIVE",
-      "task": "PHASE-01-BE-002",
-      "lastActive": "2026-11-13 11:54:10"
+      "lastActive": "2026-11-13 13:20:38"
     },
     "frontend-agent": {
-      "status": "ACTIVE",
-      "task": "PHASE-01-FE-002",
-      "lastActive": "2026-11-13 13:09:42"
+      "lastActive": "2026-11-13 13:20:38"
     },
     "qa-agent": {
-      "status": "ACTIVE",
-      "task": "PHASE-01-QA-001",
-      "lastActive": "2026-11-13 13:13:33"
+      "lastActive": "2026-11-13 13:20:38"
     },
     "code-review-agent": {
-      "status": "IDLE",
-      "task": null,
-      "lastActive": "2026-11-13 13:20:02"
+      "lastActive": "2026-11-13 13:20:38"
     }
   },
   "phases": [
     {
       "id": "PHASE-01",
       "name": "Foundation, Authentication & Layout Shell",
-      "status": "IN_PROGRESS",
+      "status": "COMPLETED",
       "tasks": [
         {
           "id": "PHASE-01-BE-001",
@@ -134,7 +132,41 @@
           "completedDate": "2026-11-13"
         }
       ],
-      "startedAt": "2026-11-13"
+      "startedAt": "2026-11-13",
+      "completedAt": "2026-11-13",
+      "report": {
+        "completedAt": "2026-11-13",
+        "summary": "Delivered NestJS 11 foundation, MongoDB connection, JWT auth with refresh rotation, SMTP mailer, Next.js 14 app shell with dark theme, auth/profile pages, and end-to-end test suites.",
+        "tasks": 6,
+        "retries": 0,
+        "reviewRounds": 0,
+        "stages": [
+          {
+            "label": "Backend",
+            "agent": "backend-agent",
+            "done": 2,
+            "total": 2
+          },
+          {
+            "label": "Frontend",
+            "agent": "frontend-agent",
+            "done": 2,
+            "total": 2
+          },
+          {
+            "label": "QA",
+            "agent": "qa-agent",
+            "done": 1,
+            "total": 1
+          },
+          {
+            "label": "Code Review",
+            "agent": "code-review-agent",
+            "done": 1,
+            "total": 1
+          }
+        ]
+      }
     },
     {
       "id": "PHASE-02",
@@ -593,6 +625,16 @@
       "event": "User approved start of PHASE-01",
       "date": "2026-11-13",
       "notes": "user approved in chat"
+    },
+    {
+      "event": "PHASE-01 completed",
+      "date": "2026-11-13",
+      "notes": "Foundation, Authentication & Layout Shell — Delivered NestJS 11 foundation, MongoDB connection, JWT auth with refresh rotation, SMTP mailer, Next.js 14 app shell with dark theme, auth/profile pages, and end-to-end test suites."
+    },
+    {
+      "event": "PHASE-01 closed — awaiting user approval to start PHASE-02",
+      "date": "2026-11-13",
+      "notes": ""
     }
   ],
   "plan": {

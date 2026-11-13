@@ -8,7 +8,7 @@
 
 ```
 Total:     [███░░░░░░░░░░░░░░░░░] 17%  (6/36 tasks)
-PHASE-01:   IN_PROGRESS (100%)
+PHASE-01:   COMPLETED (100%)
 PHASE-02:   PENDING (0%)
 PHASE-03:   PENDING (0%)
 PHASE-04:   PENDING (0%)

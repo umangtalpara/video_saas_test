@@ -104,6 +104,12 @@ What is the chosen solution?
 - **Decision**: Stay on NestJS 11 / Next.js 14 / React 18 / Tailwind 3 / Prisma 5, with Nest-ecosystem packages matched to Nest 11 (swagger 11, config 4, schedule 6, cache-manager 3, throttler 6) and `shadcn@2.3.0` for Tailwind v3. Newer majors (Nest 12, Next 16, React 19, Tailwind 4, Prisma 7) are an explicit future migration, see `.ai/context/tech-stack.md`.
 - **Also**: JWT defaults to HS256 with a >=32-char secret (RS256 optional); `exactOptionalPropertyTypes` is off; tests live inside each codebase.
 
+### PHASE-01 closed — Foundation, Authentication & Layout Shell (2026-11-13)
+
+- **Delivered**: Delivered NestJS 11 foundation, MongoDB connection, JWT auth with refresh rotation, SMTP mailer, Next.js 14 app shell with dark theme, auth/profile pages, and end-to-end test suites.
+- **Stats**: 6 tasks, 0 retries, 0 review round(s)
+- **Details**: [phase-reports.md](phase-reports.md)
+
 ---
 
 *Last updated: 2026-11-13*
