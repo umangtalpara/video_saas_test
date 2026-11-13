@@ -51,7 +51,7 @@
 | Phase | Name | Status | Tasks | Completed | Failed | Blocked |
 |-------|------|--------|-------|-----------|--------|---------|
 | PHASE-01 | Foundation, Authentication & Layout Shell | COMPLETED | 6 | 6 | 0 | 0 |
-| PHASE-02 | BYOK Provider Engine & Catalog | IN_PROGRESS | 6 | 2 | 0 | 0 |
+| PHASE-02 | BYOK Provider Engine & Catalog | IN_PROGRESS | 6 | 3 | 0 | 0 |
 | PHASE-03 | Video Projects & Script Planner Engine | PENDING | 6 | 0 | 0 | 0 |
 | PHASE-04 | Video Generation Worker & Provider Adapters | PENDING | 6 | 0 | 0 | 0 |
 | PHASE-05 | FFmpeg Rendering & Media Assembly | PENDING | 6 | 0 | 0 | 0 |
@@ -62,7 +62,7 @@
 | Metric | Value |
 |-------|-------|
 | Total Tasks | 36 |
-| Tasks Completed | 8 |
+| Tasks Completed | 9 |
 | Tasks In Progress | 0 |
 | Tasks Failed | 0 |
 | Tasks Blocked | 0 |

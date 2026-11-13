@@ -28,7 +28,9 @@
       "lastActive": "2026-11-13 13:35:17"
     },
     "frontend-agent": {
-      "lastActive": "2026-11-13 13:20:38"
+      "status": "IDLE",
+      "task": null,
+      "lastActive": "2026-11-13 13:41:04"
     },
     "qa-agent": {
       "lastActive": "2026-11-13 13:20:38"
@@ -202,13 +204,14 @@
           "title": "Provider Catalog Explorer & Model View",
           "agent": "frontend-agent",
           "priority": "P1",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-02-BE-001"
           ],
           "acceptance_criteria": "Providers page (/providers) displays provider cards with capabilities, supported aspect ratios/resolutions, duration limits, and billing badge (free_verified, trial, paid, unknown).",
-          "complexity": "M"
+          "complexity": "M",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-02-FE-002",
