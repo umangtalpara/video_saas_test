@@ -6,13 +6,7 @@
     "lastUpdated": "2026-11-13",
     "totalPhases": 6,
     "completedPhases": 3,
-    "activeBlockers": 0,
-    "awaitingApproval": {
-      "kind": "phase",
-      "after": "PHASE-03",
-      "next": "PHASE-04",
-      "since": "2026-11-13 16:14:53"
-    }
+    "activeBlockers": 0
   },
   "stack": {
     "structure": "decoupled",
@@ -29,7 +23,9 @@
   },
   "agents": {
     "backend-agent": {
-      "lastActive": "2026-11-13 16:14:53"
+      "status": "IDLE",
+      "task": null,
+      "lastActive": "2026-11-13 16:24:49"
     },
     "frontend-agent": {
       "lastActive": "2026-11-13 16:14:53"
@@ -427,20 +423,21 @@
     {
       "id": "PHASE-04",
       "name": "Video Generation Worker & Provider Adapters",
-      "status": "PENDING",
+      "status": "IN_PROGRESS",
       "tasks": [
         {
           "id": "PHASE-04-BE-001",
           "title": "Provider Adapter Framework & Video Provider Integrations",
           "agent": "backend-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-03-BE-002"
           ],
           "acceptance_criteria": "TypeScript VideoProviderAdapter interface; Alibaba Cloud Model Studio (Wan) adapter implementing validateCredentials, generateVideo, and getGenerationStatus; MockVideoProvider for local/CI automated testing without real API spend; normalized provider errors.",
-          "complexity": "XL"
+          "complexity": "XL",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-04-BE-002",
@@ -509,7 +506,8 @@
           "acceptance_criteria": "Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings; confirms SSRF protection on video downloads, no silent paid fallback, and secure S3 tenant key isolation.",
           "complexity": "S"
         }
-      ]
+      ],
+      "startedAt": "2026-11-13"
     },
     {
       "id": "PHASE-05",
@@ -747,6 +745,11 @@
       "event": "PHASE-03 closed — awaiting user approval to start PHASE-04",
       "date": "2026-11-13",
       "notes": ""
+    },
+    {
+      "event": "User approved start of PHASE-04",
+      "date": "2026-11-13",
+      "notes": "user approved"
     }
   ],
   "plan": {

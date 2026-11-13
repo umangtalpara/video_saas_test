@@ -4,9 +4,50 @@
 
 ---
 
-## No Active Phase
+## Active Phase
 
-Project Status: 🟢 IN_PROGRESS
+| Field | Value |
+|-------|-------|
+| **Phase** | PHASE-04 |
+| **Name** | Video Generation Worker & Provider Adapters |
+| **Status** | IN_PROGRESS |
+| **Started At** | 2026-11-13 |
 
-> ⏸ WAITING FOR USER APPROVAL: PHASE-03 is closed; PHASE-04 has not started.
-> The user must approve in chat; then the agent runs `status-manager.js approve-phase PHASE-04`.
+---
+
+## Phase Pipeline (strict order: Backend → Frontend → QA → Code Review)
+
+| Stage | Agent | Done / Total | State |
+|-------|-------|--------------|-------|
+| Backend | backend-agent | 1/2 | 🔄 |
+| Frontend | frontend-agent | 0/2 | ⬜ |
+| QA | qa-agent | 0/1 | ⬜ |
+| Code Review | code-review-agent | 0/1 | ⬜ |
+
+Code review rounds used: 0/3
+
+---
+
+## Phase Tasks
+
+### Backend Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-04-BE-001 | Provider Adapter Framework & Video Provider Integrations | backend-agent | P0 | COMPLETED |
+| PHASE-04-BE-002 | In-Process Generation Queue & S3 Asset Ingestion | backend-agent | P0 | PENDING |
+
+### Frontend Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-04-FE-001 | Real-Time Generation Progress Dashboard | frontend-agent | P0 | PENDING |
+| PHASE-04-FE-002 | Scene Clip Preview & Asset Inspector | frontend-agent | P1 | PENDING |
+
+### QA Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-04-QA-001 | Video Generation & Adapter Test Suite | qa-agent | P0 | PENDING |
+
+### Code Review Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-04-CR-001 | Phase 4 Generation Pipeline & S3 Security Review | code-review-agent | P0 | PENDING |
