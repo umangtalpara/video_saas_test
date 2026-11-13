@@ -63,3 +63,4 @@ export class MediaAsset {
 export const MediaAssetSchema = SchemaFactory.createForClass(MediaAsset);
 MediaAssetSchema.index({ userId: 1, projectId: 1 });
 MediaAssetSchema.index({ userId: 1, createdAt: -1 });
+

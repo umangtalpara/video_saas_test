@@ -508,3 +508,4 @@ export default function ProjectDetailsPage(): React.JSX.Element {
     </div>
   );
 }
+

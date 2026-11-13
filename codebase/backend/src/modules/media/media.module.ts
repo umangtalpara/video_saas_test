@@ -23,3 +23,4 @@ import { MediaInspectorService } from './services/media-inspector.service';
   ],
 })
 export class MediaModule {}
+

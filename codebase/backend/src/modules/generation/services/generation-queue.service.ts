@@ -21,7 +21,7 @@ export class GenerationQueueService {
   constructor(
     private readonly projectsRepository: ProjectsRepository,
     private readonly sceneProcessor: SceneProcessorService,
-  ) {}
+  ) { }
 
   public getQueueStats(): { activeCount: number; maxConcurrency: number } {
     return {

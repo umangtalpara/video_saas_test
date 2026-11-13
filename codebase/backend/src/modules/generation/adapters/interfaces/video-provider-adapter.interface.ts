@@ -68,3 +68,4 @@ export interface VideoProviderAdapter {
     providerJobId: string,
   ): Promise<boolean>;
 }
+

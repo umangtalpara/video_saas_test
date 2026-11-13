@@ -9,3 +9,4 @@ test.describe('Video Generation Progress & Asset Inspector Flows', () => {
     await expect(page.locator('body')).toBeVisible();
   });
 });
+

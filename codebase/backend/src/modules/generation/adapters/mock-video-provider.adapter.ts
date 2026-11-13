@@ -70,3 +70,4 @@ export class MockVideoProviderAdapter implements VideoProviderAdapter {
     return true;
   }
 }
+

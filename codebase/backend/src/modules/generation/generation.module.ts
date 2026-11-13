@@ -34,3 +34,4 @@ import { GenerationQueueService } from './services/generation-queue.service';
   ],
 })
 export class GenerationModule {}
+

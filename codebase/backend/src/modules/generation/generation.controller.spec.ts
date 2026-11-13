@@ -79,3 +79,4 @@ describe('GenerationController', () => {
     expect(res.scenes.length).toBe(1);
   });
 });
+

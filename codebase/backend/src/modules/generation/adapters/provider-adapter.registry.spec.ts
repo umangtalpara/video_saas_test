@@ -49,3 +49,4 @@ describe('ProviderAdapterRegistry', () => {
     expect(() => registry.getAdapter('non-existent')).toThrow(NotFoundException);
   });
 });
+

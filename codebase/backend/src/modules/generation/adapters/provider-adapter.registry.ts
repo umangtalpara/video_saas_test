@@ -41,3 +41,4 @@ export class ProviderAdapterRegistry {
     return Array.from(this.adapters.keys());
   }
 }
+
