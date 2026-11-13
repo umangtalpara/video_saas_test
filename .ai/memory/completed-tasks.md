@@ -22,3 +22,4 @@
 | PHASE-03-BE-002 | LLM Script & Scene Generation Engine | backend-agent | 2026-11-13 | — |
 | PHASE-03-FE-001 | Video Creation Wizard | frontend-agent | 2026-11-13 | — |
 | PHASE-03-FE-002 | Script Review & Scene Prompt Editor | frontend-agent | 2026-11-13 | — |
+| PHASE-03-QA-001 | Project & Script Planner Test Suite | qa-agent | 2026-11-13 | — |

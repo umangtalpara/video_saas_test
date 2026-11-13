@@ -7,10 +7,10 @@
 ## Overall Progress
 
 ```
-Total:     [█████████░░░░░░░░░░░] 44%  (16/36 tasks)
+Total:     [█████████░░░░░░░░░░░] 47%  (17/36 tasks)
 PHASE-01:   COMPLETED (100%)
 PHASE-02:   COMPLETED (100%)
-PHASE-03:   IN_PROGRESS (67%)
+PHASE-03:   IN_PROGRESS (83%)
 PHASE-04:   PENDING (0%)
 PHASE-05:   PENDING (0%)
 PHASE-06:   PENDING (0%)
@@ -22,9 +22,9 @@ PHASE-06:   PENDING (0%)
 |-------|----------|-----------|-------------|--------|---------|
 | backend-agent | 12 | 6 | 0 | 0 | 0 |
 | frontend-agent | 12 | 6 | 0 | 0 | 0 |
-| qa-agent | 6 | 2 | 0 | 0 | 0 |
+| qa-agent | 6 | 3 | 0 | 0 | 0 |
 | code-review-agent | 6 | 2 | 0 | 0 | 0 |
-| **Total** | **36** | **16** | **0** | **0** | **0** |
+| **Total** | **36** | **17** | **0** | **0** | **0** |
 
 ## Task Status Legend
 
@@ -66,7 +66,7 @@ Pipeline: Backend 2/2 ✅ → Frontend 2/2 ✅ → QA 1/1 ✅ → Code Review 1/
 
 ### PHASE-03: Video Projects & Script Planner Engine
 
-Pipeline: Backend 2/2 ✅ → Frontend 2/2 ✅ → QA 0/1 ⬜ → Code Review 0/1 ⬜
+Pipeline: Backend 2/2 ✅ → Frontend 2/2 ✅ → QA 1/1 ✅ → Code Review 0/1 ⬜
 
 | # | Task ID | Title | Agent | Priority | Status | Retries |
 |---|---------|-------|-------|----------|--------|---------|
@@ -74,7 +74,7 @@ Pipeline: Backend 2/2 ✅ → Frontend 2/2 ✅ → QA 0/1 ⬜ → Code Review 0/
 | 2 | PHASE-03-BE-002 | LLM Script & Scene Generation Engine | backend-agent | P0 | ✅ COMPLETED | 0/3 |
 | 3 | PHASE-03-FE-001 | Video Creation Wizard | frontend-agent | P0 | ✅ COMPLETED | 0/3 |
 | 4 | PHASE-03-FE-002 | Script Review & Scene Prompt Editor | frontend-agent | P0 | ✅ COMPLETED | 0/3 |
-| 5 | PHASE-03-QA-001 | Project & Script Planner Test Suite | qa-agent | P0 | ⬜ PENDING | 0/3 |
+| 5 | PHASE-03-QA-001 | Project & Script Planner Test Suite | qa-agent | P0 | ✅ COMPLETED | 0/3 |
 | 6 | PHASE-03-CR-001 | Phase 3 Script & State Machine Review | code-review-agent | P0 | ⬜ PENDING | 0/3 |
 
 ### PHASE-04: Video Generation Worker & Provider Adapters

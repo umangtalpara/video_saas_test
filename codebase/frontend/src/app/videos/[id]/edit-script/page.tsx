@@ -381,3 +381,4 @@ export default function EditScriptPage(): React.JSX.Element {
     </div>
   );
 }
+

@@ -33,7 +33,9 @@
       "lastActive": "2026-11-13 16:08:23"
     },
     "qa-agent": {
-      "lastActive": "2026-11-13 13:55:06"
+      "status": "IDLE",
+      "task": null,
+      "lastActive": "2026-11-13 16:12:47"
     },
     "code-review-agent": {
       "lastActive": "2026-11-13 13:55:06"
@@ -361,14 +363,15 @@
           "title": "Project & Script Planner Test Suite",
           "agent": "qa-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-03-BE-002",
             "PHASE-03-FE-002"
           ],
           "acceptance_criteria": "Unit tests for script parser JSON schema validation; integration tests for project CRUD and state transitions; Playwright E2E for video creation wizard and script approval flow.",
-          "complexity": "M"
+          "complexity": "M",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-03-CR-001",
