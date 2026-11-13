@@ -49,6 +49,20 @@ const MIN_PHASES = 5;
 const MAX_PHASES = 10;
 const MAX_REVIEW_ROUNDS = 3;
 
+// Human approval gates (settings.json -> workflow.require_approval). Default: ON.
+function approvalSettings() {
+  try {
+    const cfg = JSON.parse(fs.readFileSync(path.join(AI_DIR, 'settings.json'), 'utf8'));
+    const a = (cfg.workflow && cfg.workflow.require_approval) || {};
+    return { plan: a.plan !== false, betweenPhases: a.between_phases !== false };
+  } catch (e) {
+    return { plan: true, betweenPhases: true };
+  }
+}
+const waitingMessage = (aw) => aw.kind === 'plan'
+  ? `⏸ WAITING FOR USER APPROVAL of the plan before ${aw.next} starts.`
+  : `⏸ WAITING FOR USER APPROVAL: ${aw.after} is closed; ${aw.next} has not started.`;
+
 const today = () => new Date().toISOString().split('T')[0];
 const now = () => new Date().toISOString().replace('T', ' ').slice(0, 19);
 
@@ -312,6 +326,7 @@ ${GEN_NOTE}
 | **Project** | ${cell(state.project.name)} |
 | **Status** | ${emoji} ${state.project.status} |
 | **Current Phase** | ${activePhase ? `${activePhase.id} — ${cell(activePhase.name)}` : 'N/A'} |
+| **Awaiting Approval** | ${state.project.awaitingApproval ? `⏸ yes — start of ${state.project.awaitingApproval.next} (since ${state.project.awaitingApproval.since})` : 'no'} |
 | **Total Phases** | ${state.project.totalPhases} |
 | **Completed Phases** | ${state.project.completedPhases} |
 | **Active Blockers** | ${state.project.activeBlockers} |
@@ -440,6 +455,10 @@ ${STAGES.map(([, agent, label]) => `### ${label} Tasks\n${head}\n${rows((t) => t
 `;
   } else {
     current += `\n## No Active Phase\n\nProject Status: ${emoji} ${state.project.status}\n`;
+    if (state.project.awaitingApproval) {
+      const aw = state.project.awaitingApproval;
+      current += `\n> ${waitingMessage(aw)}\n> The user must approve in chat; then the agent runs \`status-manager.js approve-phase ${aw.next}\`.\n`;
+    }
   }
   atomicWrite(path.join(PM_DIR, 'current-phase.md'), current);
 
@@ -563,7 +582,8 @@ Phases & tasks
   next                                     Print the next runnable task (dependencies + stage order satisfied)
   validate-plan [--incremental]            Check the plan: ${MIN_PHASES}-${MAX_PHASES} phases, Backend/Frontend/QA/Review in every phase, DAG, criteria
   request-changes <phaseId> "<findings>" --tasks T1,T2 [--retest]   Code review CHANGES_REQUESTED: reopen tasks + re-review (max ${MAX_REVIEW_ROUNDS} rounds)
-  complete-phase <phaseId> [--summary "..."] [--start-next]       Close a phase and refresh ALL status + memory files
+  complete-phase <phaseId> [--summary "..."]                       Close a phase, refresh ALL status + memory files, then WAIT for user approval
+  approve-phase <phaseId> [--note "..."]                           Start the next phase — ONLY after the user explicitly approved in chat
 
 Agents, blockers, logs
   set-agent <agent> <${Object.keys(AGENT_STATUSES).join('|')}> [task]
@@ -596,6 +616,7 @@ commands.status = () => {
     console.log(`Active phase: ${active.id} — ${active.name}`);
     console.log('Pipeline: ' + stageSummary(active).map((x) => `${x.label} ${x.done}/${x.total} ${x.symbol}`).join(' → '));
   }
+  if (state.project.awaitingApproval) log(waitingMessage(state.project.awaitingApproval), colors.yellow);
   const nextTask = pickNext(state);
   console.log(nextTask ? `Next task: ${nextTask.id} (${nextTask.agent}) — ${nextTask.title}` : 'Next task: none runnable');
   const missing = STACK_KEYS.filter((k) => state.stack[k] === null);
@@ -648,6 +669,10 @@ commands['set-phase'] = ({ positional, flags }) => {
   const phase = state.phases.find((p) => p.id === id);
   if (!phase) fail(`Phase ${id} not found.`);
   if (status === 'IN_PROGRESS') {
+    if (state.project.awaitingApproval) {
+      if (!flags.force) fail(`${waitingMessage(state.project.awaitingApproval)} Get the user's explicit approval in chat, then run "approve-phase ${state.project.awaitingApproval.next}".`);
+      delete state.project.awaitingApproval;
+    }
     const other = state.phases.find((p) => p.status === 'IN_PROGRESS' && p.id !== id);
     if (other && !flags.force) fail(`Phase ${other.id} is still IN_PROGRESS. Complete it first (or use --force).`);
     const idx = state.phases.indexOf(phase);
@@ -703,6 +728,7 @@ commands['update-task'] = ({ positional, flags }) => {
     if (!TASK_STATUSES.includes(status)) fail(`Invalid task status. Valid: ${TASK_STATUSES.join(', ')}`);
     if (task.status === 'COMPLETED' && status !== 'COMPLETED' && !flags.force) fail(`${taskId} is COMPLETED. Completed tasks are never re-run (use --force for a deliberate reopen).`);
     if (status === 'IN_PROGRESS') {
+      if (state.project.awaitingApproval && !flags.force) fail(`${waitingMessage(state.project.awaitingApproval)} Ask the user to approve before starting ${taskId}.`);
       const unmet = (task.dependencies || []).filter((d) => { const dep = findTask(state, d); return !dep || dep.task.status !== 'COMPLETED'; });
       if (unmet.length && !flags.force) fail(`${taskId} has unmet dependencies: ${unmet.join(', ')}`);
       const earlier = unfinishedEarlierStages(found.phase, task);
@@ -754,6 +780,7 @@ commands.retry = ({ positional }) => {
 };
 
 function pickNext(state) {
+  if (state.project.awaitingApproval) return null;
   const phase = state.phases.find((p) => p.status === 'IN_PROGRESS') || state.phases.find((p) => p.status === 'PENDING');
   if (!phase) return null;
   const order = { P0: 0, P1: 1, P2: 2, P3: 3 };
@@ -770,6 +797,7 @@ commands.next = () => {
   const unknown = allTasks(state).flatMap((t) => (t.dependencies || []).filter((d) => !findTask(state, d)).map((d) => `${t.id} → ${d}`));
   if (unknown.length) log(`⚠ Unknown dependencies: ${unknown.join(', ')}`, colors.yellow);
   const next = pickNext(state);
+  if (state.project.awaitingApproval) { console.log(waitingMessage(state.project.awaitingApproval) + ' Do not start work. Ask the user to approve.'); return; }
   if (!next) { console.log('No runnable task (all done, blocked, or waiting on dependencies).'); return; }
   console.log(JSON.stringify({ phase: next.phaseId, id: next.id, title: next.title, agent: next.agent, priority: next.priority, status: next.status }));
 };
@@ -836,8 +864,14 @@ commands['validate-plan'] = ({ flags }) => {
   });
   state.plan = { ...(state.plan || {}), validatedAt: now(), phases: state.phases.length, incremental: Boolean(flags.incremental) };
   logExec(`Plan validated: ${state.phases.length} phases, ${allTasks(state).length} tasks`, 'super-agent', 'SYSTEM');
+  const needsPlanApproval = !flags.incremental && approvalSettings().plan && !state.plan.approvedAt && !state.phases.some((p) => p.startedAt || p.status !== 'PENDING');
+  if (needsPlanApproval) {
+    state.project.awaitingApproval = { kind: 'plan', after: 'PLAN', next: state.phases[0].id, since: now() };
+    state.timeline.push({ event: 'Plan validated — awaiting user approval', date: today(), notes: `${state.phases.length} phases` });
+  }
   saveState(state);
   log(`✔ Plan is valid: ${state.phases.length} phases, ${allTasks(state).length} tasks, every phase runs Backend → Frontend → QA → Code Review.`, colors.green);
+  if (needsPlanApproval) log(`${waitingMessage(state.project.awaitingApproval)} Present the roadmap to the user; after they approve run: node .ai/scripts/status-manager.js approve-phase ${state.phases[0].id}`, colors.yellow);
 };
 
 commands['request-changes'] = ({ positional, flags }) => {
@@ -876,7 +910,7 @@ commands['request-changes'] = ({ positional, flags }) => {
 
 commands['complete-phase'] = ({ positional, flags }) => {
   const [id] = positional;
-  if (!id) fail('Usage: complete-phase <phaseId> [--summary "what was delivered"] [--start-next] [--force]');
+  if (!id) fail('Usage: complete-phase <phaseId> [--summary "what was delivered"] [--force]');
   const state = loadState();
   const phase = state.phases.find((p) => p.id === id);
   if (!phase) fail(`Phase ${id} not found.`);
@@ -917,6 +951,10 @@ commands['complete-phase'] = ({ positional, flags }) => {
   if (!next) {
     state.project.status = 'COMPLETED';
     state.timeline.push({ event: 'All phases completed', date: today(), notes: 'Ready for deployment (/factory-deployment)' });
+  } else if (approvalSettings().betweenPhases) {
+    state.project.awaitingApproval = { kind: 'phase', after: id, next: next.id, since: now() };
+    state.timeline.push({ event: `${id} closed — awaiting user approval to start ${next.id}`, date: today(), notes: '' });
+    logExec(`Waiting for user approval to start ${next.id}`, 'super-agent', 'PHASE');
   } else if (flags['start-next']) {
     next.status = 'IN_PROGRESS';
     next.startedAt = next.startedAt || today();
@@ -926,8 +964,36 @@ commands['complete-phase'] = ({ positional, flags }) => {
   saveState(state);
   log(`✔ ${id} closed. Updated: project-status, progress, current-phase, roadmap, agent-status (project-management/); completed-tasks, phase-reports, blockers, execution-log, retry-log, decisions, state.json (memory/).`, colors.green);
   if (!next) log('🎉 All phases are complete. Next: /factory-testing (full regression) and /factory-deployment.', colors.green);
-  else if (flags['start-next']) log(`▶ ${next.id} (${next.name}) is now IN_PROGRESS. Next task: run "next".`, colors.blue);
+  else if (state.project.awaitingApproval) {
+    log(`${waitingMessage(state.project.awaitingApproval)}`, colors.yellow);
+    log(`STOP. Report the phase summary to the user and wait for their explicit approval in chat. Only then run: node .ai/scripts/status-manager.js approve-phase ${next.id}`, colors.yellow);
+  } else if (flags['start-next']) log(`▶ ${next.id} (${next.name}) is now IN_PROGRESS. Next task: run "next".`, colors.blue);
   else log(`Next: node .ai/scripts/status-manager.js set-phase ${next.id} IN_PROGRESS`, colors.blue);
+};
+
+commands['approve-phase'] = ({ positional, flags }) => {
+  const [id] = positional;
+  if (!id) fail('Usage: approve-phase <phaseId> [--note "what the user said"]  (run ONLY after the user explicitly approved in chat)');
+  const state = loadState();
+  const aw = state.project.awaitingApproval;
+  if (!aw) fail('Nothing is waiting for approval.');
+  if (aw.next !== id) fail(`Waiting for approval of ${aw.next}, not ${id}.`);
+  const phase = state.phases.find((p) => p.id === id);
+  if (!phase) fail(`Phase ${id} not found.`);
+  if (aw.kind === 'plan') {
+    const { errors } = planProblems(state);
+    if (errors.length) fail(`Plan changed and is no longer valid: ${errors.slice(0, 3).join(' | ')}. Fix it and re-run validate-plan.`);
+    state.plan = { ...(state.plan || {}), approvedAt: now() };
+  }
+  delete state.project.awaitingApproval;
+  phase.status = 'IN_PROGRESS';
+  phase.startedAt = phase.startedAt || today();
+  state.project.status = 'IN_PROGRESS';
+  const note = flags.note && flags.note !== true ? String(flags.note) : '';
+  state.timeline.push({ event: `User approved start of ${id}`, date: today(), notes: note });
+  logExec(`User approved → ${id} IN_PROGRESS${note ? ' — ' + note : ''}`, 'super-agent', 'PHASE');
+  saveState(state);
+  log(`▶ ${id} (${phase.name}) approved and started. Next task: run "next".`, colors.blue);
 };
 
 // ---------- main ----------

@@ -99,7 +99,7 @@ description: "Load the approved roadmap and activate the next phase (check depen
 |------|---------|
 | Where are we? | `node .ai/scripts/status-manager.js status` |
 | Next runnable task (dependencies satisfied) | `node .ai/scripts/status-manager.js next` |
-| Activate the phase | `status-manager.js set-phase PHASE-0X IN_PROGRESS` (Phase 1 requires a passing `validate-plan`; later phases require the previous one to be COMPLETED). Normally the previous `complete-phase … --start-next` already did this |
+| Activate the phase | `status-manager.js approve-phase PHASE-0X --note "<user's approval>"` — only after the user approved (plan approval for Phase 1, phase-close approval for later phases). `set-phase PHASE-0X IN_PROGRESS` is refused while an approval is pending |
 | Mark agents | `status-manager.js set-agent backend-agent ACTIVE <TASK-ID>` |
 | Log phase start | `status-manager.js add-event "Phase 0X started"` |
 

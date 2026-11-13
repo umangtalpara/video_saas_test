@@ -72,9 +72,10 @@ Run phases strictly one after another. For the active phase:
 2. **Frontend** → all `frontend-agent` tasks (against the finished backend APIs).
 3. **QA** → all `qa-agent` tasks (unit, API contract, Playwright E2E, coverage).
 4. **Code Review** → the single `code-review-agent` task. `APPROVED` completes it; `CHANGES_REQUESTED` → `request-changes` (reopens only the affected backend/frontend tasks and the review; max 3 rounds, then BLOCKED).
-5. **Close the phase** with `node .ai/scripts/status-manager.js complete-phase PHASE-0X --summary "<what was delivered>" --start-next`. This refreshes every file in `.ai/project-management/` and `.ai/memory/` (see `phase-execution.md` → *Phase Close-Out*), then activates the next phase.
+5. **Close the phase** with `node .ai/scripts/status-manager.js complete-phase PHASE-0X --summary "<what was delivered>"`. This refreshes every file in `.ai/project-management/` and `.ai/memory/` (see `phase-execution.md` → *Phase Close-Out*) and **locks the next phase until the user approves**.
+6. **Wait for user approval.** Summarise the finished phase, preview the next one, and ask for approval. Only after an explicit "yes" run `approve-phase PHASE-0Y --note "<their words>"`. Never approve on the user's behalf.
 
-The CLI enforces the order: a frontend task cannot start while a backend task of the same phase is unfinished, and so on. Tell the user a short summary after every closed phase, then continue with the next one.
+The CLI enforces the order: a frontend task cannot start while a backend task of the same phase is unfinished, and so on. The same gate applies once to the plan itself: after `validate-plan` passes, present the roadmap (phases, tasks, stack) and wait for approval before `approve-phase PHASE-01`.
 
 ### 3. Task Assignment & Delegation
 

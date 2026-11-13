@@ -40,6 +40,11 @@
       "testing",
       "deployment"
     ],
+    "require_approval": {
+      "_note": "Human approval gates enforced by status-manager.js. Set to false to let the agent continue on its own.",
+      "plan": true,
+      "between_phases": true
+    },
     "maintenance": [
       "bug-fix",
       "feature-addition"

@@ -127,7 +127,7 @@ Run from the repository root. `status-manager.js` is the only way to change stat
 | 4 | Register **5–10 phases**, each with Backend, Frontend, QA and Code Review tasks (IDs `PHASE-0X-BE/FE/QA/CR-00N`) | `status-manager.js add-phase PHASE-01 "<name>"`, `add-task PHASE-01 PHASE-01-BE-001 "<title>" backend-agent P0 --criteria "<text>"`, `add-task … frontend-agent --deps <backend ids>`, `add-task … qa-agent --deps <be+fe ids>`, `add-task … code-review-agent --deps <qa ids>` |
 | 5 | Write the narrative parts of `roadmap.md` (architecture, DB design, API design) **outside** the `<!-- AUTO:BEGIN task-board -->` block — the task board inside the block is generated | edit file |
 | 6 | Validate the plan | `node .ai/scripts/status-manager.js validate-plan` — must pass: 5–10 phases, all four stages in every phase, acceptance criteria on every task, valid dependency graph. Then `next` must return `PHASE-01-BE-001` |
-| 7 | Record decisions, open the first phase | append to `.ai/memory/decisions.md`; `set-phase PHASE-01 IN_PROGRESS`; `update-project IN_PROGRESS`; `add-event "Planning complete"` |
+| 7 | Record decisions, then **present the plan and wait for user approval** (phases, tasks per stage, stack, risks). `validate-plan` has already locked Phase 1 until then | append to `.ai/memory/decisions.md`; after the user says yes: `node .ai/scripts/status-manager.js approve-phase PHASE-01 --note "<their words>"` |
 
 ## Input
 

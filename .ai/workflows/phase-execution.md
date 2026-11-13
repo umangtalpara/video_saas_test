@@ -156,8 +156,8 @@ PENDING → IN_PROGRESS → COMPLETED
 A phase always runs its four stages in this order. The CLI enforces it: a task cannot start while an earlier-stage task of the same phase is unfinished (`next` only returns runnable tasks).
 
 ```bash
-# --- start (done automatically by the previous phase's complete-phase --start-next) ---
-node .ai/scripts/status-manager.js set-phase PHASE-0X IN_PROGRESS
+# --- start: only after the user approved (the CLI refuses otherwise) ---
+node .ai/scripts/status-manager.js approve-phase PHASE-0X --note "user approved"   # Phase 1: after plan approval; later phases: after the previous phase review
 
 # --- repeat for every task, stage by stage: Backend -> Frontend -> QA -> Code Review ---
 node .ai/scripts/status-manager.js next                                   # next runnable task + its agent
@@ -182,10 +182,16 @@ git add -A && git commit -m "feat(<scope>): <task title> [<ID>]"          # chec
 2. Append architectural decisions made in this phase to `.ai/memory/decisions.md` (manual, append-only).
 3. Close the phase — one command refreshes everything:
    ```bash
-   node .ai/scripts/status-manager.js complete-phase PHASE-0X --summary "<what was delivered, 1-2 sentences>" --start-next
+   node .ai/scripts/status-manager.js complete-phase PHASE-0X --summary "<what was delivered, 1-2 sentences>"
    ```
+   The CLI now **locks** the next phase: `next`, `set-phase … IN_PROGRESS` and `update-task … IN_PROGRESS` all refuse until the user approves.
 4. Commit and tag: `git add -A && git commit -m "chore(phase): close PHASE-0X" && git tag phase-0X`. With the 3-repo strategy also run `node .ai/scripts/git-sync.js push-all`.
-5. Tell the user a 3–5 line summary (delivered features, tests/coverage, review rounds, anything deferred), then continue with the next phase. After the last phase the project status becomes `COMPLETED` → run `/factory-testing` (full regression) and `/factory-deployment`.
+5. **STOP and wait for approval.** Send the user a 3–5 line summary (delivered features, tests/coverage, review rounds, anything deferred, what the next phase will build) and ask: *"Approve starting PHASE-0Y?"*. Do nothing else until they answer in chat.
+   - **Approved** → `node .ai/scripts/status-manager.js approve-phase PHASE-0Y --note "<their words>"`, then continue with that phase.
+   - **Changes wanted** → apply them (new/changed tasks via the CLI, `validate-plan --incremental`), then ask again.
+   - Never run `approve-phase` yourself without an explicit approval message from the user in this conversation.
+   After the last phase the project status becomes `COMPLETED` (no approval needed) → run `/factory-testing` (full regression) and `/factory-deployment`.
+   Approval gates are controlled by `.ai/settings.json → workflow.require_approval` (`plan`, `between_phases`).
 
 `complete-phase` refuses to close a phase with unfinished tasks, a missing QA/Code Review stage or open blockers. It refreshes:
 

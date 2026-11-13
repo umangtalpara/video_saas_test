@@ -11,6 +11,7 @@
 | **Project** | SaaS AI Factory |
 | **Status** | 🟡 AWAITING_PRD |
 | **Current Phase** | N/A |
+| **Awaiting Approval** | no |
 | **Total Phases** | 0 |
 | **Completed Phases** | 0 |
 | **Active Blockers** | 0 |

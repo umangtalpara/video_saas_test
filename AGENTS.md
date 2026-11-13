@@ -33,6 +33,10 @@ If resuming (state already exists), read `.ai/memory/state.json` via `node .ai/s
 5. **Naming**: `kebab-case` files/folders, `PascalCase` classes. Follow [.ai/context/naming-rules.md](.ai/context/naming-rules.md).
 6. **Skills**: before domain work, load the matching skill (`api`, `architecture`, `backend`, `database`, `frontend`, `security`, `testing`, … see `.ai/skills/`).
 
+## Human Approval Gates
+
+The agent must **stop and ask** (and run `approve-phase` only after an explicit "yes" from the user in chat) at two points: (1) after `validate-plan` passes — approve the plan before Phase 1; (2) after every `complete-phase` — approve the next phase. The CLI enforces this (`next`, `set-phase`, `update-task … IN_PROGRESS` refuse while approval is pending). Configure in `.ai/settings.json → workflow.require_approval`.
+
 ## Task Execution & Logging
 
 Progress and status files are **generated** from `.ai/memory/state.json`. Do **not** hand-edit `progress.md`, `current-phase.md`, `project-status.md`, `agent-status.md`, `completed-tasks.md` or the auto block in `roadmap.md`. Use the CLI (`node .ai/scripts/status-manager.js help` lists everything):
@@ -42,9 +46,9 @@ node .ai/scripts/status-manager.js set-stack <key> <value>        # record a Q&A
 node .ai/scripts/status-manager.js add-phase PHASE-01 "Foundation"
 node .ai/scripts/status-manager.js add-task PHASE-01 PHASE-01-BE-001 "User registration" backend-agent P0 --criteria "..."
 node .ai/scripts/status-manager.js validate-plan                  # 5-10 phases, each Backend>Frontend>QA>Code Review
-node .ai/scripts/status-manager.js set-phase PHASE-01 IN_PROGRESS
+node .ai/scripts/status-manager.js approve-phase PHASE-01 --note "user approved"   # ONLY after the user approves in chat
 node .ai/scripts/status-manager.js request-changes PHASE-01 "findings" --tasks T1,T2   # review CHANGES_REQUESTED
-node .ai/scripts/status-manager.js complete-phase PHASE-01 --summary "..." --start-next # close phase, refresh ALL files
+node .ai/scripts/status-manager.js complete-phase PHASE-01 --summary "..."   # close phase, refresh ALL files, then WAIT for approval
 node .ai/scripts/status-manager.js update-task PHASE-01-BE-001 status IN_PROGRESS
 node .ai/scripts/status-manager.js retry PHASE-01-BE-001 "reason"  # logs retry, auto-BLOCKS after 3
 node .ai/scripts/status-manager.js log "message" [agent]          # execution-log.md

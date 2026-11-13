@@ -53,14 +53,15 @@ PRD ingestion → Discovery Q&A → Scaffold → Planning → Phase execution �
    4. **Code Review** – security / performance / quality gate. `CHANGES_REQUESTED` sends only the affected tasks back (max 3 rounds), then the review repeats.
 
    Every task is validated (`validate-project.js --tsc`), tested and committed. A task that fails 3 times is **BLOCKED** and the agent asks you.
-6. **Phase close-out** – when the review is APPROVED the agent runs `complete-phase`, which refreshes **every** file in `.ai/project-management/` and `.ai/memory/` (status, progress, current phase, roadmap, agent status, completed tasks, phase report, blockers, execution/retry logs, decisions), commits and tags the phase, tells you what was delivered and starts the next phase.
-7. **Deployment prep** – after the last phase, `/factory-testing` and `/factory-deployment`.
+6. **Phase close-out** – when the review is APPROVED the agent runs `complete-phase`, which refreshes **every** file in `.ai/project-management/` and `.ai/memory/` (status, progress, current phase, roadmap, agent status, completed tasks, phase report, blockers, execution/retry logs, decisions), commits and tags the phase, and tells you what was delivered.
+7. **Your approval** – the agent stops and asks *"Approve starting Phase N+1?"*. Nothing continues until you say yes in chat (it then runs `approve-phase`). The same approval is asked once for the plan, before Phase 1. You can ask for changes instead of approving. To turn the gates off, set `workflow.require_approval` to `false` in `.ai/settings.json`.
+8. **Deployment prep** – after the last phase, `/factory-testing` and `/factory-deployment`.
 
 ```
-Phase 1 ─ Backend → Frontend → QA → Review ─ close-out ─┐
-Phase 2 ─ Backend → Frontend → QA → Review ─ close-out ─┤  (5–10 phases)
-   …                                                     │
-Phase N ─ Backend → Frontend → QA → Review ─ close-out ─┘ → testing → deployment
+Plan ─ approve ─ Phase 1 [Backend → Frontend → QA → Review] ─ close-out ─ approve ─┐
+                 Phase 2 [Backend → Frontend → QA → Review] ─ close-out ─ approve ─┤ (5–10 phases)
+                    …                                                                │
+                 Phase N [Backend → Frontend → QA → Review] ─ close-out ───────────┘ → testing → deployment
 ```
 
 If a session stops, just say *"continue"* — the agent resumes from `.ai/memory/state.json` (`status-manager.js status` / `next`).

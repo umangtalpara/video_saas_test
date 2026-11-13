@@ -48,7 +48,7 @@ The **Super Agent** is the main session: `AGENTS.md` tells whichever tool you us
 2. Open the folder in your tool and say:
    > *I have completed my PRD at doc/prd.md. Ingest it and start the factory.*
    (or run `/factory-prd-to-plan`)
-3. Answer the 11 discovery questions in chat. The agent records them, scaffolds `codebase/`, splits the PRD into **5–10 phases**, then builds them one by one. Each phase runs **Backend → Frontend → QA → Code Review** and is closed with `complete-phase`, which refreshes every file in `.ai/project-management/` and `.ai/memory/`.
+3. Answer the 11 discovery questions in chat. The agent records them, scaffolds `codebase/`, splits the PRD into **5–10 phases**, then builds them one by one. Each phase runs **Backend → Frontend → QA → Code Review** and is closed with `complete-phase`, which refreshes every file in `.ai/project-management/` and `.ai/memory/`. The agent then **waits for your approval** before the next phase (and before Phase 1, to approve the plan).
 4. Watch progress in `.ai/project-management/` (generated) or run `node .ai/scripts/status-manager.js status`.
 
 Details: **[doc/how-to-use-ai.md](doc/how-to-use-ai.md)**.
@@ -69,7 +69,8 @@ node .ai/scripts/sync-adapters.js --check  # CI: fail if adapters are out of dat
 | `node .ai/scripts/status-manager.js status` | Summary of project, phase and tasks |
 | `node .ai/scripts/status-manager.js next` | Next runnable task (respects stage order) |
 | `node .ai/scripts/status-manager.js validate-plan` | Plan must have 5–10 phases, each with Backend/Frontend/QA/Review |
-| `node .ai/scripts/status-manager.js complete-phase PHASE-0X --summary "…" --start-next` | Close a phase, refresh all status + memory files, start the next |
+| `node .ai/scripts/status-manager.js complete-phase PHASE-0X --summary "…"` | Close a phase, refresh all status + memory files, then wait for approval |
+| `node .ai/scripts/status-manager.js approve-phase PHASE-0X` | Start a phase — only after you approved |
 | `node .ai/scripts/status-manager.js help` | All commands (init, set-stack, add-phase, add-task, update-task, retry, add-blocker, resolve-blocker, log, sync ...) |
 | `node .ai/scripts/scaffold-starter.js [--help]` | Generate package.json, tsconfig, jest/playwright config, `.env`, docker-compose from the discovery answers |
 | `node .ai/scripts/validate-project.js [--tsc] [--path <dir>]` | Architecture / naming / type-safety audit |
