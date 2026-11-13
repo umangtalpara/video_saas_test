@@ -131,7 +131,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-04-FE-001: Real-Time Generation Progress Dashboard (Agent: frontend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-04-BE-002
   * Criteria: Project details screen (/videos/:id) showing generation progress bar, per-scene status badges (queued, generating, downloading, stored, failed), cancel project button, and retry failed scenes action.
-- **[PENDING]** PHASE-04-FE-002: Scene Clip Preview & Asset Inspector (Agent: frontend-agent, Priority: P1, Complexity: M)
+- **[COMPLETED]** PHASE-04-FE-002: Scene Clip Preview & Asset Inspector (Agent: frontend-agent, Priority: P1, Complexity: M)
   * Depends on: PHASE-04-BE-002, PHASE-04-FE-001
   * Criteria: Preview individual generated scene video clips; display clip metadata (codec, resolution, duration); single-scene regenerate modal with prompt tweak.
 - **[PENDING]** PHASE-04-QA-001: Video Generation & Adapter Test Suite (Agent: qa-agent, Priority: P0, Complexity: M)

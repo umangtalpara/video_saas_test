@@ -30,7 +30,7 @@
     "frontend-agent": {
       "status": "IDLE",
       "task": null,
-      "lastActive": "2026-11-13 17:08:45"
+      "lastActive": "2026-11-13 17:15:17"
     },
     "qa-agent": {
       "lastActive": "2026-11-13 16:14:53"
@@ -474,14 +474,15 @@
           "title": "Scene Clip Preview & Asset Inspector",
           "agent": "frontend-agent",
           "priority": "P1",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-04-BE-002",
             "PHASE-04-FE-001"
           ],
           "acceptance_criteria": "Preview individual generated scene video clips; display clip metadata (codec, resolution, duration); single-scene regenerate modal with prompt tweak.",
-          "complexity": "M"
+          "complexity": "M",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-04-QA-001",
