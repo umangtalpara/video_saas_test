@@ -163,5 +163,21 @@ export class ProviderConnectionsService {
       testedAt: now,
     };
   }
+
+  public async getDecryptedCredentials(
+    id: string,
+    userId: string,
+  ): Promise<{ apiKey: string; baseUrl?: string; region?: string }> {
+    const connection = await this.repository.findByIdAndUser(id, userId);
+    if (!connection) {
+      throw new NotFoundException('Provider connection not found');
+    }
+    const apiKey = this.encryptionService.decrypt(connection.encryptedCredentials);
+    return {
+      apiKey,
+      baseUrl: connection.customBaseUrl || undefined,
+      region: connection.region || undefined,
+    };
+  }
 }
 

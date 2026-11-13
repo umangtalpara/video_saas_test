@@ -55,6 +55,17 @@ export class ProjectsRepository {
     return this.projectModel.countDocuments(filter).exec();
   }
 
+  public async findProjectsByStatuses(
+    statuses: ProjectStatus[],
+    limit: number = 10,
+  ): Promise<VideoProjectDocument[]> {
+    return this.projectModel
+      .find({ status: { $in: statuses } })
+      .sort({ updatedAt: 1 })
+      .limit(limit)
+      .exec();
+  }
+
   public async findByIdAndUser(
     id: string,
     userId: string,
