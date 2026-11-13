@@ -128,7 +128,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-04-BE-002: In-Process Generation Queue & S3 Asset Ingestion (Agent: backend-agent, Priority: P0, Complexity: L)
   * Depends on: PHASE-04-BE-001
   * Criteria: Asynchronous in-process scene queue with concurrency limits; polling processor with exponential backoff; safe HTTP download of provider clips with SSRF prevention; ffprobe stream and duration validation; Amazon S3 upload with tenant-scoped keys; media_assets records.
-- **[PENDING]** PHASE-04-FE-001: Real-Time Generation Progress Dashboard (Agent: frontend-agent, Priority: P0, Complexity: M)
+- **[COMPLETED]** PHASE-04-FE-001: Real-Time Generation Progress Dashboard (Agent: frontend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-04-BE-002
   * Criteria: Project details screen (/videos/:id) showing generation progress bar, per-scene status badges (queued, generating, downloading, stored, failed), cancel project button, and retry failed scenes action.
 - **[PENDING]** PHASE-04-FE-002: Scene Clip Preview & Asset Inspector (Agent: frontend-agent, Priority: P1, Complexity: M)

@@ -84,3 +84,59 @@ export async function approveProjectScript(id: string): Promise<VideoProject> {
   return response.data;
 }
 
+export interface GenerationStatusResponse {
+  projectId: string;
+  status: string;
+  progressPercent: number;
+  scenesCount: number;
+  completedScenes: number;
+  failedScenes: number;
+  scenes: Array<{
+    id: string;
+    sceneNumber: number;
+    status: string;
+    videoAssetUrl: string | null;
+    errorMessage: string;
+  }>;
+}
+
+export async function startGeneration(
+  id: string,
+): Promise<{ message: string; projectId: string; status: string }> {
+  const response = await apiClient.post<{
+    message: string;
+    projectId: string;
+    status: string;
+  }>(`/projects/${id}/generate`);
+  return response.data;
+}
+
+export async function retrySceneGeneration(
+  projectId: string,
+  sceneId: string,
+): Promise<{ message: string; sceneId: string }> {
+  const response = await apiClient.post<{ message: string; sceneId: string }>(
+    `/projects/${projectId}/scenes/${sceneId}/retry`,
+  );
+  return response.data;
+}
+
+export async function cancelProjectGeneration(
+  projectId: string,
+): Promise<{ message: string; projectId: string }> {
+  const response = await apiClient.post<{ message: string; projectId: string }>(
+    `/projects/${projectId}/cancel`,
+  );
+  return response.data;
+}
+
+export async function fetchGenerationStatus(
+  projectId: string,
+): Promise<GenerationStatusResponse> {
+  const response = await apiClient.get<GenerationStatusResponse>(
+    `/projects/${projectId}/generation-status`,
+  );
+  return response.data;
+}
+
+

@@ -28,7 +28,9 @@
       "lastActive": "2026-11-13 17:04:00"
     },
     "frontend-agent": {
-      "lastActive": "2026-11-13 16:14:53"
+      "status": "IDLE",
+      "task": null,
+      "lastActive": "2026-11-13 17:08:45"
     },
     "qa-agent": {
       "lastActive": "2026-11-13 16:14:53"
@@ -458,13 +460,14 @@
           "title": "Real-Time Generation Progress Dashboard",
           "agent": "frontend-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-04-BE-002"
           ],
           "acceptance_criteria": "Project details screen (/videos/:id) showing generation progress bar, per-scene status badges (queued, generating, downloading, stored, failed), cancel project button, and retry failed scenes action.",
-          "complexity": "M"
+          "complexity": "M",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-04-FE-002",

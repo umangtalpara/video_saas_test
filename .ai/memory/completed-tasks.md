@@ -26,3 +26,4 @@
 | PHASE-03-CR-001 | Phase 3 Script & State Machine Review | code-review-agent | 2026-11-13 | — |
 | PHASE-04-BE-001 | Provider Adapter Framework & Video Provider Integrations | backend-agent | 2026-11-13 | — |
 | PHASE-04-BE-002 | In-Process Generation Queue & S3 Asset Ingestion | backend-agent | 2026-11-13 | — |
+| PHASE-04-FE-001 | Real-Time Generation Progress Dashboard | frontend-agent | 2026-11-13 | — |

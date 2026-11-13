@@ -35,6 +35,7 @@ export interface VideoScene {
   thumbnailUrl?: string | null;
   actualDurationSeconds?: number;
   resolution?: string;
+  errorMessage?: string;
 }
 
 export interface VideoProject {
