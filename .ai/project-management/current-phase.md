@@ -4,9 +4,50 @@
 
 ---
 
-## No Active Phase
+## Active Phase
 
-Project Status: 🟢 IN_PROGRESS
+| Field | Value |
+|-------|-------|
+| **Phase** | PHASE-03 |
+| **Name** | Video Projects & Script Planner Engine |
+| **Status** | IN_PROGRESS |
+| **Started At** | 2026-11-13 |
 
-> ⏸ WAITING FOR USER APPROVAL: PHASE-02 is closed; PHASE-03 has not started.
-> The user must approve in chat; then the agent runs `status-manager.js approve-phase PHASE-03`.
+---
+
+## Phase Pipeline (strict order: Backend → Frontend → QA → Code Review)
+
+| Stage | Agent | Done / Total | State |
+|-------|-------|--------------|-------|
+| Backend | backend-agent | 1/2 | 🔄 |
+| Frontend | frontend-agent | 0/2 | ⬜ |
+| QA | qa-agent | 0/1 | ⬜ |
+| Code Review | code-review-agent | 0/1 | ⬜ |
+
+Code review rounds used: 0/3
+
+---
+
+## Phase Tasks
+
+### Backend Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-03-BE-001 | Video Projects & Scenes Data Module | backend-agent | P0 | COMPLETED |
+| PHASE-03-BE-002 | LLM Script & Scene Generation Engine | backend-agent | P0 | PENDING |
+
+### Frontend Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-03-FE-001 | Video Creation Wizard | frontend-agent | P0 | PENDING |
+| PHASE-03-FE-002 | Script Review & Scene Prompt Editor | frontend-agent | P0 | PENDING |
+
+### QA Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-03-QA-001 | Project & Script Planner Test Suite | qa-agent | P0 | PENDING |
+
+### Code Review Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-03-CR-001 | Phase 3 Script & State Machine Review | code-review-agent | P0 | PENDING |

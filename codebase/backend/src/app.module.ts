@@ -10,6 +10,7 @@ import { MailModule } from './modules/mail/mail.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ProvidersModule } from './modules/providers/providers.module';
 import { ProviderConnectionsModule } from './modules/provider-connections/provider-connections.module';
+import { ProjectsModule } from './modules/projects/projects.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ProviderConnectionsModule } from './modules/provider-connections/provid
     AuthModule,
     ProvidersModule,
     ProviderConnectionsModule,
+    ProjectsModule,
   ],
 })
 export class AppModule {}

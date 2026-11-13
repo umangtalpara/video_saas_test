@@ -18,3 +18,4 @@
 | PHASE-02-FE-002 | User API Keys Management & Testing Interface | frontend-agent | 2026-11-13 | — |
 | PHASE-02-QA-001 | Provider Catalog & Encryption Test Suite | qa-agent | 2026-11-13 | — |
 | PHASE-02-CR-001 | Phase 2 BYOK Security Review | code-review-agent | 2026-11-13 | — |
+| PHASE-03-BE-001 | Video Projects & Scenes Data Module | backend-agent | 2026-11-13 | — |
