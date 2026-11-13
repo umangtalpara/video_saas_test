@@ -5,8 +5,14 @@
     "startedAt": "2026-11-13",
     "lastUpdated": "2026-11-13",
     "totalPhases": 6,
-    "completedPhases": 3,
-    "activeBlockers": 0
+    "completedPhases": 4,
+    "activeBlockers": 0,
+    "awaitingApproval": {
+      "kind": "phase",
+      "after": "PHASE-04",
+      "next": "PHASE-05",
+      "since": "2026-11-13 17:22:40"
+    }
   },
   "stack": {
     "structure": "decoupled",
@@ -23,24 +29,16 @@
   },
   "agents": {
     "backend-agent": {
-      "status": "IDLE",
-      "task": null,
-      "lastActive": "2026-11-13 17:04:00"
+      "lastActive": "2026-11-13 17:22:40"
     },
     "frontend-agent": {
-      "status": "IDLE",
-      "task": null,
-      "lastActive": "2026-11-13 17:15:17"
+      "lastActive": "2026-11-13 17:22:40"
     },
     "qa-agent": {
-      "status": "IDLE",
-      "task": null,
-      "lastActive": "2026-11-13 17:20:31"
+      "lastActive": "2026-11-13 17:22:40"
     },
     "code-review-agent": {
-      "status": "IDLE",
-      "task": null,
-      "lastActive": "2026-11-13 17:21:45"
+      "lastActive": "2026-11-13 17:22:40"
     }
   },
   "phases": [
@@ -429,7 +427,7 @@
     {
       "id": "PHASE-04",
       "name": "Video Generation Worker & Provider Adapters",
-      "status": "IN_PROGRESS",
+      "status": "COMPLETED",
       "tasks": [
         {
           "id": "PHASE-04-BE-001",
@@ -518,7 +516,41 @@
           "completedDate": "2026-11-13"
         }
       ],
-      "startedAt": "2026-11-13"
+      "startedAt": "2026-11-13",
+      "completedAt": "2026-11-13",
+      "report": {
+        "completedAt": "2026-11-13",
+        "summary": "Delivered Video Generation worker with Alibaba Wan and Runway adapters, in-process queue with SSRF-safe clip ingestion and S3 tenant isolation, real-time generation progress dashboard, and clip preview modal with prompt tweaking.",
+        "tasks": 6,
+        "retries": 0,
+        "reviewRounds": 0,
+        "stages": [
+          {
+            "label": "Backend",
+            "agent": "backend-agent",
+            "done": 2,
+            "total": 2
+          },
+          {
+            "label": "Frontend",
+            "agent": "frontend-agent",
+            "done": 2,
+            "total": 2
+          },
+          {
+            "label": "QA",
+            "agent": "qa-agent",
+            "done": 1,
+            "total": 1
+          },
+          {
+            "label": "Code Review",
+            "agent": "code-review-agent",
+            "done": 1,
+            "total": 1
+          }
+        ]
+      }
     },
     {
       "id": "PHASE-05",
@@ -761,6 +793,16 @@
       "event": "User approved start of PHASE-04",
       "date": "2026-11-13",
       "notes": "user approved"
+    },
+    {
+      "event": "PHASE-04 completed",
+      "date": "2026-11-13",
+      "notes": "Video Generation Worker & Provider Adapters — Delivered Video Generation worker with Alibaba Wan and Runway adapters, in-process queue with SSRF-safe clip ingestion and S3 tenant isolation, real-time generation progress dashboard, and clip preview modal with prompt tweaking."
+    },
+    {
+      "event": "PHASE-04 closed — awaiting user approval to start PHASE-05",
+      "date": "2026-11-13",
+      "notes": ""
     }
   ],
   "plan": {

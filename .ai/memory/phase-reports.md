@@ -89,3 +89,31 @@ One entry per closed phase (written by `status-manager.js complete-phase`).
 | PHASE-03-FE-002 | Script Review & Scene Prompt Editor | frontend-agent | 2026-11-13 |
 | PHASE-03-QA-001 | Project & Script Planner Test Suite | qa-agent | 2026-11-13 |
 | PHASE-03-CR-001 | Phase 3 Script & State Machine Review | code-review-agent | 2026-11-13 |
+
+## PHASE-04: Video Generation Worker & Provider Adapters
+
+| Field | Value |
+|-------|-------|
+| **Started** | 2026-11-13 |
+| **Completed** | 2026-11-13 |
+| **Tasks** | 6 |
+| **Total retries** | 0 |
+| **Review rounds** | 0 |
+
+**Summary:** Delivered Video Generation worker with Alibaba Wan and Runway adapters, in-process queue with SSRF-safe clip ingestion and S3 tenant isolation, real-time generation progress dashboard, and clip preview modal with prompt tweaking.
+
+| Stage | Agent | Done / Total |
+|-------|-------|--------------|
+| Backend | backend-agent | 2/2 |
+| Frontend | frontend-agent | 2/2 |
+| QA | qa-agent | 1/1 |
+| Code Review | code-review-agent | 1/1 |
+
+| Task | Title | Agent | Completed |
+|------|-------|-------|-----------|
+| PHASE-04-BE-001 | Provider Adapter Framework & Video Provider Integrations | backend-agent | 2026-11-13 |
+| PHASE-04-BE-002 | In-Process Generation Queue & S3 Asset Ingestion | backend-agent | 2026-11-13 |
+| PHASE-04-FE-001 | Real-Time Generation Progress Dashboard | frontend-agent | 2026-11-13 |
+| PHASE-04-FE-002 | Scene Clip Preview & Asset Inspector | frontend-agent | 2026-11-13 |
+| PHASE-04-QA-001 | Video Generation & Adapter Test Suite | qa-agent | 2026-11-13 |
+| PHASE-04-CR-001 | Phase 4 Generation Pipeline & S3 Security Review | code-review-agent | 2026-11-13 |

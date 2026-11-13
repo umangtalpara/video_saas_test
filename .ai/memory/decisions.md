@@ -122,6 +122,12 @@ What is the chosen solution?
 - **Stats**: 6 tasks, 0 retries, 0 review round(s)
 - **Details**: [phase-reports.md](phase-reports.md)
 
+### PHASE-04 closed — Video Generation Worker & Provider Adapters (2026-11-13)
+
+- **Delivered**: Delivered Video Generation worker with Alibaba Wan and Runway adapters, in-process queue with SSRF-safe clip ingestion and S3 tenant isolation, real-time generation progress dashboard, and clip preview modal with prompt tweaking.
+- **Stats**: 6 tasks, 0 retries, 0 review round(s)
+- **Details**: [phase-reports.md](phase-reports.md)
+
 ---
 
 *Last updated: 2026-11-13*
