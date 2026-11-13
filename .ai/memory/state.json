@@ -33,7 +33,9 @@
       "lastActive": "2026-11-13 13:48:22"
     },
     "qa-agent": {
-      "lastActive": "2026-11-13 13:20:38"
+      "status": "IDLE",
+      "task": null,
+      "lastActive": "2026-11-13 13:52:56"
     },
     "code-review-agent": {
       "lastActive": "2026-11-13 13:20:38"
@@ -233,14 +235,15 @@
           "title": "Provider Catalog & Encryption Test Suite",
           "agent": "qa-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-02-BE-002",
             "PHASE-02-FE-002"
           ],
           "acceptance_criteria": "Unit tests verify AES-256-GCM encryption, decryption, and key masking; integration tests verify tenant isolation on provider connections; Playwright E2E verifies adding and testing an API key.",
-          "complexity": "M"
+          "complexity": "M",
+          "completedDate": "2026-11-13"
         },
         {
           "id": "PHASE-02-CR-001",

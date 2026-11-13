@@ -59,3 +59,4 @@ export interface TestConnectionResult {
   latencyMs: number;
   testedAt: string;
 }
+

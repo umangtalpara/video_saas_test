@@ -45,3 +45,4 @@ export interface ProviderModel {
   isEnabled: boolean;
   createdAt?: string;
 }
+

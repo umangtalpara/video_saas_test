@@ -39,3 +39,4 @@ export function BillingBadge({ classification }: BillingBadgeProps): React.JSX.E
       );
   }
 }
+

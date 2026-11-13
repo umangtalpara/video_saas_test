@@ -16,3 +16,4 @@
 | PHASE-02-BE-002 | User Provider Connections & Credential Encryption | backend-agent | 2026-11-13 | — |
 | PHASE-02-FE-001 | Provider Catalog Explorer & Model View | frontend-agent | 2026-11-13 | — |
 | PHASE-02-FE-002 | User API Keys Management & Testing Interface | frontend-agent | 2026-11-13 | — |
+| PHASE-02-QA-001 | Provider Catalog & Encryption Test Suite | qa-agent | 2026-11-13 | — |
