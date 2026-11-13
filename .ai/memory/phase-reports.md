@@ -61,3 +61,31 @@ One entry per closed phase (written by `status-manager.js complete-phase`).
 | PHASE-02-FE-002 | User API Keys Management & Testing Interface | frontend-agent | 2026-11-13 |
 | PHASE-02-QA-001 | Provider Catalog & Encryption Test Suite | qa-agent | 2026-11-13 |
 | PHASE-02-CR-001 | Phase 2 BYOK Security Review | code-review-agent | 2026-11-13 |
+
+## PHASE-03: Video Projects & Script Planner Engine
+
+| Field | Value |
+|-------|-------|
+| **Started** | 2026-11-13 |
+| **Completed** | 2026-11-13 |
+| **Tasks** | 6 |
+| **Total retries** | 0 |
+| **Review rounds** | 0 |
+
+**Summary:** Delivered Video Projects & Scenes data module with state machine transitions, LLM Script & Scene Generation engine, multi-step Video Creation Wizard (/videos/new), and Script Review & Scene Prompt Editor (/videos/:id/edit-script).
+
+| Stage | Agent | Done / Total |
+|-------|-------|--------------|
+| Backend | backend-agent | 2/2 |
+| Frontend | frontend-agent | 2/2 |
+| QA | qa-agent | 1/1 |
+| Code Review | code-review-agent | 1/1 |
+
+| Task | Title | Agent | Completed |
+|------|-------|-------|-----------|
+| PHASE-03-BE-001 | Video Projects & Scenes Data Module | backend-agent | 2026-11-13 |
+| PHASE-03-BE-002 | LLM Script & Scene Generation Engine | backend-agent | 2026-11-13 |
+| PHASE-03-FE-001 | Video Creation Wizard | frontend-agent | 2026-11-13 |
+| PHASE-03-FE-002 | Script Review & Scene Prompt Editor | frontend-agent | 2026-11-13 |
+| PHASE-03-QA-001 | Project & Script Planner Test Suite | qa-agent | 2026-11-13 |
+| PHASE-03-CR-001 | Phase 3 Script & State Machine Review | code-review-agent | 2026-11-13 |

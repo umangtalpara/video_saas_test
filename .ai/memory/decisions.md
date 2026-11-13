@@ -116,6 +116,12 @@ What is the chosen solution?
 - **Stats**: 6 tasks, 0 retries, 0 review round(s)
 - **Details**: [phase-reports.md](phase-reports.md)
 
+### PHASE-03 closed — Video Projects & Script Planner Engine (2026-11-13)
+
+- **Delivered**: Delivered Video Projects & Scenes data module with state machine transitions, LLM Script & Scene Generation engine, multi-step Video Creation Wizard (/videos/new), and Script Review & Scene Prompt Editor (/videos/:id/edit-script).
+- **Stats**: 6 tasks, 0 retries, 0 review round(s)
+- **Details**: [phase-reports.md](phase-reports.md)
+
 ---
 
 *Last updated: 2026-11-13*
