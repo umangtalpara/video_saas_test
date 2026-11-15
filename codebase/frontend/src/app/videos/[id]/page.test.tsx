@@ -100,6 +100,16 @@ describe('ProjectDetailsPage', () => {
       message: 'Cancelled',
       projectId: 'proj-123',
     });
+    (projectsApi.fetchDownloadUrl as jest.Mock).mockResolvedValue({
+      downloadUrl: 'https://presigned.aws/render.mp4',
+      fileName: 'future_cyberpunk_city.mp4',
+      expiresInSeconds: 3600,
+    });
+    (projectsApi.retryProjectRender as jest.Mock).mockResolvedValue({
+      message: 'Render restarted',
+      projectId: 'proj-123',
+      status: 'queued',
+    });
   });
 
   it('renders project header and pipeline progress percentage', async () => {
@@ -183,6 +193,61 @@ describe('ProjectDetailsPage', () => {
 
     await waitFor(() => {
       expect(projectsApi.retrySceneGeneration).toHaveBeenCalledWith('proj-123', 'scene-1');
+    });
+  });
+
+  it('renders finished video player and download button when status is completed (FE-001)', async () => {
+    (projectsApi.fetchProject as jest.Mock).mockResolvedValueOnce({
+      ...mockProject,
+      status: 'completed',
+      finalVideoUrl: 'https://cdn.videoforge.ai/final.mp4',
+    });
+
+    render(<ProjectDetailsPage />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Final Rendered Video')).toBeInTheDocument();
+      expect(screen.getByText('Download Video (.MP4)')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Download Video (.MP4)'));
+
+    await waitFor(() => {
+      expect(projectsApi.fetchDownloadUrl).toHaveBeenCalledWith('proj-123');
+    });
+  });
+
+  it('renders rendering progress state banner when status is rendering (FE-001)', async () => {
+    (projectsApi.fetchProject as jest.Mock).mockResolvedValueOnce({
+      ...mockProject,
+      status: 'rendering',
+    });
+
+    render(<ProjectDetailsPage />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/FFmpeg Media Assembly & Subtitle Burning in Progress/i),
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('renders retry render button when project is failed (FE-001)', async () => {
+    (projectsApi.fetchProject as jest.Mock).mockResolvedValueOnce({
+      ...mockProject,
+      status: 'failed',
+    });
+
+    render(<ProjectDetailsPage />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Retry Render')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Retry Render'));
+
+    await waitFor(() => {
+      expect(projectsApi.retryProjectRender).toHaveBeenCalledWith('proj-123');
     });
   });
 });

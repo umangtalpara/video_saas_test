@@ -139,4 +139,45 @@ export async function fetchGenerationStatus(
   return response.data;
 }
 
+export interface DownloadUrlResponse {
+  downloadUrl: string;
+  expiresInSeconds: number;
+  fileName: string;
+}
+
+export interface PreviewUrlResponse {
+  previewUrl: string | null;
+  thumbnailUrl: string | null;
+  expiresInSeconds: number;
+}
+
+export async function fetchDownloadUrl(
+  projectId: string,
+): Promise<DownloadUrlResponse> {
+  const response = await apiClient.get<DownloadUrlResponse>(
+    `/projects/${projectId}/download-url`,
+  );
+  return response.data;
+}
+
+export async function fetchPreviewUrl(
+  projectId: string,
+): Promise<PreviewUrlResponse> {
+  const response = await apiClient.get<PreviewUrlResponse>(
+    `/projects/${projectId}/preview-url`,
+  );
+  return response.data;
+}
+
+export async function retryProjectRender(
+  projectId: string,
+): Promise<{ message: string; projectId: string; status: string }> {
+  const response = await apiClient.post<{
+    message: string;
+    projectId: string;
+    status: string;
+  }>(`/projects/${projectId}/generate`);
+  return response.data;
+}
+
 

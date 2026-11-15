@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useCallback, useTransition } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -9,6 +9,8 @@ import {
   startGeneration,
   retrySceneGeneration,
   cancelProjectGeneration,
+  fetchDownloadUrl,
+  retryProjectRender,
   GenerationStatusResponse,
 } from '../../../lib/api/projects';
 import { VideoProject, VideoScene } from '../../../types/projects';
@@ -25,7 +27,15 @@ export default function ProjectDetailsPage(): React.JSX.Element {
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
-  // Modal states for FE-002
+  // Custom Video Player States
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
+  const [volume, setVolume] = useState(1);
+
+  // Modal states
   const [previewScene, setPreviewScene] = useState<VideoScene | null>(null);
   const [regenerateScene, setRegenerateScene] = useState<VideoScene | null>(null);
   const [regeneratePrompt, setRegeneratePrompt] = useState('');
@@ -52,7 +62,7 @@ export default function ProjectDetailsPage(): React.JSX.Element {
     loadData();
   }, [loadData]);
 
-  // Polling when generating or queued
+  // Polling when generating, queued, or rendering
   useEffect(() => {
     if (!project) return;
     const isWorking =
@@ -78,6 +88,60 @@ export default function ProjectDetailsPage(): React.JSX.Element {
     return () => clearInterval(interval);
   }, [project, projectId]);
 
+  // Video player controls
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      setCurrentTime(videoRef.current.currentTime);
+      setDuration(videoRef.current.duration || 0);
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const time = parseFloat(e.target.value);
+    if (videoRef.current) {
+      videoRef.current.currentTime = time;
+      setCurrentTime(time);
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const handleDownload = async () => {
+    try {
+      setActionLoading(true);
+      const res = await fetchDownloadUrl(projectId);
+      const a = document.createElement('a');
+      a.href = res.downloadUrl;
+      a.download = res.fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setToast({ message: 'Download started!', type: 'success' });
+    } catch (err: unknown) {
+      setToast({
+        message: err instanceof Error ? err.message : 'Failed to download video',
+        type: 'error',
+      });
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   const handleStartGeneration = async () => {
     try {
       setActionLoading(true);
@@ -87,6 +151,22 @@ export default function ProjectDetailsPage(): React.JSX.Element {
     } catch (err: unknown) {
       setToast({
         message: err instanceof Error ? err.message : 'Failed to start generation',
+        type: 'error',
+      });
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleRetryRender = async () => {
+    try {
+      setActionLoading(true);
+      await retryProjectRender(projectId);
+      setToast({ message: 'Render restarted!', type: 'success' });
+      await loadData();
+    } catch (err: unknown) {
+      setToast({
+        message: err instanceof Error ? err.message : 'Failed to retry render',
         type: 'error',
       });
     } finally {
@@ -149,6 +229,12 @@ export default function ProjectDetailsPage(): React.JSX.Element {
     }
   };
 
+  const formatTime = (secs: number) => {
+    const mins = Math.floor(secs / 60);
+    const remainingSecs = Math.floor(secs % 60);
+    return `${mins}:${remainingSecs < 10 ? '0' : ''}${remainingSecs}`;
+  };
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
@@ -190,11 +276,23 @@ export default function ProjectDetailsPage(): React.JSX.Element {
       case 'queued':
         return <span className="rounded-full bg-amber-500/20 px-2.5 py-0.5 text-xs font-medium text-amber-400 border border-amber-500/30">Queued</span>;
       case 'rendering':
-        return <span className="rounded-full bg-purple-500/20 px-2.5 py-0.5 text-xs font-medium text-purple-400 border border-purple-500/30">Rendering</span>;
+        return <span className="flex items-center gap-1.5 rounded-full bg-purple-500/20 px-2.5 py-0.5 text-xs font-medium text-purple-400 border border-purple-500/30 animate-pulse"><span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-ping" />Rendering</span>;
       case 'failed':
         return <span className="rounded-full bg-rose-500/20 px-2.5 py-0.5 text-xs font-medium text-rose-400 border border-rose-500/30">Failed</span>;
       default:
         return <span className="rounded-full bg-slate-700/50 px-2.5 py-0.5 text-xs font-medium text-slate-300 border border-slate-600/50">{status}</span>;
+    }
+  };
+
+  const getAspectRatioClass = (ratio: string) => {
+    switch (ratio) {
+      case '9:16':
+        return 'max-w-sm aspect-[9/16] mx-auto';
+      case '1:1':
+        return 'max-w-md aspect-square mx-auto';
+      case '16:9':
+      default:
+        return 'max-w-4xl aspect-video mx-auto';
     }
   };
 
@@ -244,6 +342,26 @@ export default function ProjectDetailsPage(): React.JSX.Element {
               Edit Script
             </Link>
 
+            {project.status === 'completed' && project.finalVideoUrl ? (
+              <button
+                onClick={handleDownload}
+                disabled={actionLoading}
+                className="rounded-lg bg-emerald-600 px-4 py-1.5 text-xs font-semibold text-white shadow-lg shadow-emerald-500/20 hover:bg-emerald-500 transition disabled:opacity-50"
+              >
+                Download Video (.MP4)
+              </button>
+            ) : null}
+
+            {project.status === 'failed' ? (
+              <button
+                onClick={handleRetryRender}
+                disabled={actionLoading}
+                className="rounded-lg bg-indigo-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-indigo-500 transition disabled:opacity-50"
+              >
+                Retry Render
+              </button>
+            ) : null}
+
             {project.status === 'awaiting_approval' || (project.status === 'draft' && project.scriptApproved) ? (
               <button
                 onClick={handleStartGeneration}
@@ -268,6 +386,85 @@ export default function ProjectDetailsPage(): React.JSX.Element {
       </header>
 
       <main className="mx-auto max-w-7xl px-6 py-8">
+        {/* Render Progress State Banner */}
+        {project.status === 'rendering' && (
+          <section className="mb-8 rounded-2xl border border-purple-500/30 bg-purple-950/30 p-6 shadow-xl backdrop-blur">
+            <div className="flex items-center space-x-4">
+              <div className="h-8 w-8 animate-spin rounded-full border-3 border-purple-400 border-t-transparent" />
+              <div>
+                <h3 className="text-base font-semibold text-purple-200">
+                  FFmpeg Media Assembly & Subtitle Burning in Progress
+                </h3>
+                <p className="text-xs text-purple-300/80 mt-1">
+                  Concatenating scene clips, synchronizing SRT narration captions, and generating final MP4 export.
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Finished Video Player (FE-001) */}
+        {project.status === 'completed' && project.finalVideoUrl && (
+          <section className="mb-8 rounded-2xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur">
+            <h2 className="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4">
+              Final Rendered Video
+            </h2>
+
+            <div className={`relative overflow-hidden rounded-xl bg-black border border-slate-800 shadow-2xl ${getAspectRatioClass(project.aspectRatio)}`}>
+              <video
+                ref={videoRef}
+                src={project.finalVideoUrl}
+                poster={project.thumbnailUrl || undefined}
+                onTimeUpdate={handleTimeUpdate}
+                onLoadedMetadata={handleTimeUpdate}
+                onEnded={() => setIsPlaying(false)}
+                className="h-full w-full object-contain"
+                onClick={togglePlay}
+              />
+
+              {/* Custom Playback Controls Overlay */}
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 flex flex-col gap-2">
+                <input
+                  type="range"
+                  min="0"
+                  max={duration || 100}
+                  step="0.1"
+                  value={currentTime}
+                  onChange={handleSeek}
+                  aria-label="Video scrubber"
+                  className="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                />
+
+                <div className="flex items-center justify-between text-xs text-slate-300">
+                  <div className="flex items-center space-x-3">
+                    <button
+                      onClick={togglePlay}
+                      className="rounded bg-indigo-600/80 px-2.5 py-1 text-white hover:bg-indigo-600 transition font-semibold"
+                    >
+                      {isPlaying ? 'Pause' : 'Play'}
+                    </button>
+                    <span>
+                      {formatTime(currentTime)} / {formatTime(duration || project.totalDurationSeconds)}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center space-x-3">
+                    <button
+                      onClick={toggleMute}
+                      className="hover:text-white transition"
+                    >
+                      {isMuted ? 'Unmute' : 'Mute'}
+                    </button>
+                    <span className="rounded bg-slate-800 px-2 py-0.5 text-xs font-mono text-slate-400">
+                      {project.aspectRatio}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Progress & Stats Dashboard */}
         <section className="mb-8 rounded-2xl border border-slate-800 bg-slate-900/40 p-6 shadow-xl backdrop-blur">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
@@ -508,4 +705,3 @@ export default function ProjectDetailsPage(): React.JSX.Element {
     </div>
   );
 }
-
