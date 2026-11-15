@@ -35,3 +35,4 @@
 | PHASE-05-FE-001 | Video Player & Render Progress Interface | frontend-agent | 2026-11-15 | — |
 | PHASE-05-FE-002 | Video Library, Download & Project Actions | frontend-agent | 2026-11-15 | — |
 | PHASE-05-QA-001 | Render Engine & Media Delivery Test Suite | qa-agent | 2026-11-15 | — |
+| PHASE-05-CR-001 | Phase 5 Media Pipeline & Delivery Review | code-review-agent | 2026-11-15 | — |
