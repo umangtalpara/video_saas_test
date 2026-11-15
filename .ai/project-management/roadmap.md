@@ -165,7 +165,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-06-BE-001: Provider Usage Tracking & User Limits Enforcement (Agent: backend-agent, Priority: P0, Complexity: L)
   * Depends on: PHASE-05-BE-002
   * Criteria: provider_usage collection logging every provider call with units/duration/cost estimate; middleware/guard enforcing daily/monthly job caps and max estimated cost per project; block paid/unknown providers toggle check.
-- **[PENDING]** PHASE-06-BE-002: Platform Administration & System Diagnostics API (Agent: backend-agent, Priority: P0, Complexity: M)
+- **[COMPLETED]** PHASE-06-BE-002: Platform Administration & System Diagnostics API (Agent: backend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-06-BE-001
   * Criteria: Admin endpoints (/api/v1/admin/*) protected by admin RBAC: GET /admin/dashboard, GET /admin/users with suspension toggle, GET/PATCH /admin/providers with emergency killswitch, GET /admin/jobs with failure logs, GET /admin/audit-logs.
 - **[PENDING]** PHASE-06-FE-001: Usage Analytics & User Limits Dashboard (Agent: frontend-agent, Priority: P1, Complexity: M)

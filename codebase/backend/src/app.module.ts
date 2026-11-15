@@ -15,6 +15,7 @@ import { ProjectsModule } from './modules/projects/projects.module';
 import { MediaModule } from './modules/media/media.module';
 import { GenerationModule } from './modules/generation/generation.module';
 import { UsageModule } from './modules/usage/usage.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { UsageModule } from './modules/usage/usage.module';
     MediaModule,
     GenerationModule,
     UsageModule,
+    AdminModule,
   ],
 })
 export class AppModule {}
