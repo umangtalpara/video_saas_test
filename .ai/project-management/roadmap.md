@@ -171,7 +171,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-06-FE-001: Usage Analytics & User Limits Dashboard (Agent: frontend-agent, Priority: P1, Complexity: M)
   * Depends on: PHASE-06-BE-001
   * Criteria: Usage dashboard (/usage) showing consumption charts by provider and model, daily/monthly job limit progress bars, estimated cost breakdown, and personal limit settings at /settings/limits.
-- **[PENDING]** PHASE-06-FE-002: Platform Admin Console (Agent: frontend-agent, Priority: P0, Complexity: L)
+- **[COMPLETED]** PHASE-06-FE-002: Platform Admin Console (Agent: frontend-agent, Priority: P0, Complexity: L)
   * Depends on: PHASE-06-BE-002, PHASE-06-FE-001
   * Criteria: Admin console (/admin): provider catalogue manager with killswitch button, global job monitor with failure diagnostics, user management table with suspend/activate actions, and system audit log viewer.
 - **[PENDING]** PHASE-06-QA-001: Usage, Admin & Full System E2E Regression Suite (Agent: qa-agent, Priority: P0, Complexity: L)

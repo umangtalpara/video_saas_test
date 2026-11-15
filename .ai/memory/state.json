@@ -30,7 +30,7 @@
     "frontend-agent": {
       "status": "IDLE",
       "task": null,
-      "lastActive": "2026-11-15 06:29:07"
+      "lastActive": "2026-11-15 07:07:34"
     },
     "qa-agent": {
       "lastActive": "2026-11-15 05:50:55"
@@ -730,14 +730,15 @@
           "title": "Platform Admin Console",
           "agent": "frontend-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-06-BE-002",
             "PHASE-06-FE-001"
           ],
           "acceptance_criteria": "Admin console (/admin): provider catalogue manager with killswitch button, global job monitor with failure diagnostics, user management table with suspend/activate actions, and system audit log viewer.",
-          "complexity": "L"
+          "complexity": "L",
+          "completedDate": "2026-11-15"
         },
         {
           "id": "PHASE-06-QA-001",

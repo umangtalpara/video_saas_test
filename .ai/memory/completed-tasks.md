@@ -39,3 +39,4 @@
 | PHASE-06-BE-001 | Provider Usage Tracking & User Limits Enforcement | backend-agent | 2026-11-15 | — |
 | PHASE-06-BE-002 | Platform Administration & System Diagnostics API | backend-agent | 2026-11-15 | — |
 | PHASE-06-FE-001 | Usage Analytics & User Limits Dashboard | frontend-agent | 2026-11-15 | — |
+| PHASE-06-FE-002 | Platform Admin Console | frontend-agent | 2026-11-15 | — |
