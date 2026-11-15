@@ -7,7 +7,6 @@ import { WanVideoProviderAdapter } from './adapters/wan-video-provider.adapter';
 import { RunwayVideoProviderAdapter } from './adapters/runway-video-provider.adapter';
 import { MockVideoProviderAdapter } from './adapters/mock-video-provider.adapter';
 import { ProviderAdapterRegistry } from './adapters/provider-adapter.registry';
-import { SafeDownloaderService } from './services/safe-downloader.service';
 import { SceneProcessorService } from './services/scene-processor.service';
 import { GenerationQueueService } from './services/generation-queue.service';
 
@@ -23,15 +22,12 @@ import { GenerationQueueService } from './services/generation-queue.service';
     RunwayVideoProviderAdapter,
     MockVideoProviderAdapter,
     ProviderAdapterRegistry,
-    SafeDownloaderService,
     SceneProcessorService,
     GenerationQueueService,
   ],
   exports: [
     GenerationQueueService,
     ProviderAdapterRegistry,
-    SafeDownloaderService,
   ],
 })
 export class GenerationModule {}
-

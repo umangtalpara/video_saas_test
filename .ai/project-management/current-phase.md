@@ -4,9 +4,50 @@
 
 ---
 
-## No Active Phase
+## Active Phase
 
-Project Status: 🟢 IN_PROGRESS
+| Field | Value |
+|-------|-------|
+| **Phase** | PHASE-05 |
+| **Name** | FFmpeg Rendering & Media Assembly |
+| **Status** | IN_PROGRESS |
+| **Started At** | 2026-11-15 |
 
-> ⏸ WAITING FOR USER APPROVAL: PHASE-04 is closed; PHASE-05 has not started.
-> The user must approve in chat; then the agent runs `status-manager.js approve-phase PHASE-05`.
+---
+
+## Phase Pipeline (strict order: Backend → Frontend → QA → Code Review)
+
+| Stage | Agent | Done / Total | State |
+|-------|-------|--------------|-------|
+| Backend | backend-agent | 1/2 | 🔄 |
+| Frontend | frontend-agent | 0/2 | ⬜ |
+| QA | qa-agent | 0/1 | ⬜ |
+| Code Review | code-review-agent | 0/1 | ⬜ |
+
+Code review rounds used: 0/3
+
+---
+
+## Phase Tasks
+
+### Backend Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-05-BE-001 | FFmpeg Video Concatenation & Audio Mixing Engine | backend-agent | P0 | COMPLETED |
+| PHASE-05-BE-002 | Thumbnail Generation & Presigned S3 Delivery API | backend-agent | P0 | PENDING |
+
+### Frontend Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-05-FE-001 | Video Player & Render Progress Interface | frontend-agent | P0 | PENDING |
+| PHASE-05-FE-002 | Video Library, Download & Project Actions | frontend-agent | P1 | PENDING |
+
+### QA Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-05-QA-001 | Render Engine & Media Delivery Test Suite | qa-agent | P0 | PENDING |
+
+### Code Review Tasks
+| Task ID | Title | Agent | Priority | Status |
+|---------|-------|-------|----------|--------|
+| PHASE-05-CR-001 | Phase 5 Media Pipeline & Delivery Review | code-review-agent | P0 | PENDING |

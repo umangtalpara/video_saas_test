@@ -6,6 +6,7 @@ import { SafeDownloaderService } from './safe-downloader.service';
 import { MediaInspectorService } from '../../media/services/media-inspector.service';
 import { S3StorageService } from '../../media/services/s3-storage.service';
 import { MediaRepository } from '../../media/media.repository';
+import { VideoAssemblyService } from '../../media/services/video-assembly.service';
 import { AssetType } from '../../media/schemas/media-asset.schema';
 import { VideoSceneDocument, SceneStatus } from '../../projects/schemas/scene.schema';
 import { VideoProjectDocument, ProjectStatus } from '../../projects/schemas/project.schema';
@@ -23,6 +24,7 @@ export class SceneProcessorService {
     private readonly mediaInspector: MediaInspectorService,
     private readonly s3Storage: S3StorageService,
     private readonly mediaRepository: MediaRepository,
+    private readonly videoAssembly: VideoAssemblyService,
   ) {}
 
   public async getCredentials(project: VideoProjectDocument): Promise<DecryptedCredentials> {
@@ -163,6 +165,10 @@ export class SceneProcessorService {
       this.logger.log(`All scenes completed for project ${projectId}. Transitioning to RENDERING`);
       await this.projectsRepository.updateByIdAndUser(projectId, userId, {
         status: ProjectStatus.RENDERING,
+      });
+      // Trigger media assembly asynchronously
+      this.videoAssembly.assembleProject(project).catch((err: unknown) => {
+        this.logger.error(`Media assembly error for project ${projectId}: ${err}`);
       });
     }
   }

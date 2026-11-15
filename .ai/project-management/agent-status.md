@@ -10,7 +10,7 @@
 |-------|------|--------|-------------|------------|-----------------|-------------|
 | ⚪ super-agent | Orchestrator | IDLE | — | 0 | 0 | — |
 | ⚪ deep-plan-agent | Planning | IDLE | — | 0 | 0 | — |
-| 🟡 backend-agent | Backend Dev | PENDING | — | 8 | 4 | 2026-11-13 17:22:40 |
+| ⚪ backend-agent | Backend Dev | IDLE | — | 9 | 3 | 2026-11-15 05:12:05 |
 | 🟡 frontend-agent | Frontend Dev | PENDING | — | 8 | 4 | 2026-11-13 17:22:40 |
 | 🟡 qa-agent | Testing | PENDING | — | 4 | 2 | 2026-11-13 17:22:40 |
 | 🟡 code-review-agent | Code Review | PENDING | — | 4 | 2 | 2026-11-13 17:22:40 |
@@ -29,4 +29,4 @@ Set manual status (for agents without tasks, e.g. planning): `status-manager.js 
 
 ---
 
-*Last updated: 2026-11-13*
+*Last updated: 2026-11-15*
