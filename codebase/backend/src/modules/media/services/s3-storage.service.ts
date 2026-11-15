@@ -24,13 +24,29 @@ export class S3StorageService {
   private readonly cloudfrontDomain: string;
 
   constructor(private readonly configService: ConfigService) {
-    this.region = this.configService.get<string>('S3_REGION') || this.configService.get<string>('AWS_REGION') || 'us-east-1';
-    this.bucket = this.configService.get<string>('S3_BUCKET') || this.configService.get<string>('AWS_S3_BUCKET') || 'videoforge-assets';
-    this.cloudfrontDomain = this.configService.get<string>('AWS_CLOUDFRONT_DOMAIN') || '';
+    this.region =
+      this.configService.get<string>('S3_REGION') ||
+      process.env['S3_REGION'] ||
+      this.configService.get<string>('AWS_REGION') ||
+      'ap-south-1';
+    this.bucket =
+      this.configService.get<string>('S3_BUCKET') ||
+      process.env['S3_BUCKET'] ||
+      this.configService.get<string>('AWS_S3_BUCKET') ||
+      'videoforge-assets';
+    this.cloudfrontDomain =
+      this.configService.get<string>('AWS_CLOUDFRONT_DOMAIN') ||
+      process.env['AWS_CLOUDFRONT_DOMAIN'] ||
+      '';
 
-    const accessKeyId = this.configService.get<string>('S3_ACCESS_KEY_ID') || this.configService.get<string>('AWS_ACCESS_KEY_ID');
-    const secretAccessKey = this.configService.get<string>('S3_SECRET_ACCESS_KEY') || this.configService.get<string>('AWS_SECRET_ACCESS_KEY');
-    const endpoint = this.configService.get<string>('S3_ENDPOINT') || this.configService.get<string>('AWS_ENDPOINT');
+    const accessKeyId =
+      this.configService.get<string>('S3_ACCESS_KEY_ID') ||
+      process.env['S3_ACCESS_KEY_ID'] ||
+      this.configService.get<string>('AWS_ACCESS_KEY_ID');
+    const secretAccessKey =
+      this.configService.get<string>('S3_SECRET_ACCESS_KEY') ||
+      process.env['S3_SECRET_ACCESS_KEY'] ||
+      this.configService.get<string>('AWS_SECRET_ACCESS_KEY');
 
     if (accessKeyId && secretAccessKey) {
       this.s3Client = new S3Client({
@@ -39,8 +55,8 @@ export class S3StorageService {
           accessKeyId,
           secretAccessKey,
         },
-        ...(endpoint && endpoint.trim().length > 0 ? { endpoint: endpoint.trim(), forcePathStyle: true } : {}),
       });
+      this.logger.log(`Initialized native AWS S3 client for bucket "${this.bucket}" in region "${this.region}"`);
     } else {
       this.logger.warn('AWS S3 credentials not fully configured, running in simulated S3 storage mode');
     }
