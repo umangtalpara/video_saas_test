@@ -161,7 +161,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
   * Depends on: PHASE-05-QA-001
   * Criteria: Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings; confirms command injection defense on FFmpeg calls, temp file descriptor cleanup, and S3 presigned URL expiration enforcement.
 
-### PHASE-06: Usage Tracking, Limits & Admin Console (Status: IN_PROGRESS)
+### PHASE-06: Usage Tracking, Limits & Admin Console (Status: COMPLETED)
 - **[COMPLETED]** PHASE-06-BE-001: Provider Usage Tracking & User Limits Enforcement (Agent: backend-agent, Priority: P0, Complexity: L)
   * Depends on: PHASE-05-BE-002
   * Criteria: provider_usage collection logging every provider call with units/duration/cost estimate; middleware/guard enforcing daily/monthly job caps and max estimated cost per project; block paid/unknown providers toggle check.

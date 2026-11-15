@@ -145,3 +145,31 @@ One entry per closed phase (written by `status-manager.js complete-phase`).
 | PHASE-05-FE-002 | Video Library, Download & Project Actions | frontend-agent | 2026-11-15 |
 | PHASE-05-QA-001 | Render Engine & Media Delivery Test Suite | qa-agent | 2026-11-15 |
 | PHASE-05-CR-001 | Phase 5 Media Pipeline & Delivery Review | code-review-agent | 2026-11-15 |
+
+## PHASE-06: Usage Tracking, Limits & Admin Console
+
+| Field | Value |
+|-------|-------|
+| **Started** | 2026-11-15 |
+| **Completed** | 2026-11-15 |
+| **Tasks** | 6 |
+| **Total retries** | 0 |
+| **Review rounds** | 0 |
+
+**Summary:** Delivered provider usage tracking and consumption logging, user daily/monthly generation caps and strict free-only protection guard, platform administration console with provider killswitch, user suspension, job diagnostics, immutable security audit logging, and full system regression test suite.
+
+| Stage | Agent | Done / Total |
+|-------|-------|--------------|
+| Backend | backend-agent | 2/2 |
+| Frontend | frontend-agent | 2/2 |
+| QA | qa-agent | 1/1 |
+| Code Review | code-review-agent | 1/1 |
+
+| Task | Title | Agent | Completed |
+|------|-------|-------|-----------|
+| PHASE-06-BE-001 | Provider Usage Tracking & User Limits Enforcement | backend-agent | 2026-11-15 |
+| PHASE-06-BE-002 | Platform Administration & System Diagnostics API | backend-agent | 2026-11-15 |
+| PHASE-06-FE-001 | Usage Analytics & User Limits Dashboard | frontend-agent | 2026-11-15 |
+| PHASE-06-FE-002 | Platform Admin Console | frontend-agent | 2026-11-15 |
+| PHASE-06-QA-001 | Usage, Admin & Full System E2E Regression Suite | qa-agent | 2026-11-15 |
+| PHASE-06-CR-001 | Phase 6 Final Production & Security Review | code-review-agent | 2026-11-15 |

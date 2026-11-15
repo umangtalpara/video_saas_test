@@ -134,6 +134,12 @@ What is the chosen solution?
 - **Stats**: 6 tasks, 0 retries, 0 review round(s)
 - **Details**: [phase-reports.md](phase-reports.md)
 
+### PHASE-06 closed — Usage Tracking, Limits & Admin Console (2026-11-15)
+
+- **Delivered**: Delivered provider usage tracking and consumption logging, user daily/monthly generation caps and strict free-only protection guard, platform administration console with provider killswitch, user suspension, job diagnostics, immutable security audit logging, and full system regression test suite.
+- **Stats**: 6 tasks, 0 retries, 0 review round(s)
+- **Details**: [phase-reports.md](phase-reports.md)
+
 ---
 
 *Last updated: 2026-11-15*
