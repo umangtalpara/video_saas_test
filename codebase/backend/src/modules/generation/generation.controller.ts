@@ -18,6 +18,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { GenerationQueueService } from './services/generation-queue.service';
 import { ProjectsRepository } from '../projects/projects.repository';
 import { SceneStatus } from '../projects/schemas/scene.schema';
+import { UsageLimitsGuard } from '../usage/guards/usage-limits.guard';
 
 @ApiTags('Generation')
 @Controller('projects')
@@ -30,6 +31,7 @@ export class GenerationController {
   ) {}
 
   @Post(':id/generate')
+  @UseGuards(UsageLimitsGuard)
   @HttpCode(HttpStatus.ACCEPTED)
   @ApiOperation({ summary: 'Queue approved project scenes for video generation' })
   @ApiResponse({ status: 202, description: 'Generation accepted and queued' })

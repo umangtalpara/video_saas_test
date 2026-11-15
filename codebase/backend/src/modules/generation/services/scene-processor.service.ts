@@ -11,6 +11,8 @@ import { AssetType } from '../../media/schemas/media-asset.schema';
 import { VideoSceneDocument, SceneStatus } from '../../projects/schemas/scene.schema';
 import { VideoProjectDocument, ProjectStatus } from '../../projects/schemas/project.schema';
 import { DecryptedCredentials } from '../adapters/interfaces/video-provider-adapter.interface';
+import { UsageService } from '../../usage/usage.service';
+import { UsageOperation, UsageStatus } from '../../usage/schemas/provider-usage.schema';
 
 @Injectable()
 export class SceneProcessorService {
@@ -25,13 +27,12 @@ export class SceneProcessorService {
     private readonly s3Storage: S3StorageService,
     private readonly mediaRepository: MediaRepository,
     private readonly videoAssembly: VideoAssemblyService,
+    private readonly usageService?: UsageService,
   ) {}
 
   public async getCredentials(project: VideoProjectDocument): Promise<DecryptedCredentials> {
     const providerId = project.providerId || 'mock';
-    if (providerId === 'mock') {
-      return { apiKey: 'mock-valid-key' };
-    }
+    if (providerId === 'mock') return { apiKey: 'mock-valid-key' };
     if (!project.providerConnectionId) {
       throw new Error(`Project ${project._id} has no providerConnectionId configured`);
     }
@@ -52,9 +53,7 @@ export class SceneProcessorService {
 
     while (Date.now() < deadline) {
       const status = await adapter.getGenerationStatus(credentials, jobId);
-      if (status.status === 'succeeded' && status.videoUrl) {
-        return status.videoUrl;
-      }
+      if (status.status === 'succeeded' && status.videoUrl) return status.videoUrl;
       if (status.status === 'failed') {
         throw new Error(status.errorMessage || status.errorCode || 'Remote generation failed');
       }
@@ -140,10 +139,32 @@ export class SceneProcessorService {
         resolution: mediaInfo.resolution,
       });
 
+      if (this.usageService) {
+        this.usageService.recordProviderCall({
+          userId, projectId, sceneId, providerId,
+          modelId: scene.modelId || project.modelId,
+          operation: UsageOperation.VIDEO_GENERATION,
+          status: UsageStatus.SUCCESS,
+          unitsConsumed: mediaInfo.durationSeconds,
+          durationSeconds: mediaInfo.durationSeconds,
+        }).catch(() => {});
+      }
+
       await this.checkProjectCompletion(project);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Unknown generation error';
       this.logger.error(`Scene ${sceneId} generation failed: ${msg}`);
+      if (this.usageService) {
+        this.usageService.recordProviderCall({
+          userId, projectId, sceneId, providerId,
+          modelId: scene.modelId || project.modelId,
+          operation: UsageOperation.VIDEO_GENERATION,
+          status: UsageStatus.FAILED,
+          unitsConsumed: 0,
+          durationSeconds: scene.plannedDurationSeconds || 5,
+          errorMessage: msg,
+        }).catch(() => {});
+      }
       await this.projectsRepository.updateScene(sceneId, projectId, userId, {
         status: SceneStatus.FAILED,
         errorMessage: msg,

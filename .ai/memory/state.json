@@ -6,13 +6,7 @@
     "lastUpdated": "2026-11-15",
     "totalPhases": 6,
     "completedPhases": 5,
-    "activeBlockers": 0,
-    "awaitingApproval": {
-      "kind": "phase",
-      "after": "PHASE-05",
-      "next": "PHASE-06",
-      "since": "2026-11-15 05:50:55"
-    }
+    "activeBlockers": 0
   },
   "stack": {
     "structure": "decoupled",
@@ -29,7 +23,9 @@
   },
   "agents": {
     "backend-agent": {
-      "lastActive": "2026-11-15 05:50:55"
+      "status": "IDLE",
+      "task": null,
+      "lastActive": "2026-11-15 06:08:44"
     },
     "frontend-agent": {
       "lastActive": "2026-11-15 05:50:55"
@@ -683,20 +679,21 @@
     {
       "id": "PHASE-06",
       "name": "Usage Tracking, Limits & Admin Console",
-      "status": "PENDING",
+      "status": "IN_PROGRESS",
       "tasks": [
         {
           "id": "PHASE-06-BE-001",
           "title": "Provider Usage Tracking & User Limits Enforcement",
           "agent": "backend-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-05-BE-002"
           ],
           "acceptance_criteria": "provider_usage collection logging every provider call with units/duration/cost estimate; middleware/guard enforcing daily/monthly job caps and max estimated cost per project; block paid/unknown providers toggle check.",
-          "complexity": "L"
+          "complexity": "L",
+          "completedDate": "2026-11-15"
         },
         {
           "id": "PHASE-06-BE-002",
@@ -765,7 +762,8 @@
           "acceptance_criteria": "Code Review passes with status APPROVED and 0 CRITICAL or HIGH findings; confirms admin RBAC lockdown, audit logging completeness, Datadog observability integration, and production readiness.",
           "complexity": "S"
         }
-      ]
+      ],
+      "startedAt": "2026-11-15"
     }
   ],
   "blockers": [],
@@ -859,6 +857,11 @@
       "event": "PHASE-05 closed — awaiting user approval to start PHASE-06",
       "date": "2026-11-15",
       "notes": ""
+    },
+    {
+      "event": "User approved start of PHASE-06",
+      "date": "2026-11-15",
+      "notes": "User approved in chat"
     }
   ],
   "plan": {

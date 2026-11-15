@@ -5,6 +5,8 @@ import { GenerationQueueService } from './services/generation-queue.service';
 import { ProjectsRepository } from '../projects/projects.repository';
 import { ProjectStatus } from '../projects/schemas/project.schema';
 import { SceneStatus } from '../projects/schemas/scene.schema';
+import { UsageService } from '../usage/usage.service';
+import { UsageLimitsGuard } from '../usage/guards/usage-limits.guard';
 
 describe('GenerationController', () => {
   let controller: GenerationController;
@@ -43,6 +45,8 @@ describe('GenerationController', () => {
       providers: [
         { provide: GenerationQueueService, useValue: mockQueueService },
         { provide: ProjectsRepository, useValue: mockProjectsRepository },
+        { provide: UsageService, useValue: { validateGenerationEligibility: jest.fn().mockResolvedValue(undefined) } },
+        { provide: UsageLimitsGuard, useValue: { canActivate: () => true } },
       ],
     }).compile();
 

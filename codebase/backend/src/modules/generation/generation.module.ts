@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ProjectsModule } from '../projects/projects.module';
 import { ProviderConnectionsModule } from '../provider-connections/provider-connections.module';
 import { MediaModule } from '../media/media.module';
+import { UsageModule } from '../usage/usage.module';
 import { GenerationController } from './generation.controller';
 import { WanVideoProviderAdapter } from './adapters/wan-video-provider.adapter';
 import { RunwayVideoProviderAdapter } from './adapters/runway-video-provider.adapter';
@@ -15,6 +16,7 @@ import { GenerationQueueService } from './services/generation-queue.service';
     ProjectsModule,
     ProviderConnectionsModule,
     MediaModule,
+    UsageModule,
   ],
   controllers: [GenerationController],
   providers: [

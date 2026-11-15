@@ -14,6 +14,7 @@ import { ProviderConnectionsModule } from './modules/provider-connections/provid
 import { ProjectsModule } from './modules/projects/projects.module';
 import { MediaModule } from './modules/media/media.module';
 import { GenerationModule } from './modules/generation/generation.module';
+import { UsageModule } from './modules/usage/usage.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { GenerationModule } from './modules/generation/generation.module';
     ProjectsModule,
     MediaModule,
     GenerationModule,
+    UsageModule,
   ],
 })
 export class AppModule {}
