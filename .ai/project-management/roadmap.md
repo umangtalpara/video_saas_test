@@ -174,7 +174,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-06-FE-002: Platform Admin Console (Agent: frontend-agent, Priority: P0, Complexity: L)
   * Depends on: PHASE-06-BE-002, PHASE-06-FE-001
   * Criteria: Admin console (/admin): provider catalogue manager with killswitch button, global job monitor with failure diagnostics, user management table with suspend/activate actions, and system audit log viewer.
-- **[PENDING]** PHASE-06-QA-001: Usage, Admin & Full System E2E Regression Suite (Agent: qa-agent, Priority: P0, Complexity: L)
+- **[COMPLETED]** PHASE-06-QA-001: Usage, Admin & Full System E2E Regression Suite (Agent: qa-agent, Priority: P0, Complexity: L)
   * Depends on: PHASE-06-BE-002, PHASE-06-FE-002
   * Criteria: Unit tests for limit validation and free-only guard; integration tests for admin endpoints and audit logging; comprehensive Playwright E2E suite covering full lifecycle: user signup -> key setup -> project creation -> scene generation -> render -> usage tracking -> admin monitoring.
 - **[PENDING]** PHASE-06-CR-001: Phase 6 Final Production & Security Review (Agent: code-review-agent, Priority: P0, Complexity: S)

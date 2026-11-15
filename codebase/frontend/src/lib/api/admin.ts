@@ -96,3 +96,4 @@ export async function fetchAdminAuditLogs(limit: number = 50, skip: number = 0):
   const res = await apiClient.get('/admin/audit-logs', { params: { limit, skip } });
   return res.data;
 }
+

@@ -50,3 +50,4 @@ export function AuditTab({ logs }: AuditTabProps): React.JSX.Element {
     </div>
   );
 }
+

@@ -12,7 +12,7 @@
 | ⚪ deep-plan-agent | Planning | IDLE | — | 0 | 0 | — |
 | ⚪ backend-agent | Backend Dev | IDLE | — | 12 | 0 | 2026-11-15 06:15:53 |
 | ⚪ frontend-agent | Frontend Dev | IDLE | — | 12 | 0 | 2026-11-15 07:07:34 |
-| 🟡 qa-agent | Testing | PENDING | — | 5 | 1 | 2026-11-15 05:50:55 |
+| ⚪ qa-agent | Testing | IDLE | — | 6 | 0 | 2026-11-15 07:11:34 |
 | 🟡 code-review-agent | Code Review | PENDING | — | 5 | 1 | 2026-11-15 05:50:55 |
 
 ## Status Legend

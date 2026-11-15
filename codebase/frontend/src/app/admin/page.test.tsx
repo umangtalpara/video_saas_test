@@ -106,3 +106,4 @@ describe('AdminPage', () => {
     expect(screen.getByText('admin@videoforge.ai')).toBeInTheDocument();
   });
 });
+

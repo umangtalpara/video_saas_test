@@ -21,7 +21,7 @@
 |-------|-------|--------------|-------|
 | Backend | backend-agent | 2/2 | ✅ |
 | Frontend | frontend-agent | 2/2 | ✅ |
-| QA | qa-agent | 0/1 | ⬜ |
+| QA | qa-agent | 1/1 | ✅ |
 | Code Review | code-review-agent | 0/1 | ⬜ |
 
 Code review rounds used: 0/3
@@ -45,7 +45,7 @@ Code review rounds used: 0/3
 ### QA Tasks
 | Task ID | Title | Agent | Priority | Status |
 |---------|-------|-------|----------|--------|
-| PHASE-06-QA-001 | Usage, Admin & Full System E2E Regression Suite | qa-agent | P0 | PENDING |
+| PHASE-06-QA-001 | Usage, Admin & Full System E2E Regression Suite | qa-agent | P0 | COMPLETED |
 
 ### Code Review Tasks
 | Task ID | Title | Agent | Priority | Status |

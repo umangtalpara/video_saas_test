@@ -66,3 +66,4 @@ describe('UsagePage', () => {
     expect(screen.getByText('video_generation')).toBeInTheDocument();
   });
 });
+

@@ -141,3 +141,4 @@ export default function AdminPage(): React.JSX.Element {
     </div>
   );
 }
+

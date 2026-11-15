@@ -30,3 +30,4 @@ import { AdminController } from './admin.controller';
   exports: [AdminRepository, AdminService],
 })
 export class AdminModule {}
+

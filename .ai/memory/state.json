@@ -33,7 +33,9 @@
       "lastActive": "2026-11-15 07:07:34"
     },
     "qa-agent": {
-      "lastActive": "2026-11-15 05:50:55"
+      "status": "IDLE",
+      "task": null,
+      "lastActive": "2026-11-15 07:11:34"
     },
     "code-review-agent": {
       "lastActive": "2026-11-15 05:50:55"
@@ -745,14 +747,15 @@
           "title": "Usage, Admin & Full System E2E Regression Suite",
           "agent": "qa-agent",
           "priority": "P0",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-06-BE-002",
             "PHASE-06-FE-002"
           ],
           "acceptance_criteria": "Unit tests for limit validation and free-only guard; integration tests for admin endpoints and audit logging; comprehensive Playwright E2E suite covering full lifecycle: user signup -> key setup -> project creation -> scene generation -> render -> usage tracking -> admin monitoring.",
-          "complexity": "L"
+          "complexity": "L",
+          "completedDate": "2026-11-15"
         },
         {
           "id": "PHASE-06-CR-001",
