@@ -39,6 +39,30 @@ export function ProviderCard({
         ))}
       </div>
 
+      {Boolean(
+        provider.freeQuotaPolicy &&
+          provider.freeQuotaPolicy['priorityRank'] &&
+          Number(provider.freeQuotaPolicy['priorityRank']) <= 9,
+      ) && (
+        <div className="mt-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-3 text-xs dark:bg-emerald-500/10">
+          <div className="flex items-center justify-between">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-700 dark:text-emerald-400">
+              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-bold text-white">
+                {String(provider.freeQuotaPolicy['priorityRank'])}
+              </span>
+              Zero-Cost Priority #{String(provider.freeQuotaPolicy['priorityRank'])}
+            </span>
+            <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">
+              {String(provider.freeQuotaPolicy['renewal'] || '')}
+            </span>
+          </div>
+          <p className="mt-1 text-neutral-600 dark:text-neutral-300">
+            <strong className="text-neutral-800 dark:text-neutral-200">Free Allowance:</strong>{' '}
+            {String(provider.freeQuotaPolicy['freeAllowance'] || '')}
+          </p>
+        </div>
+      )}
+
       {provider.termsNotes && (
         <p className="mt-3 text-xs italic text-neutral-500 dark:text-neutral-400">
           {provider.termsNotes}

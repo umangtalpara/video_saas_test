@@ -33,9 +33,17 @@ export class ProvidersService implements OnApplicationBootstrap {
         for (const model of item.models) {
           await this.providersRepository.createModel(provider.providerId, model);
         }
+      } else {
+        await this.providersRepository.updateProvider(item.provider.providerId, {
+          displayName: item.provider.displayName,
+          freeQuotaPolicy: item.provider.freeQuotaPolicy,
+          termsNotes: item.provider.termsNotes,
+          billingClassification: item.provider.billingClassification,
+          capabilities: item.provider.capabilities,
+        });
       }
     }
-    this.logger.log(`Verified complete catalogue of ${SEED_PROVIDERS.length} official AI video providers.`);
+    this.logger.log(`Verified complete catalogue of ${SEED_PROVIDERS.length} AI video providers.`);
   }
 
   public async findAllProviders(

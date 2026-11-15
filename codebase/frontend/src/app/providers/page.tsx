@@ -63,7 +63,7 @@ export default function ProvidersPage(): React.JSX.Element {
   }, []);
 
   const filteredProviders = useMemo(() => {
-    return providers.filter((p) => {
+    const list = providers.filter((p) => {
       const matchesSearch =
         p.displayName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -72,9 +72,24 @@ export default function ProvidersPage(): React.JSX.Element {
         );
 
       const matchesBilling =
-        billingFilter === 'all' || p.billingClassification === billingFilter;
+        billingFilter === 'all'
+          ? true
+          : billingFilter === 'zero_cost'
+            ? Boolean(
+                p.freeQuotaPolicy &&
+                  p.freeQuotaPolicy['priorityRank'] &&
+                  Number(p.freeQuotaPolicy['priorityRank']) <= 9,
+              )
+            : p.billingClassification === billingFilter;
 
       return matchesSearch && matchesBilling;
+    });
+
+    return list.sort((a, b) => {
+      const rankA = Number(a.freeQuotaPolicy?.['priorityRank'] || 999);
+      const rankB = Number(b.freeQuotaPolicy?.['priorityRank'] || 999);
+      if (rankA !== rankB) return rankA - rankB;
+      return a.displayName.localeCompare(b.displayName);
     });
   }, [providers, modelsByProvider, searchQuery, billingFilter]);
 
@@ -106,6 +121,7 @@ export default function ProvidersPage(): React.JSX.Element {
           className="rounded-lg border border-neutral-300 bg-white px-3.5 py-2 text-sm shadow-sm transition focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100"
         >
           <option value="all">All Billing Tiers</option>
+          <option value="zero_cost">🌟 Zero-Cost Priority (Ranks 1–9)</option>
           <option value="user_managed">BYOK User-Managed</option>
           <option value="free_verified">Free Verified</option>
           <option value="trial">Trial Quota</option>

@@ -26,7 +26,10 @@ export class ProvidersRepository {
 
   public async findAllProviders(onlyEnabled: boolean = true): Promise<ProviderDocument[]> {
     const filter = onlyEnabled ? { isEnabled: true } : {};
-    return this.providerModel.find(filter).sort({ displayName: 1 }).exec();
+    return this.providerModel
+      .find(filter)
+      .sort({ 'freeQuotaPolicy.priorityRank': 1, displayName: 1 })
+      .exec();
   }
 
   public async findProviderById(providerId: string): Promise<ProviderDocument | null> {
