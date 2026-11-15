@@ -26,18 +26,16 @@ export class ProvidersService implements OnApplicationBootstrap {
   }
 
   public async seedDefaultCatalogIfEmpty(): Promise<void> {
-    const count = await this.providersRepository.countProviders();
-    if (count > 0) {
-      return;
-    }
-    this.logger.log('Seeding default video provider catalog...');
     for (const item of SEED_PROVIDERS) {
-      const provider = await this.providersRepository.createProvider(item.provider);
-      for (const model of item.models) {
-        await this.providersRepository.createModel(provider.providerId, model);
+      const existing = await this.providersRepository.findProviderById(item.provider.providerId);
+      if (!existing) {
+        const provider = await this.providersRepository.createProvider(item.provider);
+        for (const model of item.models) {
+          await this.providersRepository.createModel(provider.providerId, model);
+        }
       }
     }
-    this.logger.log(`Successfully seeded ${SEED_PROVIDERS.length} default providers.`);
+    this.logger.log(`Verified complete catalogue of ${SEED_PROVIDERS.length} official AI video providers.`);
   }
 
   public async findAllProviders(

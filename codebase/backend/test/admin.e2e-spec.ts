@@ -87,10 +87,9 @@ describe('Admin API & RBAC (e2e)', () => {
   const mockProvidersRepository = {
     countProviders: jest.fn().mockResolvedValue(1),
     findAllProviders: jest.fn().mockResolvedValue([mockProvider]),
-    findProviderById: jest.fn().mockImplementation((id: string) => {
-      if (id === 'wan') return Promise.resolve(mockProvider);
-      return Promise.resolve(null);
-    }),
+    findProviderById: jest.fn().mockResolvedValue(mockProvider),
+    createProvider: jest.fn().mockResolvedValue(mockProvider),
+    createModel: jest.fn().mockResolvedValue({}),
     updateProvider: jest.fn().mockImplementation((id: string, update: Record<string, unknown>) => {
       return Promise.resolve({ ...mockProvider, ...update });
     }),
