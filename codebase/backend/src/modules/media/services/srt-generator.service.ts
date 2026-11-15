@@ -53,3 +53,4 @@ export class SrtGeneratorService {
     return entries.join('\n');
   }
 }
+

@@ -121,3 +121,4 @@ describe('SceneProcessorService', () => {
     expect(mockVideoAssembly.assembleProject).toHaveBeenCalled();
   });
 });
+
