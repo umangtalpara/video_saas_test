@@ -151,7 +151,7 @@ VideoForge AI is an enterprise-grade multi-tenant SaaS that enables users to gen
 - **[COMPLETED]** PHASE-05-FE-001: Video Player & Render Progress Interface (Agent: frontend-agent, Priority: P0, Complexity: M)
   * Depends on: PHASE-05-BE-001
   * Criteria: Finished video player at /videos/:id with custom playback controls, aspect-ratio container (9:16 vertical, 16:9 landscape, 1:1 square), render progress state, and retry render button.
-- **[PENDING]** PHASE-05-FE-002: Video Library, Download & Project Actions (Agent: frontend-agent, Priority: P1, Complexity: M)
+- **[COMPLETED]** PHASE-05-FE-002: Video Library, Download & Project Actions (Agent: frontend-agent, Priority: P1, Complexity: M)
   * Depends on: PHASE-05-BE-002, PHASE-05-FE-001
   * Criteria: Videos index page (/videos) with grid/table view, filters by status and date, expiring download button, project duplication modal, and delete project with asset confirmation.
 - **[PENDING]** PHASE-05-QA-001: Render Engine & Media Delivery Test Suite (Agent: qa-agent, Priority: P0, Complexity: M)
