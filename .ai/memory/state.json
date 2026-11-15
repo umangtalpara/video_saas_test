@@ -914,6 +914,11 @@
       "event": "Project status → COMPLETED",
       "date": "2026-11-15",
       "notes": ""
+    },
+    {
+      "event": "Full test pipeline verified: unit (234 tests across BE/FE), e2e integration (47 tests), API contract & security all 100% PASS",
+      "date": "2026-11-15",
+      "notes": ""
     }
   ],
   "plan": {
