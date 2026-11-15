@@ -3,8 +3,10 @@ import { ConfigService } from '@nestjs/config';
 import {
   S3Client,
   PutObjectCommand,
+  GetObjectCommand,
   DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 export interface S3UploadResult {
   bucket: string;
@@ -116,6 +118,40 @@ export class S3StorageService {
       }
     }
     return true;
+  }
+
+  public async generatePresignedGetUrl(
+    s3Key: string,
+    expiresInSeconds: number = 3600,
+    downloadFileName?: string,
+  ): Promise<string> {
+    if (this.s3Client) {
+      try {
+        const command = new GetObjectCommand({
+          Bucket: this.bucket,
+          Key: s3Key,
+          ResponseContentDisposition: downloadFileName
+            ? `attachment; filename="${downloadFileName}"`
+            : undefined,
+        });
+        return await getSignedUrl(this.s3Client, command, {
+          expiresIn: expiresInSeconds,
+        });
+      } catch (err: unknown) {
+        this.logger.error(`Failed to generate presigned S3 URL: ${err}`);
+      }
+    }
+
+    const base = this.cloudfrontDomain
+      ? `https://${this.cloudfrontDomain}/${s3Key}`
+      : `https://${this.bucket}.s3.${this.region}.amazonaws.com/${s3Key}`;
+
+    const params = new URLSearchParams();
+    params.set('expires', String(Date.now() + expiresInSeconds * 1000));
+    if (downloadFileName) {
+      params.set('filename', downloadFileName);
+    }
+    return `${base}?${params.toString()}`;
   }
 }
 

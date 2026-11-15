@@ -46,5 +46,17 @@ describe('S3StorageService', () => {
       expect(res.fileSizeBytes).toBe(buffer.length);
     });
   });
-});
 
+  describe('generatePresignedGetUrl', () => {
+    it('should generate expiring presigned GET URL with download disposition', async () => {
+      const url = await service.generatePresignedGetUrl(
+        'users/u1/projects/p1/final/render.mp4',
+        1800,
+        'my_video.mp4',
+      );
+      expect(url).toContain('https://cdn.videoforge.ai/users/u1/projects/p1/final/render.mp4');
+      expect(url).toContain('expires=');
+      expect(url).toContain('filename=my_video.mp4');
+    });
+  });
+});
