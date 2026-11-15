@@ -28,7 +28,9 @@
       "lastActive": "2026-11-15 06:15:53"
     },
     "frontend-agent": {
-      "lastActive": "2026-11-15 05:50:55"
+      "status": "IDLE",
+      "task": null,
+      "lastActive": "2026-11-15 06:29:07"
     },
     "qa-agent": {
       "lastActive": "2026-11-15 05:50:55"
@@ -714,13 +716,14 @@
           "title": "Usage Analytics & User Limits Dashboard",
           "agent": "frontend-agent",
           "priority": "P1",
-          "status": "PENDING",
+          "status": "COMPLETED",
           "retries": 0,
           "dependencies": [
             "PHASE-06-BE-001"
           ],
           "acceptance_criteria": "Usage dashboard (/usage) showing consumption charts by provider and model, daily/monthly job limit progress bars, estimated cost breakdown, and personal limit settings at /settings/limits.",
-          "complexity": "M"
+          "complexity": "M",
+          "completedDate": "2026-11-15"
         },
         {
           "id": "PHASE-06-FE-002",
